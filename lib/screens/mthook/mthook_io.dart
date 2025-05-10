@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:revengi/dio.dart';
-import 'package:revengi/cards.dart' show getDownloadsDirectory;
+import 'package:revengi/platform.dart' show getDownloadsDirectory;
 
 class MTHookAnalysisScreen extends StatefulWidget {
   const MTHookAnalysisScreen({super.key});
