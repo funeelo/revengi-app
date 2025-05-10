@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import 'package:revengi/dio.dart';
 import 'package:revengi/screens/splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+  // dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
   runApp(const MyApp());
 }
 
