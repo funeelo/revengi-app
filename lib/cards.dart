@@ -112,6 +112,7 @@ class _JniAnalysisScreenState extends State<JniAnalysisScreen> {
     if (result != null) {
       if (isWeb()) {
         setState(() {
+          _selectedFile = null;
           _fileName = result.files.first.name;
           _fileBytes = result.files.first.bytes!;
           _error = null;
@@ -129,7 +130,11 @@ class _JniAnalysisScreenState extends State<JniAnalysisScreen> {
   }
 
   Future<void> _analyzeFile() async {
-    if (_selectedFile == null) return;
+    if (isWeb() && _fileBytes.isEmpty) {
+      return;
+    } else if (!isWeb() && _selectedFile == null) {
+      return;
+    }
 
     setState(() {
       _isAnalyzing = true;
@@ -141,10 +146,7 @@ class _JniAnalysisScreenState extends State<JniAnalysisScreen> {
       final formData = FormData.fromMap({
         'apk_file':
             isWeb()
-                ? MultipartFile.fromBytes(
-                  _fileBytes,
-                  filename: _fileName ?? _selectedFile!.path.split('/').last,
-                )
+                ? MultipartFile.fromBytes(_fileBytes, filename: _fileName)
                 : await MultipartFile.fromFile(
                   _selectedFile!.path,
                   filename:
@@ -193,10 +195,10 @@ class _JniAnalysisScreenState extends State<JniAnalysisScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    if (_selectedFile != null)
+                    if (_selectedFile != null || _fileBytes.isNotEmpty)
                       isWeb()
                           ? Text(
-                            'Selected: ${_fileName ?? _selectedFile!.path.split('/').last}',
+                            'Selected: $_fileName',
                             style: const TextStyle(color: Colors.green),
                           )
                           : Text(
@@ -217,7 +219,10 @@ class _JniAnalysisScreenState extends State<JniAnalysisScreen> {
                         Expanded(
                           child: ElevatedButton.icon(
                             onPressed:
-                                _selectedFile == null || _isAnalyzing
+                                (isWeb()
+                                            ? _fileBytes.isEmpty
+                                            : _selectedFile == null) ||
+                                        _isAnalyzing
                                     ? null
                                     : _analyzeFile,
                             icon: const Icon(Icons.analytics),

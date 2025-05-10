@@ -72,7 +72,7 @@ class DashboardScreen extends StatelessWidget {
           AnalysisCard(
             title: 'Blutter',
             icon: Icons.build,
-            description: 'Flutter binary analysis tools',
+            description: 'Flutter binary analysis tool',
             onTap:
                 () => Navigator.push(
                   context,
