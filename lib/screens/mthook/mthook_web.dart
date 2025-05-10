@@ -86,7 +86,7 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
       anchor.remove();
 
       setState(() {
-        _successMessage = 'File downloaded successfully';
+        _successMessage = 'Download started...';
       });
     } on DioException catch (e) {
       setState(() {
