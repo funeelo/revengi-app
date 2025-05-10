@@ -116,9 +116,8 @@ class _JniAnalysisScreenState extends State<JniAnalysisScreen> {
   }
 
   Future<void> _analyzeFile() async {
-    if (isWeb() && _fileBytes.isEmpty) {
-      return;
-    } else if (!isWeb() && _selectedFile == null) {
+    if ((isWeb() && _fileBytes.isEmpty) ||
+        (!isWeb() && _selectedFile == null)) {
       return;
     }
 
@@ -266,20 +265,48 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
   bool _isAnalyzing = false;
   String? _result;
   String? _error;
+  String? _fileName;
+  List<int> _libappBytes = [];
+  List<int> _libflutterBytes = [];
 
   Future<void> _pickLibappFile() async {
     final result = await FilePicker.platform.pickFiles(type: FileType.any);
 
     if (result != null) {
-      setState(() {
-        _libappFile = File(result.files.single.path!);
-        _error = null;
-        _result = null;
-      });
-      if (_libappFile!.path.split(Platform.pathSeparator).last != 'libapp.so') {
+      if (isWeb()) {
+        setState(() {
+          _fileName = result.files.first.name;
+          _libappBytes = result.files.first.bytes!;
+          _libappFile = null;
+          _error = null;
+          _result = null;
+        });
+      } else {
+        setState(() {
+          _libappFile = File(result.files.single.path!);
+          _fileName = result.files.first.name;
+          _error = null;
+          _result = null;
+        });
+      }
+
+      final bytes = isWeb() ? _libappBytes : await _libappFile!.readAsBytes();
+      final elfMagic = bytes.sublist(0, 4);
+      if (elfMagic[0] != 0x7f ||
+          elfMagic[1] != 0x45 ||
+          elfMagic[2] != 0x4c ||
+          elfMagic[3] != 0x46) {
+        setState(() {
+          _error = 'Please select a valid ELF file';
+          _libappFile = null;
+          _libappBytes = [];
+        });
+      }
+      if (_fileName != 'libapp.so') {
         setState(() {
           _error = 'Please select a valid libapp.so file';
           _libappFile = null;
+          _libappBytes = [];
         });
       }
     }
@@ -289,16 +316,50 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
     final result = await FilePicker.platform.pickFiles(type: FileType.any);
 
     if (result != null) {
-      setState(() {
-        _libflutterFile = File(result.files.single.path!);
-        _error = null;
-        _result = null;
-      });
+      if (isWeb()) {
+        setState(() {
+          _fileName = result.files.first.name;
+          _libflutterBytes = result.files.first.bytes!;
+          _libflutterFile = null;
+          _error = null;
+          _result = null;
+        });
+      } else {
+        setState(() {
+          _fileName = result.files.first.name;
+          _libflutterFile = File(result.files.single.path!);
+          _error = null;
+          _result = null;
+        });
+      }
+      final bytes =
+          isWeb() ? _libflutterBytes : await _libflutterFile!.readAsBytes();
+      final elfMagic = bytes.sublist(0, 4);
+      if (elfMagic[0] != 0x7f ||
+          elfMagic[1] != 0x45 ||
+          elfMagic[2] != 0x4c ||
+          elfMagic[3] != 0x46) {
+        setState(() {
+          _error = 'Please select a valid ELF file';
+          _libflutterFile = null;
+          _libflutterBytes = [];
+        });
+      }
+      if (_fileName != 'libflutter.so') {
+        setState(() {
+          _error = 'Please select a valid libflutter.so file';
+          _libflutterFile = null;
+          _libflutterBytes = [];
+        });
+      }
     }
   }
 
   Future<void> _analyzeFiles() async {
-    if (_libappFile == null || _libflutterFile == null) return;
+    if ((isWeb() && (_libappBytes.isEmpty || _libflutterBytes.isEmpty)) ||
+        (!isWeb() && (_libappFile == null || _libflutterFile == null))) {
+      return;
+    }
 
     setState(() {
       _isAnalyzing = true;
@@ -308,14 +369,25 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
 
     try {
       final formData = FormData.fromMap({
-        'libapp': await MultipartFile.fromFile(
-          _libappFile!.path,
-          filename: _libappFile!.path.split(Platform.pathSeparator).last,
-        ),
-        'libflutter': await MultipartFile.fromFile(
-          _libflutterFile!.path,
-          filename: _libflutterFile!.path.split(Platform.pathSeparator).last,
-        ),
+        'libapp':
+            isWeb()
+                ? MultipartFile.fromBytes(_libappBytes, filename: 'libapp.so')
+                : await MultipartFile.fromFile(
+                  _libappFile!.path,
+                  filename:
+                      _libappFile!.path.split(Platform.pathSeparator).last,
+                ),
+        'libflutter':
+            isWeb()
+                ? MultipartFile.fromBytes(
+                  _libflutterBytes,
+                  filename: 'libflutter.so',
+                )
+                : await MultipartFile.fromFile(
+                  _libflutterFile!.path,
+                  filename:
+                      _libflutterFile!.path.split(Platform.pathSeparator).last,
+                ),
       });
 
       final response = await dio.post('/analyze/flutter', data: formData);
@@ -362,13 +434,15 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
                       leading: const Icon(Icons.library_books),
                       title: const Text('libapp'),
                       subtitle:
-                          _libappFile != null
-                              ? Text(
-                                _libappFile!.path
-                                    .split(Platform.pathSeparator)
-                                    .last,
-                                style: const TextStyle(color: Colors.green),
-                              )
+                          (_libappFile != null || _libappBytes.isNotEmpty)
+                              ? isWeb()
+                                  ? Text('libapp.so')
+                                  : Text(
+                                    _libappFile!.path
+                                        .split(Platform.pathSeparator)
+                                        .last,
+                                    style: const TextStyle(color: Colors.green),
+                                  )
                               : const Text('No file selected'),
                       trailing: ElevatedButton(
                         onPressed: _isAnalyzing ? null : _pickLibappFile,
@@ -379,13 +453,16 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
                       leading: const Icon(Icons.library_books),
                       title: const Text('libflutter'),
                       subtitle:
-                          _libflutterFile != null
-                              ? Text(
-                                _libflutterFile!.path
-                                    .split(Platform.pathSeparator)
-                                    .last,
-                                style: const TextStyle(color: Colors.green),
-                              )
+                          (_libflutterFile != null ||
+                                  _libflutterBytes.isNotEmpty)
+                              ? isWeb()
+                                  ? const Text('libflutter.so')
+                                  : Text(
+                                    _libflutterFile!.path
+                                        .split(Platform.pathSeparator)
+                                        .last,
+                                    style: const TextStyle(color: Colors.green),
+                                  )
                               : const Text('No file selected'),
                       trailing: ElevatedButton(
                         onPressed: _isAnalyzing ? null : _pickLibflutterFile,
@@ -397,9 +474,12 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
                       width: double.infinity,
                       child: ElevatedButton.icon(
                         onPressed:
-                            (_libappFile == null ||
-                                    _libflutterFile == null ||
-                                    _isAnalyzing)
+                            (isWeb()
+                                        ? (_libappBytes.isEmpty ||
+                                            _libflutterBytes.isEmpty)
+                                        : (_libappFile == null ||
+                                            _libflutterFile == null)) ||
+                                    _isAnalyzing
                                 ? null
                                 : _analyzeFiles,
                         icon: const Icon(Icons.analytics),
@@ -429,7 +509,7 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
                 child: Card(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.all(16),
-                    child: Text(_result!),
+                    child: SelectableText(_result!),
                   ),
                 ),
               ),
