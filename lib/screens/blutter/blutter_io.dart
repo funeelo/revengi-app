@@ -5,6 +5,8 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:revengi/platform.dart';
 import 'package:revengi/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart'
+    show SharedPreferences;
 
 class BlutterAnalysisScreen extends StatefulWidget {
   const BlutterAnalysisScreen({super.key});
@@ -128,8 +130,12 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
         _successMessage = 'Analysis saved to: ${outputFile.path}';
       });
     } on DioException catch (e) {
+      final prefs = await SharedPreferences.getInstance();
+      final username = prefs.getString('username');
       setState(() {
-        if (e.response?.data != null &&
+        if (username == "guest") {
+          _error = "Guest users cannot use this feature";
+        } else if (e.response?.data != null &&
             e.response?.data is Map &&
             e.response?.data['detail'] != null) {
           _error =

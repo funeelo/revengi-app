@@ -5,6 +5,8 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:revengi/platform.dart';
 import 'package:revengi/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart'
+    show SharedPreferences;
 import 'package:web/web.dart' as web;
 
 class MTHookAnalysisScreen extends StatefulWidget {
@@ -89,9 +91,16 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
         _successMessage = 'Download started...';
       });
     } on DioException catch (e) {
+      final prefs = await SharedPreferences.getInstance();
+      final username = prefs.getString('username');
       setState(() {
-        _error =
-            e.response?.data?['detail'] ?? 'An error occurred during analysis';
+        if (username == "guest") {
+          _error = "Guest users cannot use this feature";
+        } else {
+          _error =
+              e.response?.data?['detail'] ??
+              'An error occurred during analysis';
+        }
       });
     } finally {
       setState(() {

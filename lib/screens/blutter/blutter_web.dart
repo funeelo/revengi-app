@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:revengi/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart'
+    show SharedPreferences;
 import 'package:web/web.dart' as web;
 
 class BlutterAnalysisScreen extends StatefulWidget {
@@ -119,8 +121,12 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
         _successMessage = 'Download started...';
       });
     } on DioException catch (e) {
+      final prefs = await SharedPreferences.getInstance();
+      final username = prefs.getString('username');
       setState(() {
-        if (e.response?.data != null &&
+        if (username == "guest") {
+          _error = "Guest users cannot use this feature";
+        } else if (e.response?.data != null &&
             e.response?.data is Map &&
             e.response?.data['detail'] != null) {
           _error =

@@ -7,6 +7,8 @@ import 'package:revengi/platform.dart';
 import 'package:revengi/dio.dart';
 import 'package:crypto/crypto.dart';
 import 'package:archive/archive.dart';
+import 'package:shared_preferences/shared_preferences.dart'
+    show SharedPreferences;
 
 class AnalysisCard extends StatelessWidget {
   final String title;
@@ -148,9 +150,16 @@ class _JniAnalysisScreenState extends State<JniAnalysisScreen> {
         _result = response.data.toString();
       });
     } on DioException catch (e) {
+      final prefs = await SharedPreferences.getInstance();
+      final username = prefs.getString('username');
       setState(() {
-        _error =
-            e.response?.data?['detail'] ?? 'An error occurred during analysis';
+        if (username == "guest") {
+          _error = "Guest users cannot use this feature";
+        } else {
+          _error =
+              e.response?.data?['detail'] ??
+              'An error occurred during analysis';
+        }
       });
     } finally {
       setState(() {
@@ -398,9 +407,16 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
         _result = response.data.toString();
       });
     } on DioException catch (e) {
+      final prefs = await SharedPreferences.getInstance();
+      final username = prefs.getString('username');
       setState(() {
-        _error =
-            e.response?.data?['detail'] ?? 'An error occurred during analysis';
+        if (username == "guest") {
+          _error = "Guest users cannot use this feature";
+        } else {
+          _error =
+              e.response?.data?['detail'] ??
+              'An error occurred during analysis';
+        }
       });
     } finally {
       setState(() {

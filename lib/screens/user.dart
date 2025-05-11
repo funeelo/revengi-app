@@ -243,6 +243,29 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(fontSize: 15),
                 ),
               ),
+              const SizedBox(height: 8),
+              TextButton(
+                onPressed:
+                    _isLoading
+                        ? null
+                        : () async {
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setBool('isLoggedIn', true);
+                          await prefs.setString('username', 'guest');
+
+                          if (mounted) {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => const DashboardScreen(),
+                              ),
+                            );
+                          }
+                        },
+                child: const Text(
+                  'Continue as Guest',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
             ],
           ),
         ),
