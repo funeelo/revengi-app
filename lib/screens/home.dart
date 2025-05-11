@@ -95,6 +95,18 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 ),
           ),
+          AnalysisCard(
+            title: 'Dex Repair',
+            icon: Icons.auto_fix_high,
+            description: 'Repair DEX files',
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const DexRepairScreen(),
+                  ),
+                ),
+          ),
         ],
       ),
     );
