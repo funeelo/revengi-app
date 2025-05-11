@@ -6,6 +6,7 @@ import 'package:revengi/screens/user.dart';
 import 'package:revengi/cards.dart';
 import 'package:revengi/screens/mthook/mthook.dart';
 import 'package:revengi/screens/blutter/blutter.dart';
+import 'package:revengi/screens/dexrepair/dexrepair.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
