@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider with ChangeNotifier {
-  late ThemeMode _themeMode;
+  ThemeMode _themeMode = ThemeMode.system;
   ThemeMode get themeMode => _themeMode;
 
   ThemeProvider() {
@@ -12,15 +12,13 @@ class ThemeProvider with ChangeNotifier {
   void _loadThemeMode() async {
     final prefs = await SharedPreferences.getInstance();
     final savedThemeMode = prefs.getString('themeMode');
-    if (savedThemeMode == null) {
-      _themeMode = ThemeMode.system;
-    } else {
+    if (savedThemeMode != null) {
       _themeMode = ThemeMode.values.firstWhere(
         (mode) => mode.toString() == savedThemeMode,
         orElse: () => ThemeMode.system,
       );
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   void toggleTheme() async {

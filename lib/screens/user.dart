@@ -249,12 +249,13 @@ class _LoginPageState extends State<LoginPage> {
                     _isLoading
                         ? null
                         : () async {
+                          final navigator = Navigator.of(context);
                           final prefs = await SharedPreferences.getInstance();
                           await prefs.setBool('isLoggedIn', true);
                           await prefs.setString('username', 'guest');
 
                           if (mounted) {
-                            Navigator.of(context).pushReplacement(
+                            navigator.pushReplacement(
                               MaterialPageRoute(
                                 builder: (context) => const DashboardScreen(),
                               ),

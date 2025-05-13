@@ -10,6 +10,7 @@ import 'package:revengi/screens/blutter/blutter.dart';
 import 'package:revengi/screens/dexrepair/dexrepair.dart';
 import 'package:revengi/theme_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:revengi/screens/smali_grammar.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -22,6 +23,32 @@ class DashboardScreen extends StatelessWidget {
     if (context.mounted) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    }
+  }
+
+  Future<void> _showSmaliGrammarDialog(BuildContext context) async {
+    if (context.mounted) {
+      await showDialog(
+        context: context,
+        builder:
+            (context) => AlertDialog(
+              title: Row(
+                children: [
+                  const Text('Smali Grammar'),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ],
+              ),
+              content: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: const SmaliInstructionDialog(),
+              ),
+            ),
       );
     }
   }
@@ -98,6 +125,14 @@ class DashboardScreen extends StatelessWidget {
               },
             ),
             const Divider(),
+            ListTile(
+              leading: const Icon(Icons.code),
+              title: const Text('Smali Grammar'),
+              onTap: () {
+                Navigator.pop(context);
+                _showSmaliGrammarDialog(context);
+              },
+            ),
             ListTile(
               leading: const Icon(Icons.info),
               title: const Text('About'),
