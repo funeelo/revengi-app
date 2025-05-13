@@ -51,8 +51,8 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor:
           Brightness.dark == Theme.of(context).brightness
-              ? const Color(0xFF121212)
-              : const Color(0xFFF5F5F5),
+              ? Colors.black
+              : Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

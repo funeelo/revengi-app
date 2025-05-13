@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:revengi/platform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 import 'package:revengi/dio.dart';
 import 'package:revengi/screens/user.dart';
 import 'package:revengi/cards.dart';
 import 'package:revengi/screens/mthook/mthook.dart';
 import 'package:revengi/screens/blutter/blutter.dart';
 import 'package:revengi/screens/dexrepair/dexrepair.dart';
+import 'package:revengi/theme_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -34,6 +37,101 @@ class DashboardScreen extends StatelessWidget {
             onPressed: () => _handleLogout(context),
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color:
+                    Brightness.dark == Theme.of(context).brightness
+                        ? Colors.black
+                        : Colors.white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    Theme.of(context).brightness == Brightness.dark
+                        ? 'assets/dark_splash.png'
+                        : 'assets/light_splash.png',
+                    height: 90,
+                  ),
+                  const SizedBox(height: 8),
+                  Builder(
+                    builder: (context) {
+                      final brightness = Theme.of(context).brightness;
+                      return Text(
+                        'RevEngi Tools',
+                        style: TextStyle(
+                          color:
+                              brightness == Brightness.dark
+                                  ? Colors.white
+                                  : Colors.black,
+                          fontSize: 24,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: Icon(
+                context.watch<ThemeProvider>().themeMode == ThemeMode.system
+                    ? Icons.brightness_auto
+                    : context.watch<ThemeProvider>().themeMode ==
+                        ThemeMode.light
+                    ? Icons.light_mode
+                    : Icons.dark_mode,
+              ),
+              title: Text(
+                'Theme: ${context.watch<ThemeProvider>().themeMode == ThemeMode.system
+                    ? 'System'
+                    : context.watch<ThemeProvider>().themeMode == ThemeMode.light
+                    ? 'Light'
+                    : 'Dark'}',
+              ),
+              onTap: () {
+                context.read<ThemeProvider>().toggleTheme();
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.info),
+              title: const Text('About'),
+              onTap: () {
+                Navigator.pop(context);
+                showAboutDialog(
+                  context: context,
+                  applicationName: 'RevEngi',
+                  applicationVersion: '1.0.0',
+                  applicationIcon: Image.asset(
+                    Theme.of(context).brightness == Brightness.dark
+                        ? 'assets/dark_splash.png'
+                        : 'assets/light_splash.png',
+                    height: 50,
+                  ),
+                  children: [
+                    const Text('A collection of reverse engineering tools.'),
+                    const SizedBox(height: 16),
+                    TextButton.icon(
+                      icon: const Icon(Icons.star),
+                      label: const Text('Star on GitHub'),
+                      onPressed:
+                          () => launchUrl(
+                            Uri.parse(
+                              'https://github.com/RevEngiSquad/revengi-app',
+                            ),
+                          ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: GridView.count(
         padding: const EdgeInsets.all(24),

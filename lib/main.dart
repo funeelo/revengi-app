@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:revengi/screens/splash.dart';
+import 'package:revengi/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'RevEngi App',
       theme: ThemeData.light(useMaterial3: true),
       darkTheme: ThemeData.dark(useMaterial3: true),
-      themeMode: ThemeMode.system,
+      themeMode: context.watch<ThemeProvider>().themeMode,
       home: const SplashScreen(),
     );
   }
