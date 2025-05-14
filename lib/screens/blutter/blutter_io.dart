@@ -25,8 +25,7 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
 
   Future<void> _pickApkFile() async {
     final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['zip', 'apk'],
+      type: FileType.any,
     );
 
     if (result != null) {
