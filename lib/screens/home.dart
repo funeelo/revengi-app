@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart'
+    show LicenseRegistry, LicenseEntryWithLineBreaks;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:revengi/platform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
@@ -53,8 +56,26 @@ class DashboardScreen extends StatelessWidget {
     }
   }
 
+  void addLicenses() {
+    final licenses = {
+      'revengi': 'assets/licenses/revengi.txt',
+      'sigtool': 'assets/licenses/sigtool.txt',
+      'smalig': 'assets/licenses/smalig.txt',
+      'blutter': 'assets/licenses/blutter.txt',
+    };
+
+    for (var entry in licenses.entries) {
+      LicenseRegistry.addLicense(() async* {
+        yield LicenseEntryWithLineBreaks([
+          entry.key,
+        ], await rootBundle.loadString(entry.value));
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    addLicenses();
     return Scaffold(
       appBar: AppBar(
         title: const Text('RevEngi Tools'),
@@ -142,6 +163,7 @@ class DashboardScreen extends StatelessWidget {
                   context: context,
                   applicationName: 'RevEngi',
                   applicationVersion: '1.0.0',
+                  applicationLegalese: '© ${DateTime.now().year} RevEngi',
                   applicationIcon: Image.asset(
                     Theme.of(context).brightness == Brightness.dark
                         ? 'assets/dark_splash.png'
@@ -149,7 +171,7 @@ class DashboardScreen extends StatelessWidget {
                     height: 50,
                   ),
                   children: [
-                    const Text('A collection of reverse engineering tools.'),
+                    const Text('\nA collection of reverse engineering tools.'),
                     const SizedBox(height: 16),
                     TextButton.icon(
                       icon: const Icon(Icons.star),
