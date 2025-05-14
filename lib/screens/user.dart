@@ -181,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (!RegExp(
                       r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&\.])[A-Za-z\d@$!%*?&\.]{8,}$',
                     ).hasMatch(value)) {
-                      return 'Password must include a lowercase, uppercase, number, special character (@$!%*?&), and be 8+ chars.';
+                      return 'Password must include a lowercase, uppercase, number, special character (@\$!%*?&), and be 8+ chars.';
                     }
                   }
                   return null;
