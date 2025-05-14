@@ -38,7 +38,6 @@ class _LoginPageState extends State<LoginPage> {
                     'username': _usernameController.text,
                     'email': _emailController.text,
                     'password': _passwordController.text,
-                    'confirm_password': _confirmPasswordController.text,
                   },
         );
 
@@ -129,6 +128,11 @@ class _LoginPageState extends State<LoginPage> {
                   if (value.length < 5 || value.length > 15) {
                     return 'Username must be between 5 and 15 characters';
                   }
+                  if (!RegExp(
+                    r'^[a-zA-Z0-9]([_]?[a-zA-Z0-9]){4,14}$',
+                  ).hasMatch(value)) {
+                    return 'You can only use letters and numbers, and underscore (_).';
+                  }
                   return null;
                 },
               ),
@@ -148,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                       return 'Please enter email';
                     }
                     if (!RegExp(
-                      r'^[a-zA-Z0-9\.]+@gmail\.com$',
+                      r'^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@gmail\.com$',
                     ).hasMatch(value)) {
                       return 'Please enter a valid Gmail address';
                     }
@@ -172,6 +176,13 @@ class _LoginPageState extends State<LoginPage> {
                   }
                   if (value.length < 8) {
                     return 'Password must be at least 8 characters';
+                  }
+                  if (!_isLogin) {
+                    if (!RegExp(
+                      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&\.])[A-Za-z\d@$!%*?&\.]{8,}$',
+                    ).hasMatch(value)) {
+                      return 'Password must include a lowercase, uppercase, number, special character (@$!%*?&), and be 8+ chars.';
+                    }
                   }
                   return null;
                 },
