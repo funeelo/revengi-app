@@ -196,7 +196,7 @@ class DashboardScreen extends StatelessWidget {
           AnalysisCard(
             title: 'Flutter Analysis',
             icon: Icons.flutter_dash,
-            description: 'Analyze Flutter libraries',
+            description: 'Analyze Flutter libs',
             onTap:
                 () => Navigator.push(
                   context,
