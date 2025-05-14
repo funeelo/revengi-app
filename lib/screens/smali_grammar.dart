@@ -146,6 +146,53 @@ class _SmaliInstructionDialogState extends State<SmaliInstructionDialog> {
     });
   }
 
+  Widget _buildFormattedText(String text) {
+    final List<InlineSpan> spans = [];
+    final regex = RegExp(r'`([^`]+)`');
+    int currentPosition = 0;
+
+    for (final match in regex.allMatches(text)) {
+      if (match.start > currentPosition) {
+        spans.add(TextSpan(text: text.substring(currentPosition, match.start)));
+      }
+      spans.add(
+        TextSpan(
+          text: match.group(1),
+          style: const TextStyle(fontFamily: 'monospace'),
+        ),
+      );
+      currentPosition = match.end;
+    }
+
+    if (currentPosition < text.length) {
+      spans.add(TextSpan(text: text.substring(currentPosition)));
+    }
+
+    return SelectableText.rich(TextSpan(children: spans));
+  }
+
+  Widget _buildLabeledText(
+    String label,
+    String content, {
+    bool useMonospace = true,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SelectableText(
+          '$label: ',
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        Expanded(
+          child:
+              useMonospace
+                  ? _buildFormattedText(content)
+                  : SelectableText(content),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
@@ -202,26 +249,43 @@ class _SmaliInstructionDialogState extends State<SmaliInstructionDialog> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SelectableText('Format: ${instruction['format']}'),
-                          SelectableText(
-                            'Format ID: ${instruction['format_id']}',
+                          _buildLabeledText(
+                            'Format',
+                            instruction['format'],
+                            useMonospace: false,
                           ),
-                          SelectableText('Syntax: ${instruction['syntax']}'),
+                          _buildLabeledText(
+                            'Format ID',
+                            instruction['format_id'],
+                            useMonospace: false,
+                          ),
+                          _buildLabeledText(
+                            'Syntax',
+                            instruction['syntax'],
+                            useMonospace: false,
+                          ),
                           const SizedBox(height: 8),
-                          SelectableText(
-                            'Arguments: ${instruction['args_info']}',
+                          _buildLabeledText(
+                            'Arguments',
+                            instruction['args_info'],
                           ),
                           const SizedBox(height: 8),
-                          SelectableText(
-                            'Description: ${instruction['long_desc']}',
+                          _buildLabeledText(
+                            'Description',
+                            instruction['long_desc'],
                           ),
-                          if (instruction['note'] != null) ...[
+                          if (instruction['note'] != null &&
+                              instruction['note'].isNotEmpty) ...[
                             const SizedBox(height: 8),
-                            SelectableText('Note: ${instruction['note']}'),
+                            _buildLabeledText('Note', instruction['note']),
                           ],
-                          if (instruction['example'] != null) ...[
+                          if (instruction['example'] != null &&
+                              instruction['example'].isNotEmpty) ...[
                             const SizedBox(height: 8),
-                            SelectableText('Example:'),
+                            const SelectableText(
+                              'Example:',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
                             Container(
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
@@ -237,7 +301,10 @@ class _SmaliInstructionDialogState extends State<SmaliInstructionDialog> {
                               ),
                             ),
                             if (instruction['example_desc'] != null)
-                              SelectableText(instruction['example_desc']),
+                              _buildLabeledText(
+                                'Example Desc.',
+                                instruction['example_desc'],
+                              ),
                           ],
                         ],
                       ),
