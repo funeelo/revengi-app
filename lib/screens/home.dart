@@ -14,6 +14,7 @@ import 'package:revengi/screens/dexrepair/dexrepair.dart';
 import 'package:revengi/theme_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:revengi/screens/smali_grammar.dart';
+import 'package:revengi/screens/profile_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -152,6 +153,19 @@ class DashboardScreen extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 _showSmaliGrammarDialog(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProfileScreen(),
+                  ),
+                );
               },
             ),
             ListTile(
