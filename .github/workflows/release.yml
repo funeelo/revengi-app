@@ -1,0 +1,316 @@
+name: Release Build
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+env:
+  FLUTTER_VERSION: "3.29.3"
+  APP_VERSION: ${{ github.ref_name }}
+
+permissions:
+  contents: write
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    outputs:
+      android-artifacts: ${{ steps.export.outputs.artifacts }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+      - run: |
+          echo "${{ secrets.KEYSTORE_FILE }}" | base64 --decode > android/keystore.jks
+          cat > android/key.properties <<EOF
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          storeFile=../keystore.jks
+          EOF
+      - run: flutter pub get
+      - run: flutter build apk --split-per-abi
+      - run: flutter build apk
+      - name: Rename APKs
+        run: |
+          mv build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk RevEngi-Android-arm32.apk
+          mv build/app/outputs/flutter-apk/app-arm64-v8a-release.apk RevEngi-Android-arm64.apk
+          mv build/app/outputs/flutter-apk/app-x86_64-release.apk RevEngi-Android-x64.apk
+          mv build/app/outputs/flutter-apk/app-release.apk RevEngi-Android-universal.apk
+      - name: Rename SHA files
+        run: |
+          mv build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk.sha1 RevEngi-Android-arm32.apk.sha1
+          mv build/app/outputs/flutter-apk/app-arm64-v8a-release.apk.sha1 RevEngi-Android-arm64.apk.sha1
+          mv build/app/outputs/flutter-apk/app-x86_64-release.apk.sha1 RevEngi-Android-x64.apk.sha1
+          mv build/app/outputs/flutter-apk/app-release.apk.sha1 RevEngi-Android-universal.apk.sha1
+      - name: Upload Android Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-artifacts
+          path: |
+            RevEngi-Android-*.apk
+            RevEngi-Android-*.apk.sha1
+
+  build-windows:
+    runs-on: windows-latest
+    outputs:
+      windows-artifacts: ${{ steps.export.outputs.artifacts }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+      - name: Generate Inno Setup Script
+        shell: bash
+        run: |
+          mkdir -p windows
+          cat > windows/installer.iss << EOL
+          [Setup]
+          AppName=RevEngi
+          AppVersion=${APP_VERSION#v}
+          WizardStyle=modern
+          DefaultDirName={autopf}\RevEngi
+          DefaultGroupName=RevEngi
+          UninstallDisplayIcon={app}\revengi.exe
+          Compression=lzma2
+          SolidCompression=yes
+          OutputBaseFilename=RevEngi-Setup
+          OutputDir=Output
+
+          [Files]
+          Source: "..\build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+
+          [Icons]
+          Name: "{group}\RevEngi"; Filename: "{app}\revengi.exe"
+          Name: "{commondesktop}\RevEngi"; Filename: "{app}\revengi.exe"
+          EOL
+      - run: flutter config --enable-windows-desktop
+      - run: flutter pub get
+      - run: flutter build windows --release
+      - name: Package Windows ZIP
+        run: |
+          Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath RevEngi-Windows.zip
+      - name: Set up Inno Setup
+        run: |
+          Invoke-WebRequest -Uri "https://jrsoftware.org/download.php/is.exe" -OutFile "inno-setup.exe"
+          .\inno-setup.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-
+          $isccPath = Get-ChildItem -Path "C:\Program Files*\Inno Setup*" -Recurse -Filter "iscc.exe" -ErrorAction SilentlyContinue
+          if ($isccPath) {
+              $isccDir = Split-Path -Path $isccPath.FullName -Parent
+              $env:Path += ";$isccDir"
+              Write-Output "Inno Setup is installed at: $isccDir"
+          } else {
+              Write-Output "Inno Setup is not installed."
+          }
+        shell: pwsh
+      - name: Create Windows Installer
+        run: |
+          iscc windows/installer.iss
+          mv windows/Output/RevEngi-Setup.exe RevEngi-Windows-installer.exe
+      - name: Generate checksums
+        run: |
+          sha256sum RevEngi-Windows.zip > sha256sum-windows
+          sha256sum RevEngi-Windows-installer.exe >> sha256sum-windows
+      - name: Upload Windows Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-artifacts
+          path: |
+            RevEngi-Windows.zip
+            RevEngi-Windows-installer.exe
+            sha256sum-windows
+
+  build-linux:
+    runs-on: ubuntu-22.04
+    outputs:
+      linux-artifacts: ${{ steps.export.outputs.artifacts }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+      - name: Install packaging dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y dpkg-dev rpm ruby ruby-dev build-essential libfuse2 \
+          libgtk-3-0 libgtk-3-dev libblkid1 liblzma5 \
+          libgdk-pixbuf2.0-0 libglib2.0-dev libpango1.0-0 libharfbuzz0b \
+          libcairo2 libatk1.0-0 libxkbcommon0 \
+          libwayland-client0 libwayland-cursor0 libwayland-egl1 \
+          libx11-6 libxext6 libxi6 libxfixes3 libxrandr2 libxrender1 libxinerama1 \
+          libxcomposite1 libxdamage1 libxcursor1 libthai0 libfribidi0 \
+          libfontconfig1 libdatrie1 libdbus-1-3 \
+          libsystemd0 libgpg-error0 libgcrypt20 liblz4-1 libzstd1 \
+          libjpeg62 libmount1 libffi8 libepoxy0 \
+          libcap2 libbsd0 libmd0 \
+          libsecret-1-dev libsodium-dev ninja-build \
+          pkg-config patchelf libsqlite3-dev locate \
+          libayatana-appindicator3-dev libffi-dev libtiff5 \
+          xz-utils libarchive-tools libcurl4-openssl-dev wget
+          sudo updatedb --localpaths='/usr/lib/x86_64-linux-gnu'
+          sudo gem install --no-document fpm
+          wget -O appimagetool-x86_64.AppImage "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+          chmod +x appimagetool-x86_64.AppImage
+      - run: flutter config --enable-linux-desktop
+      - run: flutter pub get
+      - run: flutter build linux --release
+      - name: Package DEB
+        run: |
+          mkdir -p dist/deb/DEBIAN
+          mkdir -p dist/deb/opt/revengi
+          mkdir -p dist/deb/usr/share/applications
+          mkdir -p dist/deb/usr/local/bin
+          cp -r build/linux/x64/release/bundle/* dist/deb/opt/revengi/
+          ln -s /opt/revengi/RevEngi dist/deb/usr/local/bin/revengi
+          cat > dist/deb/DEBIAN/control <<EOF
+          Package: revengi
+          Version: ${APP_VERSION#v}
+          Section: utils
+          Priority: optional
+          Architecture: amd64
+          Maintainer: RevEngi <support@revengi.in>
+          Description: RevEngi - Reverse Engineering Tool
+          EOF
+          cat > dist/deb/usr/share/applications/revengi.desktop <<EOF
+          [Desktop Entry]
+          Name=RevEngi
+          GenericName=RevEngi
+          Exec=/opt/revengi/RevEngi
+          Icon=/opt/revengi/data/flutter_assets/assets/dark_splash.png
+          Terminal=false
+          Type=Application
+          Categories=Development;
+          EOF
+          dpkg-deb --build dist/deb RevEngi-Linux.deb
+      - name: Package RPM
+        run: |
+          mkdir -p dist/rpm/opt/revengi
+          mkdir -p dist/rpm/usr/share/applications
+          mkdir -p dist/rpm/usr/local/bin
+          cp -r build/linux/x64/release/bundle/* dist/rpm/opt/revengi/
+          ln -s /opt/revengi/RevEngi dist/rpm/usr/local/bin/revengi
+          cat > dist/rpm/usr/share/applications/revengi.desktop <<EOF
+          [Desktop Entry]
+          Name=RevEngi
+          GenericName=RevEngi
+          Exec=/opt/revengi/RevEngi
+          Icon=/opt/revengi/data/flutter_assets/assets/dark_splash.png
+          Terminal=false
+          Type=Application
+          Categories=Development;
+          EOF
+          fpm -s dir -t rpm -n revengi -v ${APP_VERSION#v} -C dist/rpm .
+          mv revengi-${APP_VERSION#v}-1.x86_64.rpm RevEngi-Linux.rpm
+      - name: Package AppImage
+        run: |
+          mkdir -p AppDir/usr/bin
+          cp -r build/linux/x64/release/bundle/* AppDir/usr/bin/
+          echo "IyEvYmluL3NoClNFTEY9JChyZWFkbGluayAtZiAiJDAiKQpIRVJFPSR7U0VMRiUvKn0KCmV4cG9ydCBQQVRIPSIke0hFUkV9L3Vzci9iaW4vOiR7SEVSRX0vdXNyL3NiaW4vOiR7SEVSRX0vdXNyL2dhbWVzLzoke0hFUkV9L2Jpbi86JHtIRVJFfS9zYmluLyR7UEFUSDorOiRQQVRIfSIKCkVYRUM9JChncmVwIC1lICdeRXhlYz0uKicgIiR7SEVSRX0iLyouZGVza3RvcCB8IGhlYWQgLW4gMSB8IGN1dCAtZCAiPSIgLWYgMiB8IGN1dCAtZCAiICIgLWYgMSkKCmV4ZWMgIiR7RVhFQ30iICIkQCIK" | base64 -d > AppDir/AppRun
+          chmod +x AppDir/AppRun
+          cat > AppDir/RevEngi.desktop <<EOF
+          [Desktop Entry]
+          Name=RevEngi
+          Exec=RevEngi
+          Icon=revengi
+          Type=Application
+          Categories=Utility;
+          Comment=RevEngi - Reverse Engineering Tool
+          Terminal=false
+          EOF
+          cp assets/dark_splash.png AppDir/.DirIcon
+          cp assets/dark_splash.png AppDir/revengi.png
+          ./appimagetool-x86_64.AppImage AppDir RevEngi-Linux.AppImage
+      - name: Upload Linux Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-artifacts
+          path: |
+            RevEngi-Linux.deb
+            RevEngi-Linux.rpm
+            RevEngi-Linux.AppImage
+
+  release:
+    needs: [build-android, build-windows, build-linux]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # Download all workflow artifacts
+      - name: Download Android Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: android-artifacts
+          path: artifacts/
+
+      - name: Download Windows Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-artifacts
+          path: artifacts/
+
+      - name: Download Linux Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-artifacts
+          path: artifacts/
+
+      - name: List downloaded artifacts
+        run: ls -l artifacts
+
+      - name: Concatenate all checksum files
+        run: |
+          printf "## Checksums\n\n" > artifacts/all-checksums.txt
+          printf "**Android Artifacts**\n" >> artifacts/all-checksums.txt
+          printf "\n\`$(cat artifacts/RevEngi-Android-arm32.apk.sha1)\` artifacts/RevEngi-Android-arm32.apk\n" >> artifacts/all-checksums.txt
+          printf "\`$(cat artifacts/RevEngi-Android-arm64.apk.sha1)\` artifacts/RevEngi-Android-arm64.apk\n" >> artifacts/all-checksums.txt
+          printf "\`$(cat artifacts/RevEngi-Android-x64.apk.sha1)\` artifacts/RevEngi-Android-x64.apk\n" >> artifacts/all-checksums.txt
+          printf "\`$(cat artifacts/RevEngi-Android-universal.apk.sha1)\` artifacts/RevEngi-Android-universal.apk\n" >> artifacts/all-checksums.txt
+          printf "\n**Windows Artifacts**\n" >> artifacts/all-checksums.txt
+          awk '{print "`" $1 "` " $2}' artifacts/sha256sum-windows >> artifacts/all-checksums.txt
+          printf "\n**Linux Artifacts**\n" >> artifacts/all-checksums.txt
+          printf "\`$(sha256sum artifacts/RevEngi-Linux.deb | awk '{print $1}')\` artifacts/RevEngi-Linux.deb\n" >> artifacts/all-checksums.txt
+          printf "\`$(sha256sum artifacts/RevEngi-Linux.rpm | awk '{print $1}')\` artifacts/RevEngi-Linux.rpm\n" >> artifacts/all-checksums.txt
+          printf "\`$(sha256sum artifacts/RevEngi-Linux.AppImage | awk '{print $1}')\` artifacts/RevEngi-Linux.AppImage\n" >> artifacts/all-checksums.txt
+
+      - name: Read checksums for release body
+        id: checksums
+        run: |
+          echo 'body<<EOF' >> $GITHUB_OUTPUT
+          cat artifacts/all-checksums.txt >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
+        with:
+          tag_name: ${{ env.APP_VERSION }}
+          name: Release ${{ env.APP_VERSION }}
+          draft: true
+          prerelease: false
+          body: ${{ steps.checksums.outputs.body }}
+          files: |
+            artifacts/RevEngi-Android-arm32.apk
+            artifacts/RevEngi-Android-arm64.apk
+            artifacts/RevEngi-Android-x64.apk
+            artifacts/RevEngi-Android-universal.apk
+            artifacts/RevEngi-Android-arm32.apk.sha1
+            artifacts/RevEngi-Android-arm64.apk.sha1
+            artifacts/RevEngi-Android-x64.apk.sha1
+            artifacts/RevEngi-Android-universal.apk.sha1
+            artifacts/RevEngi-Windows.zip
+            artifacts/RevEngi-Windows-installer.exe
+            artifacts/sha256sum-windows
+            artifacts/RevEngi-Linux.deb
+            artifacts/RevEngi-Linux.rpm
+            artifacts/RevEngi-Linux.AppImage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
