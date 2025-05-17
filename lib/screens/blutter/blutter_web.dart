@@ -67,7 +67,7 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
       });
     } catch (e) {
       setState(() {
-        _error = 'Failed to extract files from ZIP';
+        _error = 'Failed to extract files from ZIP: $e';
       });
     }
   }

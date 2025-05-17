@@ -24,9 +24,7 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
   String? _successMessage;
 
   Future<void> _pickApkFile() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.any,
-    );
+    final result = await FilePicker.platform.pickFiles(type: FileType.any);
 
     if (result != null) {
       setState(() {
@@ -73,7 +71,7 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
       });
     } catch (e) {
       setState(() {
-        _error = 'Failed to extract files from ZIP';
+        _error = 'Failed to extract files from ZIP: $e';
       });
     }
   }
