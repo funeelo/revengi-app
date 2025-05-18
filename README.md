@@ -3,7 +3,6 @@
 <h1>RevEngi App</h1>
 </div>
 
-
 ## Features
 
 RevEngi App encompasses a variety of functionalities, including:
@@ -15,7 +14,7 @@ RevEngi App encompasses a variety of functionalities, including:
 *   **Dex Repair:** Repair corrupted DEX files to salvage and analyze application code.
 *   **Smali Grammar Reference:** Quick & Advanced access to Smali instruction set like their opcode, format, and description for code analysis and manipulation. Examples are also provided where applicable.
 *   **Theme Customization:** Offers light, dark, and system-based theme options.
-*   **API Key:** Get your API key from the profile section and use it to access RevEngi API, integrate it with your own tools and scripts.
+*   **API Key:** Get your API key from the profile section and use it to access [RevEngi API](https://revengi.in/docs/api), integrate it with your own tools and scripts.
 
 ## Downloads
 
@@ -54,3 +53,7 @@ Contributions to RevEngi App are welcome!  Please see [CONTRIBUTING.md](CONTRIBU
 RevEngi App is released under the [MIT License](LICENSE).
 
 The application utilizes several open-source libraries; their respective licenses can be found within the app in the "About" section.
+
+-----------
+
+Made with ⌨️, 🖱 & ❤️ by [RevEngi](https://github.com/RevEngiSquad).
