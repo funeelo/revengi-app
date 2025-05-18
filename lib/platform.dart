@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/services.dart';
 
 bool isAndroid() {
   return Platform.isAndroid;
@@ -32,5 +33,20 @@ String getDownloadsDirectory() {
     return '/home/${Platform.environment['USER']}/Downloads/RevEngi';
   } else {
     throw UnsupportedError('Unsupported platform');
+  }
+}
+
+class DeviceInfo {
+  static const platform = MethodChannel('flutter.native/helper');
+
+  static Future<int> getSdkVersion() async {
+    try {
+      final Map<dynamic, dynamic> deviceInfo = await platform.invokeMethod(
+        'getDeviceInfo',
+      );
+      return int.tryParse(deviceInfo['sdkVersion'] ?? '0') ?? 0;
+    } on PlatformException {
+      return 0;
+    }
   }
 }

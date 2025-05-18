@@ -15,6 +15,7 @@ import 'package:revengi/theme_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:revengi/screens/smali_grammar.dart';
 import 'package:revengi/screens/profile_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -74,9 +75,28 @@ class DashboardScreen extends StatelessWidget {
     }
   }
 
+  Future<void> _requestPermissions() async {
+    int sdkVersion = await DeviceInfo.getSdkVersion();
+    if (sdkVersion < 29) {
+      if (await Permission.storage.isGranted) {
+        return;
+      }
+
+      if (await Permission.storage.isPermanentlyDenied) {
+        openAppSettings();
+        return;
+      }
+
+      if (await Permission.storage.isDenied) {
+        await Permission.storage.request();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     addLicenses();
+    isAndroid() ? _requestPermissions() : null;
     return Scaffold(
       appBar: AppBar(
         title: const Text('RevEngi Tools'),
@@ -176,7 +196,7 @@ class DashboardScreen extends StatelessWidget {
                 showAboutDialog(
                   context: context,
                   applicationName: 'RevEngi',
-                  applicationVersion: '1.0.0',
+                  applicationVersion: '1.0.1',
                   applicationLegalese: '© ${DateTime.now().year} RevEngi',
                   applicationIcon: Image.asset(
                     Theme.of(context).brightness == Brightness.dark
