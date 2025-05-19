@@ -196,7 +196,7 @@ class DashboardScreen extends StatelessWidget {
                 showAboutDialog(
                   context: context,
                   applicationName: 'RevEngi',
-                  applicationVersion: '1.0.1',
+                  applicationVersion: '1.0.2',
                   applicationLegalese: '© ${DateTime.now().year} RevEngi',
                   applicationIcon: Image.asset(
                     Theme.of(context).brightness == Brightness.dark
