@@ -16,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   bool _isLogin = true;
   bool _isLoading = false;
+  bool _obscurePassword = true;
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -126,12 +127,28 @@ class _LoginPageState extends State<LoginPage> {
                     return 'Please enter username';
                   }
                   if (value.length < 5 || value.length > 15) {
-                    return 'Username must be between 5 and 15 characters';
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Username must be between 5 and 15 characters',
+                        ),
+                        duration: Duration(seconds: 3),
+                      ),
+                    );
+                    return ' ';
                   }
                   if (!RegExp(
                     r'^[a-zA-Z0-9]([_]?[a-zA-Z0-9]){4,14}$',
                   ).hasMatch(value)) {
-                    return 'You can only use letters and numbers, and underscore (_).';
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Username can only contain letters, numbers, and underscore',
+                        ),
+                        duration: Duration(seconds: 3),
+                      ),
+                    );
+                    return ' ';
                   }
                   return null;
                 },
@@ -165,11 +182,22 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   labelText: 'Password',
                   prefixIcon: const Icon(Icons.lock),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                    ),
+                    onPressed:
+                        () => setState(
+                          () => _obscurePassword = !_obscurePassword,
+                        ),
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                obscureText: true,
+                obscureText: _obscurePassword,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter password';
@@ -181,7 +209,15 @@ class _LoginPageState extends State<LoginPage> {
                     if (!RegExp(
                       r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&\.])[A-Za-z\d@$!%*?&\.]{8,}$',
                     ).hasMatch(value)) {
-                      return 'Password must include a lowercase, uppercase, number, special character (@\$!%*?&), and be 8+ chars.';
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Password must include a lowercase, uppercase, number, special character (@\$!%*?&), and be 8+ chars.',
+                          ),
+                          duration: Duration(seconds: 3),
+                        ),
+                      );
+                      return ' ';
                     }
                   }
                   return null;
