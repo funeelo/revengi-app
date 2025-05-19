@@ -55,6 +55,10 @@ The RevEngi App project is continuously evolving.  Future plans include:
 
 Contributions to RevEngi App are welcome!  Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute.
 
+## Hacking
+
+To get started with hacking on RevEngi App, please refer to the [HACKING.md](HACKING.md) file.
+
 ## License
 
 RevEngi App is released under the [MIT License](LICENSE).
