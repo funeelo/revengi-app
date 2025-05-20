@@ -1,1 +1,2 @@
-RevEngi Android App
+Your all-in-one toolkit for reverse engineering.
+Analyze Flutter Apps, extract JNI signatures, and repair DEX files with ease.

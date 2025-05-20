@@ -40,9 +40,9 @@ Alternatively, you can download the latest/past release(s) from the [Releases](h
 
 ## Screenshots
 
-| Splash                                       | Home                                     | Profile                                        | Smali Grammar                                       | Navigation Drawer                                        |
-| -------------------------------------------- | ---------------------------------------- | ---------------------------------------------- | --------------------------------------------------- | -------------------------------------------------------- |
-| ![Splash](screenshots/screenshot_splash.png) | ![Home](screenshots/screenshot_home.png) | ![Profile](screenshots/screenshot_profile.png) | ![Smali Grammar](screenshots/screenshot_smalig.png) | ![Navigation Drawer](screenshots/screenshot_sidenav.png) |
+| Splash                                                                   | Home                                                                   | Profile                                                                   | Smali Grammar                                                                   | Navigation Drawer                                                                   |
+| ------------------------------------------------------------------------ | ---------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| ![Splash](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) | ![Home](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png) | ![Profile](fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) | ![Smali Grammar](fastlane/metadata/android/en-US/images/phoneScreenshots/6.png) | ![Navigation Drawer](fastlane/metadata/android/en-US/images/phoneScreenshots/5.png) |
 
 ## Roadmap
 
