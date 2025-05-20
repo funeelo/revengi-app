@@ -224,80 +224,91 @@ class DashboardScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: GridView.count(
-        padding: const EdgeInsets.all(24),
-        crossAxisCount:
-            isWeb()
-                ? 4
-                : isWindows()
-                ? 4
-                : isLinux()
-                ? 4
-                : 2,
-        mainAxisSpacing: 16,
-        crossAxisSpacing: 16,
-        children: [
-          AnalysisCard(
-            title: 'JNI Analysis',
-            icon: Icons.android,
-            description: 'Find JNI signatures in APK',
-            onTap:
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const JniAnalysisScreen(),
-                  ),
-                ),
-          ),
-          AnalysisCard(
-            title: 'Flutter Analysis',
-            icon: Icons.flutter_dash,
-            description: 'Analyze Flutter libs',
-            onTap:
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const FlutterAnalysisScreen(),
-                  ),
-                ),
-          ),
-          AnalysisCard(
-            title: 'Blutter',
-            icon: Icons.build,
-            description: 'Flutter binary analysis tool',
-            onTap:
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const BlutterAnalysisScreen(),
-                  ),
-                ),
-          ),
-          AnalysisCard(
-            title: 'MT Hook',
-            icon: Icons.book,
-            description: 'Generate MT Enhanced Hooks',
-            onTap:
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const MTHookAnalysisScreen(),
-                  ),
-                ),
-          ),
-          AnalysisCard(
-            title: 'Dex Repair',
-            icon: Icons.auto_fix_high,
-            description: 'Repair DEX files',
-            onTap:
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const DexRepairScreen(),
-                  ),
-                ),
-          ),
-        ],
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return GridView.builder(
+            padding: const EdgeInsets.all(24),
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 320,
+              mainAxisSpacing: 16,
+              crossAxisSpacing: 16,
+              childAspectRatio: 1.2,
+              mainAxisExtent: 170,
+            ),
+            itemCount: 5,
+            itemBuilder: (context, index) {
+              switch (index) {
+                case 0:
+                  return AnalysisCard(
+                    title: 'JNI Analysis',
+                    icon: Icons.android,
+                    description: 'Find JNI signatures in APK',
+                    onTap:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const JniAnalysisScreen(),
+                          ),
+                        ),
+                  );
+                case 1:
+                  return AnalysisCard(
+                    title: 'Flutter Analysis',
+                    icon: Icons.flutter_dash,
+                    description: 'Analyze Flutter libs',
+                    onTap:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FlutterAnalysisScreen(),
+                          ),
+                        ),
+                  );
+                case 2:
+                  return AnalysisCard(
+                    title: 'Blutter',
+                    icon: Icons.build,
+                    description: 'Flutter binary analysis tool',
+                    onTap:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BlutterAnalysisScreen(),
+                          ),
+                        ),
+                  );
+                case 3:
+                  return AnalysisCard(
+                    title: 'MT Hook',
+                    icon: Icons.book,
+                    description: 'Generate MT Enhanced Hooks',
+                    onTap:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MTHookAnalysisScreen(),
+                          ),
+                        ),
+                  );
+                case 4:
+                  return AnalysisCard(
+                    title: 'Dex Repair',
+                    icon: Icons.auto_fix_high,
+                    description: 'Repair DEX files',
+                    onTap:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DexRepairScreen(),
+                          ),
+                        ),
+                  );
+                default:
+                  return const SizedBox.shrink();
+              }
+            },
+          );
+        },
       ),
     );
   }
