@@ -93,6 +93,7 @@ class _JniAnalysisScreenState extends State<JniAnalysisScreen> {
   Future<void> _pickFile() async {
     final result = await FilePicker.platform.pickFiles(
       type: isWeb() ? FileType.custom : FileType.any,
+      allowedExtensions: isWeb() ? ['apk'] : null,
     );
 
     if (result != null) {
