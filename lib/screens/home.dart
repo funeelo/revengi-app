@@ -76,6 +76,7 @@ class DashboardScreen extends StatelessWidget {
   }
 
   Future<void> _requestPermissions() async {
+    print("i'm here");
     int sdkVersion = await DeviceInfo.getSdkVersion();
     if (sdkVersion < 29) {
       if (await Permission.storage.isGranted) {
@@ -96,7 +97,7 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     addLicenses();
-    isAndroid() ? _requestPermissions() : null;
+    if (!isWeb() && isAndroid()) _requestPermissions();
     return Scaffold(
       appBar: AppBar(
         title: const Text('RevEngi Tools'),
