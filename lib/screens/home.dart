@@ -76,7 +76,6 @@ class DashboardScreen extends StatelessWidget {
   }
 
   Future<void> _requestPermissions() async {
-    print("i'm here");
     int sdkVersion = await DeviceInfo.getSdkVersion();
     if (sdkVersion < 29) {
       if (await Permission.storage.isGranted) {
