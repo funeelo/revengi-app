@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:revengi/screens/home.dart';
 import 'package:revengi/screens/user.dart';
-import 'package:revengi/dio.dart';
-import 'package:revengi/platform.dart';
+import 'package:revengi/utils/dio.dart';
+import 'package:revengi/utils/platform.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

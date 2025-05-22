@@ -4,7 +4,7 @@ import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:revengi/dio.dart';
+import 'package:revengi/utils/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
 import 'package:web/web.dart' as web;

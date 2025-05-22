@@ -2,20 +2,22 @@ import 'package:flutter/foundation.dart'
     show LicenseRegistry, LicenseEntryWithLineBreaks;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:revengi/platform.dart';
+import 'package:revengi/utils/platform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
-import 'package:revengi/dio.dart';
+import 'package:revengi/utils/dio.dart';
 import 'package:revengi/screens/user.dart';
-import 'package:revengi/cards.dart';
+import 'package:revengi/utils/cards.dart';
 import 'package:revengi/screens/mthook/mthook.dart';
 import 'package:revengi/screens/blutter/blutter.dart';
 import 'package:revengi/screens/dexrepair/dexrepair.dart';
-import 'package:revengi/theme_provider.dart';
+import 'package:revengi/utils/theme_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:revengi/screens/smali_grammar.dart';
 import 'package:revengi/screens/profile_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:revengi/screens/jni_analysis.dart';
+import 'package:revengi/screens/flutter_analysis.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});

@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:revengi/dio.dart';
-import 'package:revengi/platform.dart' show getDownloadsDirectory;
+import 'package:revengi/utils/dio.dart';
+import 'package:revengi/utils/platform.dart' show getDownloadsDirectory;
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
 

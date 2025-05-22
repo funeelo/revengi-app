@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:revengi/platform.dart';
+import 'package:revengi/utils/platform.dart';
 import 'package:crypto/crypto.dart';
 import 'package:archive/archive.dart';
 

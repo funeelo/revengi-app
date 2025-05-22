@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revengi/screens/splash.dart';
-import 'package:revengi/theme_provider.dart';
+import 'package:revengi/utils/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:revengi/dio.dart';
+import 'package:revengi/utils/dio.dart';
 import 'package:revengi/screens/home.dart';
-import 'package:revengi/platform.dart';
+import 'package:revengi/utils/platform.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
