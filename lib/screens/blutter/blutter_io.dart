@@ -106,7 +106,10 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
       final formData = FormData.fromMap({
         'libapp': await MultipartFile.fromFile(
           _libappFile!.path,
-          filename: _libappFile!.path.split(Platform.pathSeparator).last,
+          filename: _libappFile!.path
+              .split(Platform.pathSeparator)
+              .last
+              .replaceAll("Temp/", ""),
         ),
       });
 
