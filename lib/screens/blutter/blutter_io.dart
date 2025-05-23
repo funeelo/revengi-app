@@ -3,6 +3,7 @@ import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:revengi/utils/dartinfo.dart';
 import 'package:revengi/utils/platform.dart';
 import 'package:revengi/utils/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart'
@@ -86,14 +87,22 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
     });
 
     try {
+      final elfParser = ElfParser(flutterLibPath: _libflutterFile!.path);
+      final rodataInfo = elfParser.extractRodataInfo();
+      String? dartVersion = rodataInfo?.$2;
+      if (dartVersion == null && rodataInfo != null) {
+        final sdkInfo = await elfParser.getSdkInfo();
+        dartVersion = sdkInfo?.dartVersion;
+      }
+      if (dartVersion!.endsWith('.dev') || dartVersion.endsWith('.beta')) {
+        _error =
+            'Currently RevEngi only supports dart stable channel\n\nCurrent Dart Version: $dartVersion';
+        return;
+      }
       final formData = FormData.fromMap({
         'libapp': await MultipartFile.fromFile(
           _libappFile!.path,
           filename: _libappFile!.path.split(Platform.pathSeparator).last,
-        ),
-        'libflutter': await MultipartFile.fromFile(
-          _libflutterFile!.path,
-          filename: _libflutterFile!.path.split(Platform.pathSeparator).last,
         ),
       });
 
@@ -101,6 +110,7 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
         '/blutter',
         data: formData,
         options: Options(responseType: ResponseType.bytes),
+        queryParameters: {'dart_version': dartVersion},
       );
 
       // Save response bytes to file

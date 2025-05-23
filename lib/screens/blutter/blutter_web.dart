@@ -4,6 +4,7 @@ import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:revengi/utils/dartinfo.dart';
 import 'package:revengi/utils/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
@@ -82,18 +83,29 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
     });
 
     try {
+      final elfParser = ElfParser(
+        flutterLibBytes: Uint8List.fromList(_libflutterBytes),
+      );
+      final rodataInfo = elfParser.extractRodataInfo();
+      String? dartVersion = rodataInfo?.$2;
+      if (dartVersion == null && rodataInfo != null) {
+        final sdkInfo = await elfParser.getSdkInfo();
+        dartVersion = sdkInfo?.dartVersion;
+      }
+      if (dartVersion!.endsWith('.dev') || dartVersion.endsWith('.beta')) {
+        _error =
+            'Currently RevEngi only supports dart stable channel\n\nCurrent Dart Version: $dartVersion';
+        return;
+      }
       final formData = FormData.fromMap({
         'libapp': MultipartFile.fromBytes(_libappBytes, filename: 'libapp.so'),
-        'libflutter': MultipartFile.fromBytes(
-          _libflutterBytes,
-          filename: 'libflutter.so',
-        ),
       });
 
       final response = await dio.post(
         '/blutter',
         data: formData,
         options: Options(responseType: ResponseType.bytes),
+        queryParameters: {'dart_version': dartVersion},
       );
       final filename =
           response.headers['content-disposition']?.first
