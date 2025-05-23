@@ -27,6 +27,7 @@ class _DexRepairScreenState extends State<DexRepairScreen> {
     [100, 101, 120, 10, 48, 51, 55, 0], // "dex\n037\0"
     [100, 101, 120, 10, 48, 51, 56, 0], // "dex\n038\0"
     [100, 101, 120, 10, 48, 51, 57, 0], // "dex\n039\0"
+    [100, 101, 120, 10, 48, 51, 28, 0], // "dex\n040\0"
   ];
 
   Future<void> _pickDexFile() async {

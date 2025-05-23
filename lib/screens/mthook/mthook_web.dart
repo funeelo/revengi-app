@@ -113,9 +113,13 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
         if (username == "guest") {
           _error = "Guest users cannot use this feature";
         } else {
-          _error =
-              e.response?.data?['detail'] ??
-              'An error occurred during analysis';
+          if (e.response?.data != null &&
+              e.response?.data is Map &&
+              e.response?.data['detail'] != null) {
+            _error =
+                e.response?.data?['detail'] ??
+                'An error occurred during analysis';
+          }
         }
       });
     } finally {
