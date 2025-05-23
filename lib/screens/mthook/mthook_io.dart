@@ -20,6 +20,8 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
   String? _error;
   String? _successMessage;
   String? _fileName;
+  late double _uploadProgress;
+  late double _downloadProgress;
 
   Future<void> _pickFile() async {
     final result = await FilePicker.platform.pickFiles(type: FileType.any);
@@ -40,6 +42,8 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
       _isAnalyzing = true;
       _error = null;
       _successMessage = null;
+      _uploadProgress = 0;
+      _downloadProgress = 0;
     });
 
     try {
@@ -56,6 +60,18 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
         '/mthook',
         data: formData,
         options: Options(responseType: ResponseType.bytes),
+        onSendProgress: (int sent, int total) {
+          setState(() {
+            _uploadProgress = sent / total;
+          });
+        },
+        onReceiveProgress: (int received, int total) {
+          if (total != -1) {
+            setState(() {
+              _downloadProgress = received / total;
+            });
+          }
+        },
       );
 
       // Save response bytes to file
@@ -154,9 +170,26 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            if (_isAnalyzing)
-              const Center(child: CircularProgressIndicator())
-            else if (_error != null)
+            if (_isAnalyzing) ...[
+              if (_uploadProgress > 0 && _uploadProgress < 1)
+                Column(
+                  children: [
+                    const Text('Uploading...'),
+                    LinearProgressIndicator(value: _uploadProgress),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              if (_downloadProgress > 0 && _downloadProgress < 1)
+                Column(
+                  children: [
+                    const Text('Downloading...'),
+                    LinearProgressIndicator(value: _downloadProgress),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              if (_uploadProgress == 0 && _downloadProgress == 0)
+                const Center(child: CircularProgressIndicator()),
+            ] else if (_error != null)
               Card(
                 color: Colors.red[100],
                 child: Padding(

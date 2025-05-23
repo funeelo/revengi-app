@@ -23,6 +23,8 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
   bool _isAnalyzing = false;
   String? _error;
   String? _successMessage;
+  late double _uploadProgress;
+  late double _downloadProgress;
 
   Future<void> _pickApkFile() async {
     final result = await FilePicker.platform.pickFiles(type: FileType.any);
@@ -84,6 +86,8 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
       _isAnalyzing = true;
       _error = null;
       _successMessage = null;
+      _uploadProgress = 0;
+      _downloadProgress = 0;
     });
 
     try {
@@ -111,6 +115,18 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
         data: formData,
         options: Options(responseType: ResponseType.bytes),
         queryParameters: {'dart_version': dartVersion},
+        onSendProgress: (int sent, int total) {
+          setState(() {
+            _uploadProgress = sent / total;
+          });
+        },
+        onReceiveProgress: (int received, int total) {
+          if (total != -1) {
+            setState(() {
+              _downloadProgress = received / total;
+            });
+          }
+        },
       );
 
       // Save response bytes to file
@@ -160,6 +176,8 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
     } finally {
       setState(() {
         _isAnalyzing = false;
+        _uploadProgress = 0;
+        _downloadProgress = 0;
       });
     }
   }
@@ -221,9 +239,26 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            if (_isAnalyzing)
-              const Center(child: CircularProgressIndicator())
-            else if (_error != null)
+            if (_isAnalyzing) ...[
+              if (_uploadProgress > 0 && _uploadProgress < 1)
+                Column(
+                  children: [
+                    const Text('Uploading...'),
+                    LinearProgressIndicator(value: _uploadProgress),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              if (_downloadProgress > 0 && _downloadProgress < 1)
+                Column(
+                  children: [
+                    const Text('Downloading...'),
+                    LinearProgressIndicator(value: _downloadProgress),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              if (_uploadProgress == 0 && _downloadProgress == 0)
+                const Center(child: CircularProgressIndicator()),
+            ] else if (_error != null)
               Card(
                 color: Colors.red[100],
                 child: Padding(
