@@ -50,11 +50,15 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
 
   Future<void> _extractFiles() async {
     if (_fileBytes.isEmpty) return;
+    String fileEnd = "arm64-v8a/libapp.so";
+    if (_fileName!.endsWith('.zip')) {
+      fileEnd = "libapp.so";
+    }
     try {
       final archive = ZipDecoder().decodeBytes(_fileBytes);
 
       for (final file in archive) {
-        if (file.isFile && file.name.endsWith('libapp.so')) {
+        if (file.isFile && file.name.endsWith(fileEnd)) {
           _libappBytes = file.content as List<int>;
         } else if (file.isFile && file.name.endsWith('libflutter.so')) {
           _libflutterBytes = file.content as List<int>;
@@ -216,6 +220,29 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Note: ',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.orange,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          TextSpan(
+                            text:
+                                '\nAPK: The app will directly handle APK files.\n'
+                                '\nZIP: Ensure ZIP files contain only the `libapp.so` for arm64 architecture. Failure to comply may result in errors.',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(

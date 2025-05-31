@@ -49,12 +49,16 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
     final Directory directory = Directory.systemTemp;
     final apkPath = _apkFile!.path;
     final zipFile = File(apkPath);
+    String fileEnd = "arm64-v8a/libapp.so";
+    if (apkPath.split(Platform.pathSeparator).last.endsWith('.zip')) {
+      fileEnd = "libapp.so";
+    }
 
     try {
       final archive = ZipDecoder().decodeBytes(await zipFile.readAsBytes());
 
       for (final file in archive) {
-        if (file.isFile && file.name.endsWith('libapp.so')) {
+        if (file.isFile && file.name.endsWith(fileEnd)) {
           final data = file.content as List<int>;
           _libappFile = File('${directory.path}/libapp.so')
             ..writeAsBytesSync(data);
@@ -223,6 +227,30 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
                       trailing: ElevatedButton(
                         onPressed: _isAnalyzing ? null : _pickApkFile,
                         child: const Text('Choose File'),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Note: ',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.orange,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          TextSpan(
+                            text:
+                                '\nAPK: The app will directly handle APK files.\n'
+                                '\nZIP: Ensure ZIP files contain only the `libapp.so` for arm64 architecture. Failure to comply may result in errors.',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 16),
