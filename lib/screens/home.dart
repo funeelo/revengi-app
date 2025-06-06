@@ -256,48 +256,50 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     context.read<ThemeProvider>().toggleTheme();
                   },
                 ),
-                ListTile(
-                  leading: const Icon(Icons.link),
-                  title: const Text('API URL'),
-                  onTap: () async {
-                    final prefs = await SharedPreferences.getInstance();
-                    if (!context.mounted) return;
-                    showDialog(
-                      context: context,
-                      builder:
-                          (context) => AlertDialog(
-                            title: const Text('API URL'),
-                            content: TextField(
-                              controller: TextEditingController(
-                                text:
-                                    prefs.getString('apiUrl') ??
-                                    'https://api.revengi.in',
-                              ),
-                              decoration: const InputDecoration(
-                                hintText: 'Enter API URL',
-                              ),
-                              onSubmitted: (value) async {
-                                await prefs.setString('apiUrl', value);
-                                if (context.mounted) Navigator.pop(context);
-                              },
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text('Cancel'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  prefs.remove('apiUrl');
-                                  Navigator.pop(context);
-                                },
-                                child: const Text('Reset'),
-                              ),
-                            ],
-                          ),
-                    );
-                  },
-                ),
+                // NOTE: Disabled for now
+
+                // ListTile(
+                //   leading: const Icon(Icons.link),
+                //   title: const Text('API URL'),
+                //   onTap: () async {
+                //     final prefs = await SharedPreferences.getInstance();
+                //     if (!context.mounted) return;
+                //     showDialog(
+                //       context: context,
+                //       builder:
+                //           (context) => AlertDialog(
+                //             title: const Text('API URL'),
+                //             content: TextField(
+                //               controller: TextEditingController(
+                //                 text:
+                //                     prefs.getString('apiUrl') ??
+                //                     'https://api.revengi.in',
+                //               ),
+                //               decoration: const InputDecoration(
+                //                 hintText: 'Enter API URL',
+                //               ),
+                //               onSubmitted: (value) async {
+                //                 await prefs.setString('apiUrl', value);
+                //                 if (context.mounted) Navigator.pop(context);
+                //               },
+                //             ),
+                //             actions: [
+                //               TextButton(
+                //                 onPressed: () => Navigator.pop(context),
+                //                 child: const Text('Cancel'),
+                //               ),
+                //               TextButton(
+                //                 onPressed: () {
+                //                   prefs.remove('apiUrl');
+                //                   Navigator.pop(context);
+                //                 },
+                //                 child: const Text('Reset'),
+                //               ),
+                //             ],
+                //           ),
+                //     );
+                //   },
+                // ),
                 ...(!isWeb()
                     ? [
                       SwitchListTile.adaptive(
