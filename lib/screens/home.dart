@@ -19,12 +19,98 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:revengi/screens/jni_analysis.dart';
 import 'package:revengi/screens/flutter_analysis.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  // Nah, that's users choice, not ours
+  bool checkUpdate = false;
+  String currentVersion = "1.0.8";
+  bool isUpdateAvailable = false;
+
+  @override
+  void initState() {
+    super.initState();
+    addLicenses();
+    if (!isWeb() && isAndroid()) _initializePrefs();
+    if (!isWeb() && isAndroid()) _requestPermissions();
+  }
+
+  Future<void> _initializePrefs() async {
+    await _getUpdatePrefs();
+    await checkForUpdate();
+    if (isUpdateAvailable && mounted) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showUpdateDialog();
+      });
+    }
+  }
+
+  Future<void> checkForUpdate() async {
+    if (!checkUpdate) return;
+    final response = await dio.get(
+      'https://api.github.com/repos/RevEngiSquad/revengi-app/releases/latest',
+    );
+    if (response.statusCode == 200) {
+      final latestVersion = response.data['tag_name'].replaceAll('v', '');
+      if (latestVersion != currentVersion) {
+        setState(() {
+          isUpdateAvailable = true;
+        });
+      }
+    }
+  }
+
+  void _showUpdateDialog() {
+    showAdaptiveDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog.adaptive(
+          title: const Text('Update Available'),
+          content: const Text(
+            'A new version of the app is available. Would you like to update now?',
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Later'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Update'),
+              onPressed: () {
+                launchUrl(Uri.parse('https://revengi.in/downloads'));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _saveUpdatePrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('checkUpdate', checkUpdate);
+  }
+
+  Future<void> _getUpdatePrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      checkUpdate = prefs.getBool('checkUpdate') ?? false;
+    });
+  }
 
   Future<void> _handleLogout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
+    await prefs.remove('username');
+    await prefs.remove('apiKey');
+    await prefs.setBool('isLoggedIn', false);
     dio.options.headers.remove('X-API-Key');
 
     if (context.mounted) {
@@ -97,8 +183,6 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    addLicenses();
-    if (!isWeb() && isAndroid()) _requestPermissions();
     return Scaffold(
       appBar: AppBar(
         title: const Text('RevEngi Tools'),
@@ -148,25 +232,88 @@ class DashboardScreen extends StatelessWidget {
                 ],
               ),
             ),
-            ListTile(
-              leading: Icon(
-                context.watch<ThemeProvider>().themeMode == ThemeMode.system
-                    ? Icons.brightness_auto
-                    : context.watch<ThemeProvider>().themeMode ==
-                        ThemeMode.light
-                    ? Icons.light_mode
-                    : Icons.dark_mode,
-              ),
-              title: Text(
-                'Theme: ${context.watch<ThemeProvider>().themeMode == ThemeMode.system
-                    ? 'System'
-                    : context.watch<ThemeProvider>().themeMode == ThemeMode.light
-                    ? 'Light'
-                    : 'Dark'}',
-              ),
-              onTap: () {
-                context.read<ThemeProvider>().toggleTheme();
-              },
+            ExpansionTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Preferences'),
+              children: [
+                ListTile(
+                  leading: Icon(
+                    context.watch<ThemeProvider>().themeMode == ThemeMode.system
+                        ? Icons.brightness_auto
+                        : context.watch<ThemeProvider>().themeMode ==
+                            ThemeMode.light
+                        ? Icons.light_mode
+                        : Icons.dark_mode,
+                  ),
+                  title: Text(
+                    'Theme: ${context.watch<ThemeProvider>().themeMode == ThemeMode.system
+                        ? 'System'
+                        : context.watch<ThemeProvider>().themeMode == ThemeMode.light
+                        ? 'Light'
+                        : 'Dark'}',
+                  ),
+                  onTap: () {
+                    context.read<ThemeProvider>().toggleTheme();
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.link),
+                  title: const Text('API URL'),
+                  onTap: () async {
+                    final prefs = await SharedPreferences.getInstance();
+                    if (!context.mounted) return;
+                    showDialog(
+                      context: context,
+                      builder:
+                          (context) => AlertDialog(
+                            title: const Text('API URL'),
+                            content: TextField(
+                              controller: TextEditingController(
+                                text:
+                                    prefs.getString('apiUrl') ??
+                                    'https://api.revengi.in',
+                              ),
+                              decoration: const InputDecoration(
+                                hintText: 'Enter API URL',
+                              ),
+                              onSubmitted: (value) async {
+                                await prefs.setString('apiUrl', value);
+                                if (context.mounted) Navigator.pop(context);
+                              },
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  prefs.remove('apiUrl');
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Reset'),
+                              ),
+                            ],
+                          ),
+                    );
+                  },
+                ),
+                ...(!isWeb()
+                    ? [
+                      SwitchListTile.adaptive(
+                        secondary: const Icon(Icons.update),
+                        value: checkUpdate,
+                        title: const Text("Check for Updates"),
+                        onChanged: (value) {
+                          setState(() {
+                            checkUpdate = value;
+                          });
+                          _saveUpdatePrefs();
+                        },
+                      ),
+                    ]
+                    : []),
+              ],
             ),
             const Divider(),
             ListTile(
@@ -198,7 +345,7 @@ class DashboardScreen extends StatelessWidget {
                 showAboutDialog(
                   context: context,
                   applicationName: 'RevEngi',
-                  applicationVersion: '1.0.7',
+                  applicationVersion: currentVersion,
                   applicationLegalese: '© ${DateTime.now().year} RevEngi',
                   applicationIcon: Image.asset(
                     Theme.of(context).brightness == Brightness.dark
