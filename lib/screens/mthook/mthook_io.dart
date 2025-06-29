@@ -86,13 +86,26 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
       if (!dir.existsSync()) {
         await dir.create(recursive: true);
       }
-      final filename = response.headers['content-disposition']?.first
-          .split('filename=')[1]
-          .replaceAll('"', '');
+      String? filename;
+      final contentDisposition = response.headers['content-disposition']?.first;
+      if (contentDisposition != null) {
+        final regexExtended = RegExp(r"filename\*=([^']*)''([^;\n]+)");
+        final regexStandard = RegExp(r'filename="?([^";\n]+)"?');
+        final matchExtended = regexExtended.firstMatch(contentDisposition);
+        if (matchExtended != null) {
+          filename = Uri.decodeFull(matchExtended.group(2)!);
+        } else {
+          final matchStandard = regexStandard.firstMatch(contentDisposition);
+          if (matchStandard != null) {
+            filename = matchStandard.group(1);
+          }
+        }
+      }
+      filename ??= 'output.zip';
       var outputFile = File('${dir.path}/$filename');
       if (outputFile.existsSync()) {
         final randomNumber = DateTime.now().millisecondsSinceEpoch;
-        final newFilename = filename?.replaceAll('.zip', '_$randomNumber.zip');
+        final newFilename = filename.replaceAll('.zip', '_$randomNumber.zip');
         outputFile = File('${dir.path}/$newFilename');
       }
       await outputFile.writeAsBytes(response.data);

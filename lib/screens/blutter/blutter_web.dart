@@ -126,11 +126,22 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
           }
         },
       );
-      final filename =
-          response.headers['content-disposition']?.first
-              .split('filename=')[1]
-              .replaceAll('"', '') ??
-          'blutter_output.zip';
+      String? filename;
+      final contentDisposition = response.headers['content-disposition']?.first;
+      if (contentDisposition != null) {
+        final regexExtended = RegExp(r"filename\*=([^']*)''([^;\n]+)");
+        final regexStandard = RegExp(r'filename="?([^";\n]+)"?');
+        final matchExtended = regexExtended.firstMatch(contentDisposition);
+        if (matchExtended != null) {
+          filename = Uri.decodeFull(matchExtended.group(2)!);
+        } else {
+          final matchStandard = regexStandard.firstMatch(contentDisposition);
+          if (matchStandard != null) {
+            filename = matchStandard.group(1);
+          }
+        }
+      }
+      filename ??= 'blutter_output.zip';
       final bytes = Uint8List.fromList(response.data);
       String url = web.URL.createObjectURL(
         web.Blob(
