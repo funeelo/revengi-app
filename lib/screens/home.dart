@@ -179,6 +179,40 @@ class _DashboardScreenState extends State<DashboardScreen> {
       if (await Permission.storage.isDenied) {
         await Permission.storage.request();
       }
+    } else {
+      if (await Permission.ignoreBatteryOptimizations.isGranted) {
+        return;
+      }
+      if (await Permission.ignoreBatteryOptimizations.isDenied) {
+        if (!mounted) return;
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Battery Optimization Permission'),
+              content: const Text(
+                'For Android 13 and above, We need to disable battery optimization for this app to work properly in the background.',
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                    // Navigate to the battery optimization settings
+                    await Permission.ignoreBatteryOptimizations.request();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
   }
 
