@@ -42,19 +42,12 @@ jobs:
           mv build/app/outputs/flutter-apk/app-arm64-v8a-release.apk RevEngi-Android-arm64.apk
           mv build/app/outputs/flutter-apk/app-x86_64-release.apk RevEngi-Android-x64.apk
           mv build/app/outputs/flutter-apk/app-release.apk RevEngi-Android-universal.apk
-      - name: Rename SHA files
-        run: |
-          mv build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk.sha1 RevEngi-Android-arm32.apk.sha1
-          mv build/app/outputs/flutter-apk/app-arm64-v8a-release.apk.sha1 RevEngi-Android-arm64.apk.sha1
-          mv build/app/outputs/flutter-apk/app-x86_64-release.apk.sha1 RevEngi-Android-x64.apk.sha1
-          mv build/app/outputs/flutter-apk/app-release.apk.sha1 RevEngi-Android-universal.apk.sha1
       - name: Upload Android Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: android-artifacts
           path: |
             RevEngi-Android-*.apk
-            RevEngi-Android-*.apk.sha1
 
   build-windows:
     runs-on: windows-latest
@@ -114,10 +107,6 @@ jobs:
         run: |
           iscc windows/installer.iss
           mv windows/Output/RevEngi-Setup.exe RevEngi-Windows-installer.exe
-      - name: Generate checksums
-        run: |
-          sha256sum RevEngi-Windows.zip > sha256sum-windows
-          sha256sum RevEngi-Windows-installer.exe >> sha256sum-windows
       - name: Upload Windows Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -125,7 +114,6 @@ jobs:
           path: |
             RevEngi-Windows.zip
             RevEngi-Windows-installer.exe
-            sha256sum-windows
 
   build-linux:
     runs-on: ubuntu-22.04
@@ -266,28 +254,6 @@ jobs:
       - name: List downloaded artifacts
         run: ls -l artifacts
 
-      - name: Concatenate all checksum files
-        run: |
-          printf "## Checksums\n\n" > artifacts/all-checksums.txt
-          printf "**Android Artifacts**\n" >> artifacts/all-checksums.txt
-          printf "\n\`$(cat artifacts/RevEngi-Android-arm32.apk.sha1)\` artifacts/RevEngi-Android-arm32.apk\n" >> artifacts/all-checksums.txt
-          printf "\`$(cat artifacts/RevEngi-Android-arm64.apk.sha1)\` artifacts/RevEngi-Android-arm64.apk\n" >> artifacts/all-checksums.txt
-          printf "\`$(cat artifacts/RevEngi-Android-x64.apk.sha1)\` artifacts/RevEngi-Android-x64.apk\n" >> artifacts/all-checksums.txt
-          printf "\`$(cat artifacts/RevEngi-Android-universal.apk.sha1)\` artifacts/RevEngi-Android-universal.apk\n" >> artifacts/all-checksums.txt
-          printf "\n**Windows Artifacts**\n" >> artifacts/all-checksums.txt
-          awk '{print "`" $1 "` " $2}' artifacts/sha256sum-windows >> artifacts/all-checksums.txt
-          printf "\n**Linux Artifacts**\n" >> artifacts/all-checksums.txt
-          printf "\`$(sha256sum artifacts/RevEngi-Linux.deb | awk '{print $1}')\` artifacts/RevEngi-Linux.deb\n" >> artifacts/all-checksums.txt
-          printf "\`$(sha256sum artifacts/RevEngi-Linux.rpm | awk '{print $1}')\` artifacts/RevEngi-Linux.rpm\n" >> artifacts/all-checksums.txt
-          printf "\`$(sha256sum artifacts/RevEngi-Linux.AppImage | awk '{print $1}')\` artifacts/RevEngi-Linux.AppImage\n" >> artifacts/all-checksums.txt
-
-      - name: Read checksums for release body
-        id: checksums
-        run: |
-          echo 'body<<EOF' >> $GITHUB_OUTPUT
-          cat artifacts/all-checksums.txt >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
-
       - name: Release
         uses: softprops/action-gh-release@v2
         if: github.ref_type == 'tag'
@@ -296,19 +262,13 @@ jobs:
           name: Release ${{ env.APP_VERSION }}
           draft: true
           prerelease: false
-          body: ${{ steps.checksums.outputs.body }}
           files: |
             artifacts/RevEngi-Android-arm32.apk
             artifacts/RevEngi-Android-arm64.apk
             artifacts/RevEngi-Android-x64.apk
             artifacts/RevEngi-Android-universal.apk
-            artifacts/RevEngi-Android-arm32.apk.sha1
-            artifacts/RevEngi-Android-arm64.apk.sha1
-            artifacts/RevEngi-Android-x64.apk.sha1
-            artifacts/RevEngi-Android-universal.apk.sha1
             artifacts/RevEngi-Windows.zip
             artifacts/RevEngi-Windows-installer.exe
-            artifacts/sha256sum-windows
             artifacts/RevEngi-Linux.deb
             artifacts/RevEngi-Linux.rpm
             artifacts/RevEngi-Linux.AppImage
