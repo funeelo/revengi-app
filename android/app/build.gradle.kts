@@ -65,3 +65,7 @@ android {
 flutter {
     source = "../.."
 }
+
+dependencies {
+    implementation("io.github.reandroid:ARSCLib:1.3.8")
+}

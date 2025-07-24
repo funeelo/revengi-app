@@ -19,6 +19,7 @@ import 'package:revengi/screens/profile_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:revengi/screens/jni_analysis.dart';
 import 'package:revengi/screens/flutter_analysis.dart';
+import 'package:revengi/screens/splitsmerger/splitsmerger.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -125,24 +126,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (context.mounted) {
       await showDialog(
         context: context,
-        builder:
-            (context) => AlertDialog(
-              title: Row(
-                children: [
-                  const Text('Smali Grammar'),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ],
+        builder: (context) => AlertDialog(
+          title: Row(
+            children: [
+              const Text('Smali Grammar'),
+              const Spacer(),
+              IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => Navigator.of(context).pop(),
               ),
-              content: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: MediaQuery.of(context).size.height * 0.8,
-                child: const SmaliInstructionDialog(),
-              ),
-            ),
+            ],
+          ),
+          content: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.8,
+            child: const SmaliInstructionDialog(),
+          ),
+        ),
       );
     }
   }
@@ -234,10 +234,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color:
-                    Brightness.dark == Theme.of(context).brightness
-                        ? Colors.black
-                        : Colors.white,
+                color: Brightness.dark == Theme.of(context).brightness
+                    ? Colors.black
+                    : Colors.white,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -255,10 +254,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       return Text(
                         'RevEngi Tools',
                         style: TextStyle(
-                          color:
-                              brightness == Brightness.dark
-                                  ? Colors.white
-                                  : Colors.black,
+                          color: brightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.black,
                           fontSize: 24,
                         ),
                       );
@@ -276,7 +274,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     context.watch<ThemeProvider>().themeMode == ThemeMode.system
                         ? Icons.brightness_auto
                         : context.watch<ThemeProvider>().themeMode ==
-                            ThemeMode.light
+                              ThemeMode.light
                         ? Icons.light_mode
                         : Icons.dark_mode,
                   ),
@@ -299,54 +297,53 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     if (!context.mounted) return;
                     showDialog(
                       context: context,
-                      builder:
-                          (context) => AlertDialog(
-                            title: const Text('OLLAMA base URL'),
-                            content: TextField(
-                              controller: TextEditingController(
-                                text:
-                                    prefs.getString('ollamaBaseUrl') ??
-                                    'http://localhost:11434/api',
-                              ),
-                              decoration: const InputDecoration(
-                                hintText: 'Enter API URL',
-                              ),
-                              onSubmitted: (value) async {
-                                await prefs.setString('ollamaBaseUrl', value);
-                                if (context.mounted) Navigator.pop(context);
-                              },
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text('Cancel'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  prefs.remove('ollamaBaseUrl');
-                                  Navigator.pop(context);
-                                },
-                                child: const Text('Reset'),
-                              ),
-                            ],
+                      builder: (context) => AlertDialog(
+                        title: const Text('OLLAMA base URL'),
+                        content: TextField(
+                          controller: TextEditingController(
+                            text:
+                                prefs.getString('ollamaBaseUrl') ??
+                                'http://localhost:11434/api',
                           ),
+                          decoration: const InputDecoration(
+                            hintText: 'Enter API URL',
+                          ),
+                          onSubmitted: (value) async {
+                            await prefs.setString('ollamaBaseUrl', value);
+                            if (context.mounted) Navigator.pop(context);
+                          },
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              prefs.remove('ollamaBaseUrl');
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Reset'),
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),
                 ...(!isWeb()
                     ? [
-                      SwitchListTile.adaptive(
-                        secondary: const Icon(Icons.update),
-                        value: checkUpdate,
-                        title: const Text("Check for Updates"),
-                        onChanged: (value) {
-                          setState(() {
-                            checkUpdate = value;
-                          });
-                          _saveUpdatePrefs();
-                        },
-                      ),
-                    ]
+                        SwitchListTile.adaptive(
+                          secondary: const Icon(Icons.update),
+                          value: checkUpdate,
+                          title: const Text("Check for Updates"),
+                          onChanged: (value) {
+                            setState(() {
+                              checkUpdate = value;
+                            });
+                            _saveUpdatePrefs();
+                          },
+                        ),
+                      ]
                     : []),
               ],
             ),
@@ -394,12 +391,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     TextButton.icon(
                       icon: const Icon(Icons.star),
                       label: const Text('Star on GitHub'),
-                      onPressed:
-                          () => launchUrl(
-                            Uri.parse(
-                              'https://github.com/RevEngiSquad/revengi-app',
-                            ),
-                          ),
+                      onPressed: () => launchUrl(
+                        Uri.parse(
+                          'https://github.com/RevEngiSquad/revengi-app',
+                        ),
+                      ),
                     ),
                   ],
                 );
@@ -415,10 +411,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             MaterialPageRoute(builder: (context) => const OllamaChatScreen()),
           );
         },
-        backgroundColor:
-            Brightness.dark == Theme.of(context).brightness
-                ? Colors.black
-                : Colors.white,
+        backgroundColor: Brightness.dark == Theme.of(context).brightness
+            ? Colors.black
+            : Colors.white,
         child: Icon(Icons.chat, color: Theme.of(context).colorScheme.primary),
       ),
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
@@ -433,7 +428,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               childAspectRatio: 1.2,
               mainAxisExtent: 170,
             ),
-            itemCount: 5,
+            itemCount: 6,
             itemBuilder: (context, index) {
               switch (index) {
                 case 0:
@@ -441,65 +436,72 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     title: 'JNI Analysis',
                     icon: Icons.android,
                     description: 'Find JNI signatures in APK',
-                    onTap:
-                        () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const JniAnalysisScreen(),
-                          ),
-                        ),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const JniAnalysisScreen(),
+                      ),
+                    ),
                   );
                 case 1:
                   return AnalysisCard(
                     title: 'Flutter Analysis',
                     icon: Icons.flutter_dash,
                     description: 'Analyze Flutter libs',
-                    onTap:
-                        () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const FlutterAnalysisScreen(),
-                          ),
-                        ),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FlutterAnalysisScreen(),
+                      ),
+                    ),
                   );
                 case 2:
                   return AnalysisCard(
                     title: 'Blutter',
                     icon: Icons.build,
                     description: 'Flutter binary analysis tool',
-                    onTap:
-                        () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const BlutterAnalysisScreen(),
-                          ),
-                        ),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const BlutterAnalysisScreen(),
+                      ),
+                    ),
                   );
                 case 3:
                   return AnalysisCard(
                     title: 'MT Hook',
                     icon: Icons.book,
                     description: 'Generate MT Enhanced Hooks',
-                    onTap:
-                        () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MTHookAnalysisScreen(),
-                          ),
-                        ),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MTHookAnalysisScreen(),
+                      ),
+                    ),
                   );
                 case 4:
                   return AnalysisCard(
                     title: 'Dex Repair',
                     icon: Icons.auto_fix_high,
                     description: 'Repair DEX files',
-                    onTap:
-                        () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const DexRepairScreen(),
-                          ),
-                        ),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DexRepairScreen(),
+                      ),
+                    ),
+                  );
+                case 5:
+                  return AnalysisCard(
+                    title: 'APKS to APK',
+                    icon: Icons.merge_type,
+                    description: 'Merge Split APKs',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SplitApksMergerScreen(),
+                      ),
+                    ),
                   );
                 default:
                   return const SizedBox.shrink();
