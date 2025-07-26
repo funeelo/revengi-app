@@ -8,13 +8,18 @@ import 'package:revengi/screens/splash.dart';
 import 'package:revengi/utils/dio.dart';
 import 'package:revengi/utils/platform.dart';
 import 'package:revengi/utils/theme_provider.dart';
+import 'package:revengi/utils/language_provider.dart';
+import 'package:revengi/l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDio();
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => LanguageProvider()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -73,6 +78,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return MaterialApp(
       navigatorKey: navigatorKey,
       title: 'RevEngi App',
@@ -80,6 +86,9 @@ class _MyAppState extends State<MyApp> {
       darkTheme: ThemeData.dark(useMaterial3: true),
       themeMode: context.watch<ThemeProvider>().themeMode,
       home: const SplashScreen(),
+      locale: languageProvider.locale,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }

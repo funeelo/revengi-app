@@ -31,6 +31,7 @@ RevEngi App encompasses a variety of functionalities, including:
 *   **Smali Grammar Reference:** Quick & Advanced access to Smali instruction set like their opcode, format, and description for code analysis and manipulation. Examples are also provided where applicable.
 *   **Local LLM:** On-Device AI chat with Llama, Qwen, Gemma & more with chat history support. Your data stays on your device. Customize `baseUrl` to your ollama instance for remote access.
 *   **Theme Customization:** Offers light, dark, and system-based theme options.
+*   **Split APKs Merger:** Merge split APKs into a single APK (APKS/APKM/XAPK to APK).
 *   **API Key:** Get your API key from the profile section and use it to access [RevEngi API](https://revengi.in/docs/api), integrate it with your own tools and scripts.
 
 ## Downloads

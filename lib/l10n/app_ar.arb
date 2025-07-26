@@ -1,0 +1,44 @@
+{
+  "@@locale": "ar",
+  "about": "عن",
+  "apksToApk": "APKS إلى APK",
+  "appDescription": "مجموعة من أدوات الهندسة العكسية.",
+  "appTitle": "Revengi",
+  "batteryOptimization": "تحسين البطارية",
+  "batteryOptimizationMessage": "بالنسبة إلى Android 13 وما فوق ، نحتاج إلى تعطيل تحسين البطارية لهذا التطبيق للعمل بشكل صحيح في الخلفية.",
+  "blutter": "بلتر",
+  "blutterDesc": "أداة التحليل الثنائي رفرفة",
+  "cancel": "يلغي",
+  "checkForUpdate": "تحقق للحصول على التحديثات",
+  "dexRepair": "إصلاح DEX",
+  "dexRepairDesc": "إصلاح ملفات DEX",
+  "flutterAnalysis": "تحليل الرفرفة",
+  "flutterAnalysisDesc": "تحليل libs رفرفة",
+  "jniAnalysis": "تحليل JNI",
+  "jniAnalysisDesc": "ابحث عن توقيعات JNI في APK",
+  "language": "اللغة: {languageCode}",
+  "@language": {
+    "description": "رمز اللغة",
+    "placeholders": {
+      "languageCode": {
+        "type": "String",
+        "example": "ES"
+      }
+    }
+  },
+  "later": "لاحقاً",
+  "mergeSplitApks": "دمج انقسام APKs",
+  "mtHook": "هوك",
+  "mtHookDesc": "توليد خطافات محسنة MT",
+  "ok": "نعم",
+  "ollama_api_url": "عنوان ULLAMA BASE URL",
+  "preferences": "التفضيلات",
+  "profile": "حساب تعريفي",
+  "reset": "إعادة ضبط",
+  "selectLanguage": "حدد اللغة",
+  "smaliGrammar": "قواعد سميلي",
+  "theme": "سمة",
+  "update": "تحديث",
+  "updateAvailable": "التحديث المتاح",
+  "updateAvailableMessage": "يتوفر إصدار جديد من التطبيق.هل ترغب في التحديث الآن؟"
+}

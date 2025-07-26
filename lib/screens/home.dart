@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart'
     show LicenseRegistry, LicenseEntryWithLineBreaks;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:revengi/l10n/app_localizations.dart';
 import 'package:revengi/screens/ollama_screen.dart';
 import 'package:revengi/utils/platform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,6 +21,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:revengi/screens/jni_analysis.dart';
 import 'package:revengi/screens/flutter_analysis.dart';
 import 'package:revengi/screens/splitsmerger/splitsmerger.dart';
+import 'package:revengi/utils/language_provider.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -73,19 +75,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog.adaptive(
-          title: const Text('Update Available'),
-          content: const Text(
-            'A new version of the app is available. Would you like to update now?',
-          ),
+          title: Text(AppLocalizations.of(context)!.updateAvailable),
+          content: Text(AppLocalizations.of(context)!.updateAvailableMessage),
           actions: <Widget>[
             TextButton(
-              child: const Text('Later'),
+              child: Text(AppLocalizations.of(context)!.later),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: const Text('Update'),
+              child: Text(AppLocalizations.of(context)!.update),
               onPressed: () {
                 launchUrl(Uri.parse('https://revengi.in/downloads'));
               },
@@ -126,23 +126,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (context.mounted) {
       await showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: Row(
-            children: [
-              const Text('Smali Grammar'),
-              const Spacer(),
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () => Navigator.of(context).pop(),
+        builder:
+            (context) => AlertDialog(
+              title: Row(
+                children: [
+                  Text(AppLocalizations.of(context)!.smaliGrammar),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ],
               ),
-            ],
-          ),
-          content: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
-            height: MediaQuery.of(context).size.height * 0.8,
-            child: const SmaliInstructionDialog(),
-          ),
-        ),
+              content: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: const SmaliInstructionDialog(),
+              ),
+            ),
       );
     }
   }
@@ -153,6 +154,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       'sigtool': 'assets/licenses/sigtool.txt',
       'smalig': 'assets/licenses/smalig.txt',
       'blutter': 'assets/licenses/blutter.txt',
+      'arsclib': 'assets/licenses/arsclib.txt',
     };
 
     for (var entry in licenses.entries) {
@@ -189,19 +191,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('Battery Optimization Permission'),
-              content: const Text(
-                'For Android 13 and above, We need to disable battery optimization for this app to work properly in the background.',
+              title: Text(AppLocalizations.of(context)!.batteryOptimization),
+              content: Text(
+                AppLocalizations.of(context)!.batteryOptimizationMessage,
               ),
               actions: <Widget>[
                 TextButton(
-                  child: const Text('Cancel'),
+                  child: Text(AppLocalizations.of(context)!.cancel),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 TextButton(
-                  child: const Text('OK'),
+                  child: Text(AppLocalizations.of(context)!.ok),
                   onPressed: () async {
                     Navigator.of(context).pop();
                     // Navigate to the battery optimization settings
@@ -216,11 +218,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
   }
 
+  String _getLanguageName(String languageCode) {
+    switch (languageCode) {
+      case 'en':
+        return 'English';
+      case 'es':
+        return 'Español';
+      case 'ar':
+        return 'العربية';
+      default:
+        return languageCode.toUpperCase();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    final languageCode =
+        context.watch<LanguageProvider>().locale.languageCode.toUpperCase();
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('RevEngi Tools'),
+        title: Text(localizations.appTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -234,9 +253,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Brightness.dark == Theme.of(context).brightness
-                    ? Colors.black
-                    : Colors.white,
+                color:
+                    Brightness.dark == Theme.of(context).brightness
+                        ? Colors.black
+                        : Colors.white,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -252,11 +272,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     builder: (context) {
                       final brightness = Theme.of(context).brightness;
                       return Text(
-                        'RevEngi Tools',
+                        localizations.appTitle,
                         style: TextStyle(
-                          color: brightness == Brightness.dark
-                              ? Colors.white
-                              : Colors.black,
+                          color:
+                              brightness == Brightness.dark
+                                  ? Colors.white
+                                  : Colors.black,
                           fontSize: 24,
                         ),
                       );
@@ -267,19 +288,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             ExpansionTile(
               leading: const Icon(Icons.settings),
-              title: const Text('Preferences'),
+              title: Text(localizations.preferences),
               children: [
                 ListTile(
                   leading: Icon(
                     context.watch<ThemeProvider>().themeMode == ThemeMode.system
                         ? Icons.brightness_auto
                         : context.watch<ThemeProvider>().themeMode ==
-                              ThemeMode.light
+                            ThemeMode.light
                         ? Icons.light_mode
                         : Icons.dark_mode,
                   ),
                   title: Text(
-                    'Theme: ${context.watch<ThemeProvider>().themeMode == ThemeMode.system
+                    '${localizations.theme}: ${context.watch<ThemeProvider>().themeMode == ThemeMode.system
                         ? 'System'
                         : context.watch<ThemeProvider>().themeMode == ThemeMode.light
                         ? 'Light'
@@ -290,67 +311,102 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   },
                 ),
                 ListTile(
+                  leading: const Icon(Icons.language),
+                  title: Text(localizations.language(languageCode)),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder:
+                          (context) => AlertDialog(
+                            title: Text(localizations.selectLanguage),
+                            content: SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children:
+                                    AppLocalizations.supportedLocales.map((
+                                      locale,
+                                    ) {
+                                      return ListTile(
+                                        title: Text(
+                                          _getLanguageName(locale.languageCode),
+                                        ),
+                                        onTap: () {
+                                          context
+                                              .read<LanguageProvider>()
+                                              .setLocale(locale);
+                                          Navigator.pop(context);
+                                        },
+                                      );
+                                    }).toList(),
+                              ),
+                            ),
+                          ),
+                    );
+                  },
+                ),
+                ListTile(
                   leading: const Icon(Icons.link),
-                  title: const Text('OLLAMA base URL'),
+                  title: Text(localizations.ollama_api_url),
                   onTap: () async {
                     final prefs = await SharedPreferences.getInstance();
                     if (!context.mounted) return;
                     showDialog(
                       context: context,
-                      builder: (context) => AlertDialog(
-                        title: const Text('OLLAMA base URL'),
-                        content: TextField(
-                          controller: TextEditingController(
-                            text:
-                                prefs.getString('ollamaBaseUrl') ??
-                                'http://localhost:11434/api',
+                      builder:
+                          (context) => AlertDialog(
+                            title: Text(localizations.ollama_api_url),
+                            content: TextField(
+                              controller: TextEditingController(
+                                text:
+                                    prefs.getString('ollamaBaseUrl') ??
+                                    'http://localhost:11434/api',
+                              ),
+                              decoration: const InputDecoration(
+                                hintText: 'Enter API URL',
+                              ),
+                              onSubmitted: (value) async {
+                                await prefs.setString('ollamaBaseUrl', value);
+                                if (context.mounted) Navigator.pop(context);
+                              },
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(localizations.cancel),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  prefs.remove('ollamaBaseUrl');
+                                  Navigator.pop(context);
+                                },
+                                child: Text(localizations.reset),
+                              ),
+                            ],
                           ),
-                          decoration: const InputDecoration(
-                            hintText: 'Enter API URL',
-                          ),
-                          onSubmitted: (value) async {
-                            await prefs.setString('ollamaBaseUrl', value);
-                            if (context.mounted) Navigator.pop(context);
-                          },
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              prefs.remove('ollamaBaseUrl');
-                              Navigator.pop(context);
-                            },
-                            child: const Text('Reset'),
-                          ),
-                        ],
-                      ),
                     );
                   },
                 ),
                 ...(!isWeb()
                     ? [
-                        SwitchListTile.adaptive(
-                          secondary: const Icon(Icons.update),
-                          value: checkUpdate,
-                          title: const Text("Check for Updates"),
-                          onChanged: (value) {
-                            setState(() {
-                              checkUpdate = value;
-                            });
-                            _saveUpdatePrefs();
-                          },
-                        ),
-                      ]
+                      SwitchListTile.adaptive(
+                        secondary: const Icon(Icons.update),
+                        value: checkUpdate,
+                        title: Text(localizations.checkForUpdate),
+                        onChanged: (value) {
+                          setState(() {
+                            checkUpdate = value;
+                          });
+                          _saveUpdatePrefs();
+                        },
+                      ),
+                    ]
                     : []),
               ],
             ),
             const Divider(),
             ListTile(
               leading: const Icon(Icons.code),
-              title: const Text('Smali Grammar'),
+              title: Text(localizations.smaliGrammar),
               onTap: () {
                 Navigator.pop(context);
                 _showSmaliGrammarDialog(context);
@@ -358,7 +414,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.person),
-              title: const Text('Profile'),
+              title: Text(localizations.profile),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
@@ -371,12 +427,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.info),
-              title: const Text('About'),
+              title: Text(localizations.about),
               onTap: () {
                 Navigator.pop(context);
                 showAboutDialog(
                   context: context,
-                  applicationName: 'RevEngi',
+                  applicationName: localizations.appTitle,
                   applicationVersion: currentVersion,
                   applicationLegalese: '© ${DateTime.now().year} RevEngi',
                   applicationIcon: Image.asset(
@@ -386,16 +442,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 50,
                   ),
                   children: [
-                    const Text('\nA collection of reverse engineering tools.'),
+                    Text(localizations.appDescription),
                     const SizedBox(height: 16),
                     TextButton.icon(
                       icon: const Icon(Icons.star),
                       label: const Text('Star on GitHub'),
-                      onPressed: () => launchUrl(
-                        Uri.parse(
-                          'https://github.com/RevEngiSquad/revengi-app',
-                        ),
-                      ),
+                      onPressed:
+                          () => launchUrl(
+                            Uri.parse(
+                              'https://github.com/RevEngiSquad/revengi-app',
+                            ),
+                          ),
                     ),
                   ],
                 );
@@ -411,9 +468,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
             MaterialPageRoute(builder: (context) => const OllamaChatScreen()),
           );
         },
-        backgroundColor: Brightness.dark == Theme.of(context).brightness
-            ? Colors.black
-            : Colors.white,
+        backgroundColor:
+            Brightness.dark == Theme.of(context).brightness
+                ? Colors.black
+                : Colors.white,
         child: Icon(Icons.chat, color: Theme.of(context).colorScheme.primary),
       ),
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
@@ -433,75 +491,81 @@ class _DashboardScreenState extends State<DashboardScreen> {
               switch (index) {
                 case 0:
                   return AnalysisCard(
-                    title: 'JNI Analysis',
+                    title: localizations.jniAnalysis,
                     icon: Icons.android,
-                    description: 'Find JNI signatures in APK',
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const JniAnalysisScreen(),
-                      ),
-                    ),
+                    description: localizations.jniAnalysisDesc,
+                    onTap:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const JniAnalysisScreen(),
+                          ),
+                        ),
                   );
                 case 1:
                   return AnalysisCard(
-                    title: 'Flutter Analysis',
+                    title: localizations.flutterAnalysis,
                     icon: Icons.flutter_dash,
-                    description: 'Analyze Flutter libs',
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const FlutterAnalysisScreen(),
-                      ),
-                    ),
+                    description: localizations.flutterAnalysisDesc,
+                    onTap:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FlutterAnalysisScreen(),
+                          ),
+                        ),
                   );
                 case 2:
                   return AnalysisCard(
-                    title: 'Blutter',
+                    title: localizations.blutter,
                     icon: Icons.build,
-                    description: 'Flutter binary analysis tool',
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const BlutterAnalysisScreen(),
-                      ),
-                    ),
+                    description: localizations.blutterDesc,
+                    onTap:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BlutterAnalysisScreen(),
+                          ),
+                        ),
                   );
                 case 3:
                   return AnalysisCard(
-                    title: 'MT Hook',
+                    title: localizations.mtHook,
                     icon: Icons.book,
-                    description: 'Generate MT Enhanced Hooks',
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MTHookAnalysisScreen(),
-                      ),
-                    ),
+                    description: localizations.mtHookDesc,
+                    onTap:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MTHookAnalysisScreen(),
+                          ),
+                        ),
                   );
                 case 4:
                   return AnalysisCard(
-                    title: 'Dex Repair',
+                    title: localizations.dexRepair,
                     icon: Icons.auto_fix_high,
-                    description: 'Repair DEX files',
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DexRepairScreen(),
-                      ),
-                    ),
+                    description: localizations.dexRepairDesc,
+                    onTap:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DexRepairScreen(),
+                          ),
+                        ),
                   );
                 case 5:
                   return AnalysisCard(
-                    title: 'APKS to APK',
+                    title: localizations.apksToApk,
                     icon: Icons.merge_type,
-                    description: 'Merge Split APKs',
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SplitApksMergerScreen(),
-                      ),
-                    ),
+                    description: localizations.mergeSplitApks,
+                    onTap:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SplitApksMergerScreen(),
+                          ),
+                        ),
                   );
                 default:
                   return const SizedBox.shrink();

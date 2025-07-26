@@ -1,0 +1,44 @@
+{
+  "@@locale": "es",
+  "about": "About",
+  "apksToApk": "APKS to APK",
+  "appDescription": "Una colección de herramientas de ingeniería inversa.",
+  "appTitle": "RevEngi",
+  "batteryOptimization": "Battery Optimization",
+  "batteryOptimizationMessage": "For Android 13 and above, We need to disable battery optimization for this app to work properly in the background.",
+  "blutter": "Blutter",
+  "blutterDesc": "Flutter binary analysis tool",
+  "cancel": "Cancel",
+  "checkForUpdate": "Check for Updates",
+  "dexRepair": "Dex Repair",
+  "dexRepairDesc": "Repair DEX files",
+  "flutterAnalysis": "Flutter Analysis",
+  "flutterAnalysisDesc": "Analyze Flutter libs",
+  "jniAnalysis": "JNI Analysis",
+  "jniAnalysisDesc": "Find JNI signatures in APK",
+  "language": "Idioma: {languageCode}",
+  "@language": {
+    "description": "Language code",
+    "placeholders": {
+      "languageCode": {
+        "type": "String",
+        "example": "ES"
+      }
+    }
+  },
+  "later": "Luego",
+  "mergeSplitApks": "Merge Split APKs",
+  "mtHook": "MT Hook",
+  "mtHookDesc": "Generate MT Enhanced Hooks",
+  "ok": "Ok",
+  "ollama_api_url": "OLLAMA base URL",
+  "preferences": "Preferencias",
+  "profile": "Perfil",
+  "reset": "Reset",
+  "selectLanguage": "Seleccionar idioma",
+  "smaliGrammar": "Smali Grammar",
+  "theme": "Tema",
+  "update": "Update",
+  "updateAvailable": "Actualización disponible",
+  "updateAvailableMessage": "Hay una nueva versión de la aplicación disponible. ¿Quieres actualizar ahora?"
+}
