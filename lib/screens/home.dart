@@ -226,6 +226,58 @@ class _DashboardScreenState extends State<DashboardScreen> {
         return 'Español';
       case 'ar':
         return 'العربية';
+      case 'af':
+        return 'Afrikaans';
+      case 'ca':
+        return 'Català';
+      case 'cs':
+        return 'Čeština';
+      case 'da':
+        return 'Dansk';
+      case 'de':
+        return 'Deutsch';
+      case 'el':
+        return 'Ελληνικά';
+      case 'fi':
+        return 'Suomi';
+      case 'fr':
+        return 'Français';
+      case 'he':
+        return 'עברית';
+      case 'hi':
+        return 'हिन्दी';
+      case 'hu':
+        return 'Magyar';
+      case 'it':
+        return 'Italiano';
+      case 'ja':
+        return '日本語';
+      case 'ko':
+        return '한국어';
+      case 'nl':
+        return 'Nederlands';
+      case 'no':
+        return 'Norsk';
+      case 'pl':
+        return 'Polski';
+      case 'pt':
+        return 'Português';
+      case 'ro':
+        return 'Română';
+      case 'ru':
+        return 'Русский';
+      case 'sr':
+        return 'Српски';
+      case 'sv':
+        return 'Svenska';
+      case 'tr':
+        return 'Türkçe';
+      case 'uk':
+        return 'Українська';
+      case 'vi':
+        return 'Tiếng Việt';
+      case 'zh':
+        return '中文';
       default:
         return languageCode.toUpperCase();
     }
