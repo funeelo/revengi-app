@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguageProvider extends ChangeNotifier {
   static const String _prefKey = 'app_language';
-  Locale _locale = const Locale('en');
+  Locale? _locale;
 
   LanguageProvider() {
     _loadSavedLocale();
   }
 
-  Locale get locale => _locale;
+  Locale get locale => _locale ?? PlatformDispatcher.instance.locale;
 
   Future<void> _loadSavedLocale() async {
     final prefs = await SharedPreferences.getInstance();
