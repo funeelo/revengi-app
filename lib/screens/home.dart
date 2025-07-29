@@ -33,7 +33,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   // Nah, that's users choice, not ours
   bool checkUpdate = false;
-  String currentVersion = "1.2.1";
+  String currentVersion = "1.2.2";
   bool isUpdateAvailable = false;
 
   @override
