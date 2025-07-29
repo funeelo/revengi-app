@@ -81,10 +81,12 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
   Future<void> _loadLocalModels() async {
     try {
       final res = await client.listModels();
-      setState(() {
-        localModels =
-            res.models!.map((m) => m.model).whereType<String>().toList();
-      });
+      if (mounted) {
+        setState(() {
+          localModels =
+              res.models!.map((m) => m.model).whereType<String>().toList();
+        });
+      }
     } catch (_) {}
   }
 
@@ -99,9 +101,11 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
           await prefs.setString('model_size_$model', size);
         }
       }
-      setState(() {
-        remoteModelSizes[model] = size;
-      });
+      if (mounted) {
+        setState(() {
+          remoteModelSizes[model] = size;
+        });
+      }
     }
   }
 
@@ -128,11 +132,13 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
 
   Future<void> _pullModel(String model) async {
     final localizations = AppLocalizations.of(context)!;
-    setState(() {
-      pulling = true;
-      pullProgress = 0.0;
-      pullStatusText = null;
-    });
+    if (mounted) {
+      setState(() {
+        pulling = true;
+        pullProgress = 0.0;
+        pullStatusText = null;
+      });
+    }
 
     try {
       final stream = client.pullModelStream(
@@ -143,18 +149,20 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
       int? completed;
 
       await for (var status in stream) {
-        setState(() {
-          total = status.total;
-          completed = status.completed;
-          if (total != null && completed != null && total! > 0) {
-            pullProgress = completed! / total!;
-            pullStatusText =
-                'Downloading... ${(pullProgress * 100).toStringAsFixed(0)}%';
-          } else {
-            pullProgress = 0.0;
-            pullStatusText = status.status?.toString() ?? '';
-          }
-        });
+        if (mounted) {
+          setState(() {
+            total = status.total;
+            completed = status.completed;
+            if (total != null && completed != null && total! > 0) {
+              pullProgress = completed! / total!;
+              pullStatusText =
+                  'Downloading... ${(pullProgress * 100).toStringAsFixed(0)}%';
+            } else {
+              pullProgress = 0.0;
+              pullStatusText = status.status?.toString() ?? '';
+            }
+          });
+        }
       }
       await _loadLocalModels();
     } catch (e) {
@@ -166,15 +174,17 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
             ),
           ),
         );
+        setState(() {
+          pullStatusText = localizations.failedToPullModel(e.toString());
+          chatInputEnabled = false;
+        });
       }
-      setState(() {
-        pullStatusText = localizations.failedToPullModel(e.toString());
-        chatInputEnabled = false;
-      });
     } finally {
-      setState(() {
-        pulling = false;
-      });
+      if (mounted) {
+        setState(() {
+          pulling = false;
+        });
+      }
     }
   }
 
