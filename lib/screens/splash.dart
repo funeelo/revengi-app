@@ -20,9 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _checkLoginStatus() async {
-    await Future.delayed(
-      const Duration(seconds: 2),
-    ); // Show splash for 2 seconds
+    await Future.delayed(const Duration(seconds: 2));
 
     if (!mounted) return;
 
@@ -31,8 +29,10 @@ class _SplashScreenState extends State<SplashScreen> {
     final String? username = prefs.getString('username');
     final String? apiKey = prefs.getString('apiKey');
 
-    if (isLoggedIn && username != null && apiKey != null) {
-      dio.options.headers['X-API-Key'] = apiKey;
+    if (isLoggedIn && username != null) {
+      if (apiKey != null) {
+        dio.options.headers['X-API-Key'] = apiKey;
+      }
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const DashboardScreen()),
