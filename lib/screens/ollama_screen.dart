@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:ollama_dart/ollama_dart.dart';
 import 'package:dio/dio.dart';
+import 'package:revengi/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:revengi/utils/platform.dart';
@@ -59,7 +60,11 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to initialize Ollama client: $e')),
+          SnackBar(
+            content: Text(
+              AppLocalizations.of(context)!.ollamaInitializeError(e.toString()),
+            ),
+          ),
         );
         setState(() {
           chatInputEnabled = false;
@@ -122,6 +127,7 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
   }
 
   Future<void> _pullModel(String model) async {
+    final localizations = AppLocalizations.of(context)!;
     setState(() {
       pulling = true;
       pullProgress = 0.0;
@@ -154,13 +160,15 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to pull model. Is Ollama running?'),
+          SnackBar(
+            content: Text(
+              localizations.failedToPullModel("Is Ollama running?"),
+            ),
           ),
         );
       }
       setState(() {
-        pullStatusText = 'Failed to pull model: ${e.toString()}';
+        pullStatusText = localizations.failedToPullModel(e.toString());
         chatInputEnabled = false;
       });
     } finally {
@@ -320,39 +328,43 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: const Text('AI Chat (Ollama)'),
+        title: Text(localizations.aiChat),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [Tab(text: 'Models'), Tab(text: 'Chat')],
+          tabs: [
+            Tab(text: localizations.models),
+            Tab(text: localizations.chat),
+          ],
         ),
         actions: [
           if (_tabController?.index == 1)
             IconButton(
               icon: const Icon(Icons.settings),
-              tooltip: 'System Message',
+              tooltip: localizations.systemMessage,
               onPressed: () async {
                 final controller = TextEditingController(text: systemMessage);
                 final result = await showDialog<String>(
                   context: context,
                   builder:
                       (context) => AlertDialog(
-                        title: const Text('Set System Message'),
+                        title: Text(localizations.setSystemMessage),
                         content: TextField(
                           controller: controller,
                           minLines: 2,
                           maxLines: 5,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: 'System message',
+                            labelText: localizations.systemMessage,
                           ),
                         ),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(context),
-                            child: const Text('Cancel'),
+                            child: Text(localizations.cancel),
                           ),
                           ElevatedButton(
                             onPressed:
@@ -360,7 +372,7 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
                                   context,
                                   controller.text.trim(),
                                 ),
-                            child: const Text('Save'),
+                            child: Text(localizations.save),
                           ),
                         ],
                       ),
@@ -381,6 +393,7 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
 
   Widget _buildModelsTab() {
     final hasLocalModels = localModels.isNotEmpty;
+    final localizations = AppLocalizations.of(context)!;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -394,7 +407,7 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
                   children: [
                     if (hasLocalModels) ...[
                       Text(
-                        'Downloaded Models:',
+                        localizations.downloadedModels,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const SizedBox(height: 8),
@@ -435,7 +448,7 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
                       const SizedBox(height: 24),
                     ],
                     Text(
-                      'Download a model:',
+                      localizations.downloadModel,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: 8),
@@ -519,8 +532,8 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
                       children: [
                         Expanded(
                           child: TextField(
-                            decoration: const InputDecoration(
-                              labelText: 'Enter a model name',
+                            decoration: InputDecoration(
+                              labelText: localizations.enterModelName,
                               border: OutlineInputBorder(),
                             ),
                             onChanged: (value) {
@@ -533,7 +546,8 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
                                 if (isOnAndroid) {
                                   setState(() {
                                     pulling = true;
-                                    pullStatusText = 'Fetching model info...';
+                                    pullStatusText =
+                                        localizations.fetchingModelInfo;
                                   });
                                 }
                                 String? sizeStr = remoteModelSizes[modelName];
@@ -554,7 +568,8 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
                                 bool proceed = true;
                                 if (sizeStr != null && isOnAndroid) {
                                   setState(() {
-                                    pullStatusText = 'Checking device RAM...';
+                                    pullStatusText =
+                                        localizations.checkingDeviceRam;
                                   });
                                   double sizeGB = 0;
                                   final gbMatch = RegExp(
@@ -595,8 +610,9 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
                                           context: context,
                                           builder:
                                               (context) => AlertDialog(
-                                                title: const Text(
-                                                  'Large Model Warning',
+                                                title: Text(
+                                                  localizations
+                                                      .largeModelWarning,
                                                 ),
                                                 content: Text(
                                                   'The model you are trying to download ($sizeStr) exceeds 75% of your device RAM (${ramGB.toStringAsFixed(2)} GB). This may cause issues or not run at all. Do you want to continue?',
@@ -608,7 +624,9 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
                                                           context,
                                                           false,
                                                         ),
-                                                    child: const Text('Cancel'),
+                                                    child: Text(
+                                                      localizations.cancel,
+                                                    ),
                                                   ),
                                                   ElevatedButton(
                                                     onPressed:
@@ -616,8 +634,8 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
                                                           context,
                                                           true,
                                                         ),
-                                                    child: const Text(
-                                                      'Continue',
+                                                    child: Text(
+                                                      localizations.proceed,
                                                     ),
                                                   ),
                                                 ],
@@ -652,7 +670,7 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
                           builder:
                               (context) => IconButton(
                                 icon: const Icon(Icons.open_in_new),
-                                tooltip: 'Open Ollama Library',
+                                tooltip: localizations.openOllamaLibrary,
                                 onPressed: () async {
                                   final url = Uri.parse(
                                     'https://ollama.com/library/${selectedModel ?? ''}',
@@ -726,6 +744,7 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
 
   Widget _buildChatTab() {
     final modelSelected = selectedModel != null;
+    final localizations = AppLocalizations.of(context)!;
     return SafeArea(
       child: Column(
         children: [
@@ -733,7 +752,7 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
             Expanded(
               child: Center(
                 child: Text(
-                  'Please select or download a model in the “Models” tab.',
+                  localizations.selectOrDownloadModel,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -796,8 +815,8 @@ class OllamaChatScreenState extends State<OllamaChatScreen>
                     decoration: InputDecoration(
                       hintText:
                           modelSelected
-                              ? 'Type your message…'
-                              : 'Select a model to chat',
+                              ? localizations.typeMessage
+                              : localizations.selectAModel,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),

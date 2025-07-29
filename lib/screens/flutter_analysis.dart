@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:revengi/l10n/app_localizations.dart';
 import 'package:revengi/utils/platform.dart';
 import 'package:revengi/utils/dartinfo.dart';
 
@@ -23,6 +24,7 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
   List<int> _libflutterBytes = [];
 
   Future<void> _pickLibappFile() async {
+    final localizations = AppLocalizations.of(context)!;
     final result = await FilePicker.platform.pickFiles(type: FileType.any);
 
     if (result != null) {
@@ -50,14 +52,14 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
           elfMagic[2] != 0x4c ||
           elfMagic[3] != 0x46) {
         setState(() {
-          _error = 'Please select a valid ELF file';
+          _error = localizations.selectValidFile("ELF");
           _libappFile = null;
           _libappBytes = [];
         });
       }
       if (_fileName != 'libapp.so') {
         setState(() {
-          _error = 'Please select a valid libapp.so file';
+          _error = localizations.selectValidFile("libapp.so");
           _libappFile = null;
           _libappBytes = [];
         });
@@ -66,6 +68,7 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
   }
 
   Future<void> _pickLibflutterFile() async {
+    final localizations = AppLocalizations.of(context)!;
     final result = await FilePicker.platform.pickFiles(type: FileType.any);
 
     if (result != null) {
@@ -93,14 +96,14 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
           elfMagic[2] != 0x4c ||
           elfMagic[3] != 0x46) {
         setState(() {
-          _error = 'Please select a valid ELF file';
+          _error = localizations.selectValidFile("ELF");
           _libflutterFile = null;
           _libflutterBytes = [];
         });
       }
       if (_fileName != 'libflutter.so') {
         setState(() {
-          _error = 'Please select a valid libflutter.so file';
+          _error = localizations.selectValidFile("libflutter.so");
           _libflutterFile = null;
           _libflutterBytes = [];
         });
@@ -164,8 +167,10 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Analysis')),
+      appBar: AppBar(title: Text(localizations.flutterAnalysis)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -177,8 +182,8 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Select Library Files',
+                    Text(
+                      localizations.selectFiles('Library'),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -198,10 +203,10 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
                                         .last,
                                     style: const TextStyle(color: Colors.green),
                                   )
-                              : const Text('No file selected'),
+                              : Text(localizations.noFileSelected),
                       trailing: ElevatedButton(
                         onPressed: _isAnalyzing ? null : _pickLibappFile,
-                        child: const Text('Choose File'),
+                        child: Text(localizations.chooseFile("File")),
                       ),
                     ),
                     ListTile(
@@ -218,10 +223,10 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
                                         .last,
                                     style: const TextStyle(color: Colors.green),
                                   )
-                              : const Text('No file selected'),
+                              : Text(localizations.noFileSelected),
                       trailing: ElevatedButton(
                         onPressed: _isAnalyzing ? null : _pickLibflutterFile,
-                        child: const Text('Choose File'),
+                        child: Text(localizations.chooseFile("File")),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -238,7 +243,11 @@ class _FlutterAnalysisScreenState extends State<FlutterAnalysisScreen> {
                                 ? null
                                 : _analyzeFiles,
                         icon: const Icon(Icons.analytics),
-                        label: Text(_isAnalyzing ? 'Analyzing...' : 'Analyze'),
+                        label: Text(
+                          _isAnalyzing
+                              ? localizations.analyzing
+                              : localizations.analyze,
+                        ),
                       ),
                     ),
                   ],

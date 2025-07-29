@@ -1,5 +1,8 @@
 {
   "about": "Σχετικά",
+  "aiChat": "AI Chat",
+  "analyze": "Analyze",
+  "analyzing": "Analyzing...",
   "apiKey": "Κλειδί API",
   "apiRateLimits": "Όρια Ρυθμού Τελικών Σημείων Api",
   "apksToApk": "APKS στο APK",
@@ -9,21 +12,61 @@
   "batteryOptimizationMessage": "Για Android 13 και παραπάνω, Πρέπει να απενεργοποιήσετε τη βελτιστοποίηση της μπαταρίας για να λειτουργήσει σωστά αυτή η εφαρμογή στο παρασκήνιο.",
   "blutter": "Blutter",
   "blutterDesc": "Εργαλείο ανάλυσης δυαδικών πτερυγίων",
+  "blutterNote": "\nAPK: The app will directly handle APK files.\n\r\nZIP: Ensure ZIP files contain only the `libapp.so` for arm64 architecture. Failure to comply may result in errors.",
   "cancel": "Ακύρωση",
+  "chat": "Chat",
   "checkForUpdate": "Έλεγχος για ενημερώσεις",
+  "checkingDeviceRam": "Checking device RAM...",
+  "chooseFile": "Choose {type}",
+  "@chooseFile": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "cleanMeta": "Clean META-INF directory",
   "confirmPassword": "Επιβεβαίωση Κωδικού Πρόσβασης",
   "continueAsGuest": "Συνέχεια ως επισκέπτης",
   "copiedToClipboard": "Αντιγράφηκε στο πρόχειρο",
   "createAccount": "Δημιουργία Λογαριασμού",
   "dexRepair": "Επισκευή Dex",
   "dexRepairDesc": "Επισκευή αρχείων DEX",
+  "downloadedModels": "Downloaded Models:",
+  "downloading": "Downloading...",
+  "downloadModel": "Download a model:",
   "email": "E-mail",
   "emailCond": "Παρακαλώ εισάγετε μια έγκυρη διεύθυνση Gmail",
   "enterEmail": "Παρακαλώ εισάγετε email",
+  "enterModelName": "Enter a model name",
   "enterPassword": "Παρακαλώ εισάγετε κωδικό πρόσβασης",
   "enterUsername": "Παρακαλώ εισάγετε όνομα χρήστη",
+  "errorDuringAnalysis": "An error occurred during analysis",
+  "failedToExtractFiles": "Failed to extract files from ZIP: {e}",
+  "@failedToExtractFiles": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToPullModel": "Failed to pull model: {error}",
+  "@failedToPullModel": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "featureNeedsApp": "Please use the desktop or mobile app for this feature.",
+  "fetchingModelInfo": "Fetching model info...",
   "flutterAnalysis": "Ανάλυση Flutter",
   "flutterAnalysisDesc": "Αναλύστε τα χείλη Flutter",
+  "generate": "Generate",
+  "generating": "Generating...",
+  "guestNotAllowed": "Guest users cannot use this feature",
+  "iDonTLoveThisApp": "I don't care, I'll regret",
+  "iLoveThisApp": "I'm sorry, I love this app",
   "jniAnalysis": "Ανάλυση JNI",
   "jniAnalysisDesc": "Βρείτε JNI υπογραφές στο APK",
   "language": "Language: {languageCode}",
@@ -36,31 +79,100 @@
       }
     }
   },
+  "largeModelWarning": "Large Model Warning",
   "later": "Αργότερα",
   "login": "Είσοδος",
+  "merge": "Merge",
   "mergeSplitApks": "Συγχώνευση Διαχωρισμού Apk",
+  "mergeUnsupportedOnWeb": "Split APK merging is not possible in the web version.",
+  "models": "Models",
   "mtHook": "MT Γάντζος",
   "mtHookDesc": "Δημιουργία MT Ενισχυμένη Αγκίστρια",
+  "noFileSelected": "No file selected",
   "ok": "Εντάξει",
   "ollama_api_url": "URL βάσης OLLAMA",
+  "ollamaInitializeError": "Failed to initialize Ollama client: {e}",
+  "@ollamaInitializeError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "openOllamaLibrary": "Open Ollama Library",
   "passLen": "Ο κωδικός πρόσβασης πρέπει να περιέχει τουλάχιστον 8 χαρακτήρες",
   "passMisMatch": "Οι κωδικοί πρόσβασης δεν ταιριάζουν",
   "password": "Κωδικός",
+  "pathToApkeditorJar": "Path to apkeditor jar",
   "pleaseConfirmPassword": "Παρακαλώ επιβεβαιώστε τον κωδικό πρόσβασης",
   "preferences": "Ρυθμίσεις",
+  "proceed": "Proceed",
   "profile": "Προφίλ",
   "register": "Εγγραφή",
+  "repair": "Repair",
+  "repairDexError": "Error repairing DEX file: {e}",
+  "@repairDexError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "repairDexSuccess": "DEX file repaired successfully. Saved to: {outputpath}",
+  "@repairDexSuccess": {
+    "placeholders": {
+      "outputpath": {
+        "type": "String"
+      }
+    }
+  },
+  "repairing": "Repairing...",
   "reset": "Reset",
+  "save": "Save",
+  "selectAModel": "Select a model to chat",
+  "selectFiles": "Select {type} File",
+  "@selectFiles": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
   "selectLanguage": "Επιλογή Γλώσσας",
+  "selectOrDownloadModel": "Please select or download a model in the “Models” tab.",
+  "selectValidFile": "Please select a valid {type} file",
+  "@selectValidFile": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "setJarPath": "Set apkeditor jar path",
+  "setSystemMessage": "Set System Message",
   "smaliGrammar": "Γραμματική Σμάλι",
   "suggestLogin": "Έχετε ένα λογαριασμό? Είσοδος",
   "suggestRegister": "Χρειάζεστε λογαριασμό? Εγγραφή",
+  "systemMessage": "System Message",
   "theme": "Θέμα",
+  "typeMessage": "Type your message…",
+  "uninstallWarning": "You were just about to uninstall the app weren't you?",
+  "unsupportedDartVersion": "Currently RevEngi only supports dart stable channel\n\nCurrent Dart Version: {dartversion}",
+  "@unsupportedDartVersion": {
+    "placeholders": {
+      "dartversion": {
+        "type": "String"
+      }
+    }
+  },
   "update": "Ενημέρωση",
   "updateAvailable": "Διαθέσιμη Ενημέρωση",
   "updateAvailableMessage": "Μια νέα έκδοση της εφαρμογής είναι διαθέσιμη. Θα θέλατε να ενημερώσετε τώρα?",
+  "uploading": "Uploading...",
   "username": "Όνομα Χρήστη",
   "usernameCond": "Το όνομα χρήστη μπορεί να περιέχει μόνο γράμματα, αριθμούς και κάτω παύλα",
   "usernameLimit": "Το όνομα χρήστη πρέπει να είναι μεταξύ 5 και 15 χαρακτήρων",
+  "validateModules": "Validate version of base.apk with split APKs",
+  "vrd": "Validate resources dir name",
   "welcomeBack": "Καλώς Ήρθατε!"
 }

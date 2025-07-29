@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:revengi/l10n/app_localizations.dart';
 import 'package:revengi/utils/platform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -75,9 +76,10 @@ class SplitApksMergerScreenState extends State<SplitApksMergerScreen> {
         return;
       }
       setState(() {
-        _selectedFile = result.files.single.path != null
-            ? File(result.files.single.path!)
-            : null;
+        _selectedFile =
+            result.files.single.path != null
+                ? File(result.files.single.path!)
+                : null;
         _fileName = result.files.first.name;
         _fileBytes = result.files.first.bytes ?? [];
       });
@@ -162,28 +164,30 @@ class SplitApksMergerScreenState extends State<SplitApksMergerScreen> {
 
   Future<void> _setJarPathSettings() async {
     final controller = TextEditingController(text: apkEditorJarPath ?? '');
+    final localizations = AppLocalizations.of(context)!;
     final result = await showDialog<String>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Set apkeditor jar path'),
-        content: TextField(
-          controller: controller,
-          decoration: const InputDecoration(
-            labelText: 'Path to apkeditor jar',
-            border: OutlineInputBorder(),
+      builder:
+          (context) => AlertDialog(
+            title: Text(localizations.setJarPath),
+            content: TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                labelText: localizations.pathToApkeditorJar,
+                border: OutlineInputBorder(),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(localizations.cancel),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context, controller.text.trim()),
+                child: Text(localizations.save),
+              ),
+            ],
           ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context, controller.text.trim()),
-            child: const Text('Save'),
-          ),
-        ],
-      ),
     );
     if (result != null && result.isNotEmpty) {
       await _setJarPath(result);
@@ -295,14 +299,15 @@ class SplitApksMergerScreenState extends State<SplitApksMergerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text('SplitApksMerger'),
+        title: Text(localizations.mergeSplitApks),
         actions: [
           if (isWindows() || isLinux())
             IconButton(
               icon: Icon(Icons.settings),
-              tooltip: 'Set apkeditor jar path',
+              tooltip: localizations.setJarPath,
               onPressed: _setJarPathSettings,
             ),
         ],
@@ -313,7 +318,7 @@ class SplitApksMergerScreenState extends State<SplitApksMergerScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Select APK File'),
+              Text(localizations.selectFiles("APK")),
               if (_selectedFile != null || _fileBytes.isNotEmpty)
                 Text(
                   'Selected: $_fileName',
@@ -323,17 +328,19 @@ class SplitApksMergerScreenState extends State<SplitApksMergerScreen> {
               ElevatedButton.icon(
                 onPressed: _pickFile,
                 icon: Icon(Icons.file_upload),
-                label: Text('Choose APK'),
+                label: Text(localizations.chooseFile("APK")),
               ),
               SizedBox(height: 20),
               Text('extractNativeLibs:'),
               DropdownButton<String>(
                 value: extractNativeLibs,
-                items: extractNativeLibsOptions
-                    .map(
-                      (opt) => DropdownMenuItem(value: opt, child: Text(opt)),
-                    )
-                    .toList(),
+                items:
+                    extractNativeLibsOptions
+                        .map(
+                          (opt) =>
+                              DropdownMenuItem(value: opt, child: Text(opt)),
+                        )
+                        .toList(),
                 onChanged: (value) {
                   setState(() {
                     extractNativeLibs = value!;
@@ -341,7 +348,7 @@ class SplitApksMergerScreenState extends State<SplitApksMergerScreen> {
                 },
               ),
               SwitchListTile(
-                title: Text('Validate resources dir name'),
+                title: Text(localizations.vrd),
                 value: validateResDir,
                 onChanged: (val) {
                   setState(() {
@@ -350,7 +357,7 @@ class SplitApksMergerScreenState extends State<SplitApksMergerScreen> {
                 },
               ),
               SwitchListTile(
-                title: Text('Clean META-INF directory'),
+                title: Text(localizations.cleanMeta),
                 value: cleanMeta,
                 onChanged: (val) {
                   setState(() {
@@ -359,7 +366,7 @@ class SplitApksMergerScreenState extends State<SplitApksMergerScreen> {
                 },
               ),
               SwitchListTile(
-                title: Text('Validate version of base.apk with split APKs'),
+                title: Text(localizations.validateModules),
                 value: validateModules,
                 onChanged: (val) {
                   setState(() {
@@ -379,12 +386,12 @@ class SplitApksMergerScreenState extends State<SplitApksMergerScreen> {
               Center(
                 child: ElevatedButton.icon(
                   icon: Icon(Icons.merge_type),
-                  label: Text('Merge'),
+                  label: Text(localizations.merge),
                   onPressed:
                       (_selectedFile != null || _fileBytes.isNotEmpty) &&
-                          !_isMerging
-                      ? _mergeFileTask
-                      : null,
+                              !_isMerging
+                          ? _mergeFileTask
+                          : null,
                   style: ElevatedButton.styleFrom(minimumSize: Size(160, 48)),
                 ),
               ),
@@ -406,9 +413,10 @@ class SplitApksMergerScreenState extends State<SplitApksMergerScreen> {
                       return Text(
                         log['msg'] ?? '',
                         style: TextStyle(
-                          color: log['type'] == 'error'
-                              ? Colors.redAccent
-                              : Colors.greenAccent,
+                          color:
+                              log['type'] == 'error'
+                                  ? Colors.redAccent
+                                  : Colors.greenAccent,
                           fontFamily: 'monospace',
                           fontSize: 14,
                         ),

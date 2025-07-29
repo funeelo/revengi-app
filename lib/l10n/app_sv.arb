@@ -1,5 +1,8 @@
 {
   "about": "Om",
+  "aiChat": "AI Chat",
+  "analyze": "Analyze",
+  "analyzing": "Analyzing...",
   "apiKey": "API nyckel",
   "apiRateLimits": "Gränser för API-slutpunkter",
   "apksToApk": "APKS till APK",
@@ -9,21 +12,61 @@
   "batteryOptimizationMessage": "För Android 13 och ovan, Vi måste inaktivera batterioptimering för att denna app ska fungera korrekt i bakgrunden.",
   "blutter": "Blutter",
   "blutterDesc": "Flutter binära analysverktyg",
+  "blutterNote": "\nAPK: The app will directly handle APK files.\n\r\nZIP: Ensure ZIP files contain only the `libapp.so` for arm64 architecture. Failure to comply may result in errors.",
   "cancel": "Avbryt",
+  "chat": "Chat",
   "checkForUpdate": "Sök efter uppdateringar",
+  "checkingDeviceRam": "Checking device RAM...",
+  "chooseFile": "Choose {type}",
+  "@chooseFile": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "cleanMeta": "Clean META-INF directory",
   "confirmPassword": "Bekräfta lösenord",
   "continueAsGuest": "Fortsätt som gäst",
   "copiedToClipboard": "Kopierad till urklipp",
   "createAccount": "Skapa konto",
   "dexRepair": "Dex Reparation",
   "dexRepairDesc": "Reparera DEX-filer",
+  "downloadedModels": "Downloaded Models:",
+  "downloading": "Downloading...",
+  "downloadModel": "Download a model:",
   "email": "E-post",
   "emailCond": "Ange en giltig Gmail-adress",
   "enterEmail": "Ange e-postadress",
+  "enterModelName": "Enter a model name",
   "enterPassword": "Ange lösenord",
   "enterUsername": "Ange användarnamn",
+  "errorDuringAnalysis": "An error occurred during analysis",
+  "failedToExtractFiles": "Failed to extract files from ZIP: {e}",
+  "@failedToExtractFiles": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToPullModel": "Failed to pull model: {error}",
+  "@failedToPullModel": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "featureNeedsApp": "Please use the desktop or mobile app for this feature.",
+  "fetchingModelInfo": "Fetching model info...",
   "flutterAnalysis": "Flutter Analys",
   "flutterAnalysisDesc": "Analysera Flutter libs",
+  "generate": "Generate",
+  "generating": "Generating...",
+  "guestNotAllowed": "Guest users cannot use this feature",
+  "iDonTLoveThisApp": "I don't care, I'll regret",
+  "iLoveThisApp": "I'm sorry, I love this app",
   "jniAnalysis": "JNI Analys",
   "jniAnalysisDesc": "Hitta JNI-signaturer i APK",
   "language": "Språk: {languageCode}",
@@ -36,31 +79,100 @@
       }
     }
   },
+  "largeModelWarning": "Large Model Warning",
   "later": "Senare",
   "login": "Inloggning",
+  "merge": "Merge",
   "mergeSplitApks": "Slå ihop delade APK:er",
+  "mergeUnsupportedOnWeb": "Split APK merging is not possible in the web version.",
+  "models": "Models",
   "mtHook": "MT krok",
   "mtHookDesc": "Generera MT-förbättrade krokar",
+  "noFileSelected": "No file selected",
   "ok": "OK",
   "ollama_api_url": "OLLAMA bas-URL",
+  "ollamaInitializeError": "Failed to initialize Ollama client: {e}",
+  "@ollamaInitializeError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "openOllamaLibrary": "Open Ollama Library",
   "passLen": "Lösenordet måste vara minst 8 tecken",
   "passMisMatch": "Lösenorden matchar inte",
   "password": "Lösenord",
+  "pathToApkeditorJar": "Path to apkeditor jar",
   "pleaseConfirmPassword": "Bekräfta lösenordet",
   "preferences": "Inställningar",
+  "proceed": "Proceed",
   "profile": "Profil",
   "register": "Registrera",
+  "repair": "Repair",
+  "repairDexError": "Error repairing DEX file: {e}",
+  "@repairDexError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "repairDexSuccess": "DEX file repaired successfully. Saved to: {outputpath}",
+  "@repairDexSuccess": {
+    "placeholders": {
+      "outputpath": {
+        "type": "String"
+      }
+    }
+  },
+  "repairing": "Repairing...",
   "reset": "Reset",
+  "save": "Save",
+  "selectAModel": "Select a model to chat",
+  "selectFiles": "Select {type} File",
+  "@selectFiles": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
   "selectLanguage": "Välj språk",
+  "selectOrDownloadModel": "Please select or download a model in the “Models” tab.",
+  "selectValidFile": "Please select a valid {type} file",
+  "@selectValidFile": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "setJarPath": "Set apkeditor jar path",
+  "setSystemMessage": "Set System Message",
   "smaliGrammar": "Smali Grammatik",
   "suggestLogin": "Har du ett konto? Logga in",
   "suggestRegister": "Behöver du ett konto? Registrera",
+  "systemMessage": "System Message",
   "theme": "Tema",
+  "typeMessage": "Type your message…",
+  "uninstallWarning": "You were just about to uninstall the app weren't you?",
+  "unsupportedDartVersion": "Currently RevEngi only supports dart stable channel\n\nCurrent Dart Version: {dartversion}",
+  "@unsupportedDartVersion": {
+    "placeholders": {
+      "dartversion": {
+        "type": "String"
+      }
+    }
+  },
   "update": "Uppdatera",
   "updateAvailable": "Uppdatering tillgänglig",
   "updateAvailableMessage": "En ny version av appen finns tillgänglig. Vill du uppdatera nu?",
+  "uploading": "Uploading...",
   "username": "Användarnamn",
   "usernameCond": "Användarnamnet kan endast innehålla bokstäver, siffror och understreck",
   "usernameLimit": "Användarnamnet måste vara mellan 5 och 15 tecken",
+  "validateModules": "Validate version of base.apk with split APKs",
+  "vrd": "Validate resources dir name",
   "welcomeBack": "Välkommen tillbaka!"
 }

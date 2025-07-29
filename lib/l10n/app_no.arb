@@ -1,5 +1,8 @@
 {
   "about": "Om",
+  "aiChat": "AI Chat",
+  "analyze": "Analyze",
+  "analyzing": "Analyzing...",
   "apiKey": "API-nøkkel (Automatic Translation)",
   "apiRateLimits": "API Endepunkter Grense (Automatic Translation)",
   "apksToApk": "APKS til APK",
@@ -9,21 +12,61 @@
   "batteryOptimizationMessage": "Vi må deaktivere batterioptimalisering for Android 13 og eldre for at denne appen skal fungere ordentlig i bakgrunnen.",
   "blutter": "Blutter",
   "blutterDesc": "Verktøy for binær analyse",
+  "blutterNote": "\nAPK: The app will directly handle APK files.\n\r\nZIP: Ensure ZIP files contain only the `libapp.so` for arm64 architecture. Failure to comply may result in errors.",
   "cancel": "Avbryt",
+  "chat": "Chat",
   "checkForUpdate": "Se etter oppdateringer",
+  "checkingDeviceRam": "Checking device RAM...",
+  "chooseFile": "Choose {type}",
+  "@chooseFile": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "cleanMeta": "Clean META-INF directory",
   "confirmPassword": "Bekreft passord",
   "continueAsGuest": "Fortsett som gjest",
   "copiedToClipboard": "Kopiert til utklippstavle",
   "createAccount": "Opprett konto",
   "dexRepair": "Dex reparasjon",
   "dexRepairDesc": "Reparer DEX filer",
+  "downloadedModels": "Downloaded Models:",
+  "downloading": "Downloading...",
+  "downloadModel": "Download a model:",
   "email": "E-post",
   "emailCond": "Vennligst skriv inn en gyldig Gmail-adresse",
   "enterEmail": "Skriv inn e-post adressen",
+  "enterModelName": "Enter a model name",
   "enterPassword": "Vennligst angi passord",
   "enterUsername": "Skriv inn brukernavn",
+  "errorDuringAnalysis": "An error occurred during analysis",
+  "failedToExtractFiles": "Failed to extract files from ZIP: {e}",
+  "@failedToExtractFiles": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToPullModel": "Failed to pull model: {error}",
+  "@failedToPullModel": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "featureNeedsApp": "Please use the desktop or mobile app for this feature.",
+  "fetchingModelInfo": "Fetching model info...",
   "flutterAnalysis": "Flutter analyse",
   "flutterAnalysisDesc": "Analyser libs",
+  "generate": "Generate",
+  "generating": "Generating...",
+  "guestNotAllowed": "Guest users cannot use this feature",
+  "iDonTLoveThisApp": "I don't care, I'll regret",
+  "iLoveThisApp": "I'm sorry, I love this app",
   "jniAnalysis": "JNI Analyse",
   "jniAnalysisDesc": "Finn JNI signaturer i APK",
   "language": "Språk: {languageCode}",
@@ -36,31 +79,100 @@
       }
     }
   },
+  "largeModelWarning": "Large Model Warning",
   "later": "Senere",
   "login": "Innlogging",
+  "merge": "Merge",
   "mergeSplitApks": "Slå sammen delte APKer",
+  "mergeUnsupportedOnWeb": "Split APK merging is not possible in the web version.",
+  "models": "Models",
   "mtHook": "MT Lastkrok",
   "mtHookDesc": "Generer MT Enhanced Hooks",
+  "noFileSelected": "No file selected",
   "ok": "OK",
   "ollama_api_url": "OLLAMA grunns-URL",
+  "ollamaInitializeError": "Failed to initialize Ollama client: {e}",
+  "@ollamaInitializeError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "openOllamaLibrary": "Open Ollama Library",
   "passLen": "Passordet må være minst 8 tegn",
   "passMisMatch": "Passordene samsvarer ikke",
   "password": "Passord",
+  "pathToApkeditorJar": "Path to apkeditor jar",
   "pleaseConfirmPassword": "Bekreft passord",
   "preferences": "Innstillinger",
+  "proceed": "Proceed",
   "profile": "Profil",
   "register": "Registrer",
+  "repair": "Repair",
+  "repairDexError": "Error repairing DEX file: {e}",
+  "@repairDexError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "repairDexSuccess": "DEX file repaired successfully. Saved to: {outputpath}",
+  "@repairDexSuccess": {
+    "placeholders": {
+      "outputpath": {
+        "type": "String"
+      }
+    }
+  },
+  "repairing": "Repairing...",
   "reset": "Reset",
+  "save": "Save",
+  "selectAModel": "Select a model to chat",
+  "selectFiles": "Select {type} File",
+  "@selectFiles": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
   "selectLanguage": "Velg språk",
+  "selectOrDownloadModel": "Please select or download a model in the “Models” tab.",
+  "selectValidFile": "Please select a valid {type} file",
+  "@selectValidFile": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "setJarPath": "Set apkeditor jar path",
+  "setSystemMessage": "Set System Message",
   "smaliGrammar": "Smali grammatikk",
   "suggestLogin": "Har du en konto? Logg inn",
   "suggestRegister": "Trenger du en konto? Registrer",
+  "systemMessage": "System Message",
   "theme": "Tema",
+  "typeMessage": "Type your message…",
+  "uninstallWarning": "You were just about to uninstall the app weren't you?",
+  "unsupportedDartVersion": "Currently RevEngi only supports dart stable channel\n\nCurrent Dart Version: {dartversion}",
+  "@unsupportedDartVersion": {
+    "placeholders": {
+      "dartversion": {
+        "type": "String"
+      }
+    }
+  },
   "update": "Oppdater",
   "updateAvailable": "Oppdatering tilgjengelig",
   "updateAvailableMessage": "En ny versjon av appen er tilgjengelig. Ønsker du å oppdatere nå?",
+  "uploading": "Uploading...",
   "username": "Brukernavn",
   "usernameCond": "Brukernavnet kan bare inneholde bokstaver, tall og understrekingstegn",
   "usernameLimit": "Brukernavnet må være mellom 5 og 15 tegn",
+  "validateModules": "Validate version of base.apk with split APKs",
+  "vrd": "Validate resources dir name",
   "welcomeBack": "Velkommen tilbake!"
 }

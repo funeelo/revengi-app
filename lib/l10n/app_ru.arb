@@ -1,5 +1,8 @@
 {
   "about": "О программе",
+  "aiChat": "AI Chat",
+  "analyze": "Analyze",
+  "analyzing": "Analyzing...",
   "apiKey": "Ключ API",
   "apiRateLimits": "Пределы конечной ставки API",
   "apksToApk": "APKS в АПК",
@@ -9,21 +12,61 @@
   "batteryOptimizationMessage": "Для Android 13 и выше нам нужно отключить оптимизацию батареи, чтобы это приложение работало правильно в фоновом режиме.",
   "blutter": "Blutter",
   "blutterDesc": "Инструмент бинарного анализа Flutter",
+  "blutterNote": "\nAPK: The app will directly handle APK files.\n\r\nZIP: Ensure ZIP files contain only the `libapp.so` for arm64 architecture. Failure to comply may result in errors.",
   "cancel": "Отмена",
+  "chat": "Chat",
   "checkForUpdate": "Проверить обновления",
+  "checkingDeviceRam": "Checking device RAM...",
+  "chooseFile": "Choose {type}",
+  "@chooseFile": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "cleanMeta": "Clean META-INF directory",
   "confirmPassword": "Подтверждение пароля",
   "continueAsGuest": "Продолжить как гость",
   "copiedToClipboard": "Скопировано в буфер обмена",
   "createAccount": "Создать Аккаунт",
   "dexRepair": "Ремонт",
   "dexRepairDesc": "Восстановление DEX файлов",
+  "downloadedModels": "Downloaded Models:",
+  "downloading": "Downloading...",
+  "downloadModel": "Download a model:",
   "email": "Почта",
   "emailCond": "Пожалуйста, введите действительный Gmail адрес",
   "enterEmail": "Пожалуйста, введите email",
+  "enterModelName": "Enter a model name",
   "enterPassword": "Введите пароль",
   "enterUsername": "Пожалуйста, введите имя пользователя",
+  "errorDuringAnalysis": "An error occurred during analysis",
+  "failedToExtractFiles": "Failed to extract files from ZIP: {e}",
+  "@failedToExtractFiles": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToPullModel": "Failed to pull model: {error}",
+  "@failedToPullModel": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "featureNeedsApp": "Please use the desktop or mobile app for this feature.",
+  "fetchingModelInfo": "Fetching model info...",
   "flutterAnalysis": "Анализ Flutter",
   "flutterAnalysisDesc": "Анализ библиотек Flutter",
+  "generate": "Generate",
+  "generating": "Generating...",
+  "guestNotAllowed": "Guest users cannot use this feature",
+  "iDonTLoveThisApp": "I don't care, I'll regret",
+  "iLoveThisApp": "I'm sorry, I love this app",
   "jniAnalysis": "JNI Анализ",
   "jniAnalysisDesc": "Поиск JNI подписей в APK",
   "language": "Язык: {languageCode}",
@@ -36,31 +79,100 @@
       }
     }
   },
+  "largeModelWarning": "Large Model Warning",
   "later": "Позже",
   "login": "Логин",
+  "merge": "Merge",
   "mergeSplitApks": "Объединить API",
+  "mergeUnsupportedOnWeb": "Split APK merging is not possible in the web version.",
+  "models": "Models",
   "mtHook": "MT Hook",
   "mtHookDesc": "Генерировать улучшенные хуки MT",
+  "noFileSelected": "No file selected",
   "ok": "Ок",
   "ollama_api_url": "OLLAMA базовый URL",
+  "ollamaInitializeError": "Failed to initialize Ollama client: {e}",
+  "@ollamaInitializeError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "openOllamaLibrary": "Open Ollama Library",
   "passLen": "Пароль должен содержать не менее 8 символов",
   "passMisMatch": "Пароли не совпадают",
   "password": "Пароль",
+  "pathToApkeditorJar": "Path to apkeditor jar",
   "pleaseConfirmPassword": "Подтвердите пароль",
   "preferences": "Настройки",
+  "proceed": "Proceed",
   "profile": "Профиль",
   "register": "Регистрация",
+  "repair": "Repair",
+  "repairDexError": "Error repairing DEX file: {e}",
+  "@repairDexError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "repairDexSuccess": "DEX file repaired successfully. Saved to: {outputpath}",
+  "@repairDexSuccess": {
+    "placeholders": {
+      "outputpath": {
+        "type": "String"
+      }
+    }
+  },
+  "repairing": "Repairing...",
   "reset": "Reset",
+  "save": "Save",
+  "selectAModel": "Select a model to chat",
+  "selectFiles": "Select {type} File",
+  "@selectFiles": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
   "selectLanguage": "Выберите язык",
+  "selectOrDownloadModel": "Please select or download a model in the “Models” tab.",
+  "selectValidFile": "Please select a valid {type} file",
+  "@selectValidFile": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "setJarPath": "Set apkeditor jar path",
+  "setSystemMessage": "Set System Message",
   "smaliGrammar": "Smali Grammar",
   "suggestLogin": "Уже есть аккаунт? Войдите",
   "suggestRegister": "Нужен аккаунт? Зарегистрироваться",
+  "systemMessage": "System Message",
   "theme": "Тема",
+  "typeMessage": "Type your message…",
+  "uninstallWarning": "You were just about to uninstall the app weren't you?",
+  "unsupportedDartVersion": "Currently RevEngi only supports dart stable channel\n\nCurrent Dart Version: {dartversion}",
+  "@unsupportedDartVersion": {
+    "placeholders": {
+      "dartversion": {
+        "type": "String"
+      }
+    }
+  },
   "update": "Обновить",
   "updateAvailable": "Доступно обновление",
   "updateAvailableMessage": "Доступна новая версия приложения. Хотите обновить сейчас?",
+  "uploading": "Uploading...",
   "username": "Имя пользователя",
   "usernameCond": "Имя пользователя может содержать только буквы, цифры и подчеркивание",
   "usernameLimit": "Имя пользователя должно быть от 5 до 15 символов",
+  "validateModules": "Validate version of base.apk with split APKs",
+  "vrd": "Validate resources dir name",
   "welcomeBack": "С возвращением!"
 }

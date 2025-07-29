@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:revengi/l10n/app_localizations.dart';
 import 'package:revengi/utils/dio.dart';
 import 'package:revengi/utils/platform.dart' show getDownloadsDirectory;
 import 'package:shared_preferences/shared_preferences.dart'
@@ -44,6 +45,7 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
 
   Future<void> _analyzeFile() async {
     if (_selectedFile == null) return;
+    final localizations = AppLocalizations.of(context)!;
 
     setState(() {
       _isAnalyzing = true;
@@ -118,14 +120,14 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
       final username = prefs.getString('username');
       setState(() {
         if (username == "guest") {
-          _error = "Guest users cannot use this feature";
+          _error = localizations.guestNotAllowed;
         } else {
           if (e.response?.data != null &&
               e.response?.data is Map &&
               e.response?.data['detail'] != null) {
             _error =
                 e.response?.data?['detail'] ??
-                'An error occurred during analysis';
+                localizations.errorDuringAnalysis;
           }
         }
       });
@@ -138,8 +140,9 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('MT Hook Analysis')),
+      appBar: AppBar(title: Text(localizations.mtHook)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -151,8 +154,8 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Select APK File',
+                    Text(
+                      localizations.selectFiles("APK"),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -171,7 +174,7 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
                           child: ElevatedButton.icon(
                             onPressed: _isAnalyzing ? null : _pickFile,
                             icon: const Icon(Icons.file_upload),
-                            label: const Text('Choose APK'),
+                            label: Text(localizations.chooseFile("APK")),
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -183,7 +186,9 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
                                     : _analyzeFile,
                             icon: const Icon(Icons.analytics),
                             label: Text(
-                              _isAnalyzing ? 'Generating...' : 'Generate',
+                              _isAnalyzing
+                                  ? localizations.generating
+                                  : localizations.generate,
                             ),
                           ),
                         ),
@@ -198,7 +203,7 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
               if (_uploadProgress > 0 && _uploadProgress < 1)
                 Column(
                   children: [
-                    const Text('Uploading...'),
+                    Text(localizations.uploading),
                     LinearProgressIndicator(value: _uploadProgress),
                     const SizedBox(height: 8),
                   ],
@@ -206,7 +211,7 @@ class _MTHookAnalysisScreenState extends State<MTHookAnalysisScreen> {
               if (_downloadProgress > 0 && _downloadProgress < 1)
                 Column(
                   children: [
-                    const Text('Downloading...'),
+                    Text(localizations.downloading),
                     LinearProgressIndicator(value: _downloadProgress),
                     const SizedBox(height: 8),
                   ],

@@ -1,5 +1,8 @@
 {
   "about": "Despre",
+  "aiChat": "AI Chat",
+  "analyze": "Analyze",
+  "analyzing": "Analyzing...",
   "apiKey": "Cheie API",
   "apiRateLimits": "Limitele ratei de finalizare API",
   "apksToApk": "APKS pentru APK",
@@ -9,21 +12,61 @@
   "batteryOptimizationMessage": "Pentru Android 13 și mai mare, trebuie să dezactivăm optimizarea bateriei pentru ca această aplicație să funcționeze corespunzător în fundal.",
   "blutter": "Blutter",
   "blutterDesc": "Instrument de analiză binară Flutter",
+  "blutterNote": "\nAPK: The app will directly handle APK files.\n\r\nZIP: Ensure ZIP files contain only the `libapp.so` for arm64 architecture. Failure to comply may result in errors.",
   "cancel": "Anulează",
+  "chat": "Chat",
   "checkForUpdate": "Verifică pentru actualizări",
+  "checkingDeviceRam": "Checking device RAM...",
+  "chooseFile": "Choose {type}",
+  "@chooseFile": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "cleanMeta": "Clean META-INF directory",
   "confirmPassword": "Confirmare parolă",
   "continueAsGuest": "Continuă ca Vizitator",
   "copiedToClipboard": "Copiat în clipboard",
   "createAccount": "Creare cont",
   "dexRepair": "Reparație Dex",
   "dexRepairDesc": "Repară fişierele DEX",
+  "downloadedModels": "Downloaded Models:",
+  "downloading": "Downloading...",
+  "downloadModel": "Download a model:",
   "email": "E-mail",
   "emailCond": "Te rugăm să introduci o adresă Gmail validă",
   "enterEmail": "Te rugăm să introduci e-mail",
+  "enterModelName": "Enter a model name",
   "enterPassword": "Vă rugăm să introduceţi parola",
   "enterUsername": "Introdu numele de utilizator",
+  "errorDuringAnalysis": "An error occurred during analysis",
+  "failedToExtractFiles": "Failed to extract files from ZIP: {e}",
+  "@failedToExtractFiles": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToPullModel": "Failed to pull model: {error}",
+  "@failedToPullModel": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "featureNeedsApp": "Please use the desktop or mobile app for this feature.",
+  "fetchingModelInfo": "Fetching model info...",
   "flutterAnalysis": "Analiză Flutter",
   "flutterAnalysisDesc": "Analizează frezele Flutter",
+  "generate": "Generate",
+  "generating": "Generating...",
+  "guestNotAllowed": "Guest users cannot use this feature",
+  "iDonTLoveThisApp": "I don't care, I'll regret",
+  "iLoveThisApp": "I'm sorry, I love this app",
   "jniAnalysis": "Analiza JNI",
   "jniAnalysisDesc": "Găsește semnăturile JNI în APK",
   "language": "Limbă: {languageCode}",
@@ -36,31 +79,100 @@
       }
     }
   },
+  "largeModelWarning": "Large Model Warning",
   "later": "Mai târziu",
   "login": "Autentificare",
+  "merge": "Merge",
   "mergeSplitApks": "Îmbinare APK-uri",
+  "mergeUnsupportedOnWeb": "Split APK merging is not possible in the web version.",
+  "models": "Models",
   "mtHook": "Cârlig MT",
   "mtHookDesc": "Genereaza Cârlige Imbunatite MT",
+  "noFileSelected": "No file selected",
   "ok": "Ok",
   "ollama_api_url": "URL bază OLLAMA",
+  "ollamaInitializeError": "Failed to initialize Ollama client: {e}",
+  "@ollamaInitializeError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "openOllamaLibrary": "Open Ollama Library",
   "passLen": "Parola trebuie să conțină cel puțin 8 caractere",
   "passMisMatch": "Parolele nu corespund",
   "password": "Parolă",
+  "pathToApkeditorJar": "Path to apkeditor jar",
   "pleaseConfirmPassword": "Vă rugăm să confirmați parola",
   "preferences": "Preferințe",
+  "proceed": "Proceed",
   "profile": "Profil",
   "register": "Inregistrare",
+  "repair": "Repair",
+  "repairDexError": "Error repairing DEX file: {e}",
+  "@repairDexError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "repairDexSuccess": "DEX file repaired successfully. Saved to: {outputpath}",
+  "@repairDexSuccess": {
+    "placeholders": {
+      "outputpath": {
+        "type": "String"
+      }
+    }
+  },
+  "repairing": "Repairing...",
   "reset": "Reset",
+  "save": "Save",
+  "selectAModel": "Select a model to chat",
+  "selectFiles": "Select {type} File",
+  "@selectFiles": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
   "selectLanguage": "Selectaţi limba",
+  "selectOrDownloadModel": "Please select or download a model in the “Models” tab.",
+  "selectValidFile": "Please select a valid {type} file",
+  "@selectValidFile": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "setJarPath": "Set apkeditor jar path",
+  "setSystemMessage": "Set System Message",
   "smaliGrammar": "Smali Grammar",
   "suggestLogin": "Ai un cont? Autentifică-te",
   "suggestRegister": "Ai nevoie de un cont? Înregistrează-te",
+  "systemMessage": "System Message",
   "theme": "Tema",
+  "typeMessage": "Type your message…",
+  "uninstallWarning": "You were just about to uninstall the app weren't you?",
+  "unsupportedDartVersion": "Currently RevEngi only supports dart stable channel\n\nCurrent Dart Version: {dartversion}",
+  "@unsupportedDartVersion": {
+    "placeholders": {
+      "dartversion": {
+        "type": "String"
+      }
+    }
+  },
   "update": "Actualizare",
   "updateAvailable": "Actualizare disponibilă",
   "updateAvailableMessage": "O nouă versiune a aplicației este disponibilă. Doriți să actualizați acum?",
+  "uploading": "Uploading...",
   "username": "Nume",
   "usernameCond": "Numele de utilizator poate conține doar litere, numere și underscore",
   "usernameLimit": "Numele de utilizator trebuie să aibă între 5 și 15 caractere",
+  "validateModules": "Validate version of base.apk with split APKs",
+  "vrd": "Validate resources dir name",
   "welcomeBack": "Bine ai revenit!"
 }

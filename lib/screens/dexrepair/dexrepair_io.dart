@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:revengi/l10n/app_localizations.dart';
 import 'package:revengi/utils/platform.dart';
 import 'package:crypto/crypto.dart';
 import 'package:archive/archive.dart';
@@ -76,6 +77,7 @@ class _DexRepairScreenState extends State<DexRepairScreen> {
   Future<void> _repairDexFile() async {
     if (_dexFile == null) return;
 
+    final localizations = AppLocalizations.of(context)!;
     setState(() {
       _isRepairing = true;
       _error = null;
@@ -104,11 +106,11 @@ class _DexRepairScreenState extends State<DexRepairScreen> {
       }
       await outputPath.writeAsBytes(repairedDex);
       setState(() {
-        _result = 'DEX file repaired successfully. Saved to: $outputPath';
+        _result = localizations.repairDexSuccess(outputPath.path);
       });
     } catch (e) {
       setState(() {
-        _error = 'Error repairing DEX file: $e';
+        _error = localizations.repairDexError(e.toString());
       });
     } finally {
       setState(() {
@@ -119,8 +121,9 @@ class _DexRepairScreenState extends State<DexRepairScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('Dex Repair')),
+      appBar: AppBar(title: Text(localizations.dexRepair)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -132,8 +135,8 @@ class _DexRepairScreenState extends State<DexRepairScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Select Dex File',
+                    Text(
+                      localizations.selectFiles("DEX"),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -146,10 +149,10 @@ class _DexRepairScreenState extends State<DexRepairScreen> {
                       subtitle:
                           (_dexFile != null)
                               ? Text(_fileName!)
-                              : const Text('No file selected'),
+                              : Text(localizations.noFileSelected),
                       trailing: ElevatedButton(
                         onPressed: _isRepairing ? null : _pickDexFile,
-                        child: const Text('Choose File'),
+                        child: Text(localizations.chooseFile("File")),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -161,7 +164,11 @@ class _DexRepairScreenState extends State<DexRepairScreen> {
                                 ? null
                                 : _repairDexFile,
                         icon: const Icon(Icons.analytics),
-                        label: Text(_isRepairing ? 'Repairing...' : 'Repair'),
+                        label: Text(
+                          _isRepairing
+                              ? localizations.repairing
+                              : localizations.repair,
+                        ),
                       ),
                     ),
                   ],

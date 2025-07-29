@@ -1,5 +1,8 @@
 {
   "about": "Про програму",
+  "aiChat": "AI Chat",
+  "analyze": "Analyze",
+  "analyzing": "Analyzing...",
   "apiKey": "API ключ",
   "apiRateLimits": "Ліміт кількості кінцевих точок API",
   "apksToApk": "APKS до APK",
@@ -9,21 +12,61 @@
   "batteryOptimizationMessage": "Для Android 13 і вище необхідно вимкнути оптимізацію заряду акумулятора для коректної роботи у фоновому режимі.",
   "blutter": "Blutter",
   "blutterDesc": "Програма неточного бінарного аналізу",
+  "blutterNote": "\nAPK: The app will directly handle APK files.\n\r\nZIP: Ensure ZIP files contain only the `libapp.so` for arm64 architecture. Failure to comply may result in errors.",
   "cancel": "Скасувати",
+  "chat": "Chat",
   "checkForUpdate": "Перевірити наявність оновлень",
+  "checkingDeviceRam": "Checking device RAM...",
+  "chooseFile": "Choose {type}",
+  "@chooseFile": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "cleanMeta": "Clean META-INF directory",
   "confirmPassword": "Підтвердити пароль",
   "continueAsGuest": "Продовжити як гість",
   "copiedToClipboard": "Скопійовано до буферу обміну",
   "createAccount": "Створити обл. запис",
   "dexRepair": "Відновити",
   "dexRepairDesc": "Відновлення файлів DEX",
+  "downloadedModels": "Downloaded Models:",
+  "downloading": "Downloading...",
+  "downloadModel": "Download a model:",
   "email": "Ел. пошта",
   "emailCond": "Будь ласка, введіть правильну Gmail адресу",
   "enterEmail": "Будь ласка, уведіть адресу ел. пошти",
+  "enterModelName": "Enter a model name",
   "enterPassword": "Будь ласка, введіть пароль",
   "enterUsername": "Будь ласка, введіть ім'я користувача",
+  "errorDuringAnalysis": "An error occurred during analysis",
+  "failedToExtractFiles": "Failed to extract files from ZIP: {e}",
+  "@failedToExtractFiles": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToPullModel": "Failed to pull model: {error}",
+  "@failedToPullModel": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "featureNeedsApp": "Please use the desktop or mobile app for this feature.",
+  "fetchingModelInfo": "Fetching model info...",
   "flutterAnalysis": "Пробний аналіз",
   "flutterAnalysisDesc": "Аналізувати очищання",
+  "generate": "Generate",
+  "generating": "Generating...",
+  "guestNotAllowed": "Guest users cannot use this feature",
+  "iDonTLoveThisApp": "I don't care, I'll regret",
+  "iLoveThisApp": "I'm sorry, I love this app",
   "jniAnalysis": "Аналіз JNI",
   "jniAnalysisDesc": "Знайти JNI підписи в APK",
   "language": "Language: {languageCode}",
@@ -36,31 +79,100 @@
       }
     }
   },
+  "largeModelWarning": "Large Model Warning",
   "later": "Пізніше",
   "login": "Логін",
+  "merge": "Merge",
   "mergeSplitApks": "Об'єднати розділені APK",
+  "mergeUnsupportedOnWeb": "Split APK merging is not possible in the web version.",
+  "models": "Models",
   "mtHook": "МТ Хук",
   "mtHookDesc": "Створити MT посилені хуки",
+  "noFileSelected": "No file selected",
   "ok": "Гаразд",
   "ollama_api_url": "Основний URL OLAMA",
+  "ollamaInitializeError": "Failed to initialize Ollama client: {e}",
+  "@ollamaInitializeError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "openOllamaLibrary": "Open Ollama Library",
   "passLen": "Пароль має складатися хоча б з 8 символів",
   "passMisMatch": "Паролі не збігаються",
   "password": "Пароль",
+  "pathToApkeditorJar": "Path to apkeditor jar",
   "pleaseConfirmPassword": "Будь ласка, підтвердіть пароль",
   "preferences": "Властивості",
+  "proceed": "Proceed",
   "profile": "Анкета",
   "register": "Зареєструватися",
+  "repair": "Repair",
+  "repairDexError": "Error repairing DEX file: {e}",
+  "@repairDexError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "repairDexSuccess": "DEX file repaired successfully. Saved to: {outputpath}",
+  "@repairDexSuccess": {
+    "placeholders": {
+      "outputpath": {
+        "type": "String"
+      }
+    }
+  },
+  "repairing": "Repairing...",
   "reset": "Reset",
+  "save": "Save",
+  "selectAModel": "Select a model to chat",
+  "selectFiles": "Select {type} File",
+  "@selectFiles": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
   "selectLanguage": "Оберіть мову",
+  "selectOrDownloadModel": "Please select or download a model in the “Models” tab.",
+  "selectValidFile": "Please select a valid {type} file",
+  "@selectValidFile": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "setJarPath": "Set apkeditor jar path",
+  "setSystemMessage": "Set System Message",
   "smaliGrammar": "Смалі Граматика",
   "suggestLogin": "Вже маєте обліковий запис? Увійдіть",
   "suggestRegister": "Потрібен обліковий запис? Зареєструватися",
+  "systemMessage": "System Message",
   "theme": "Тема",
+  "typeMessage": "Type your message…",
+  "uninstallWarning": "You were just about to uninstall the app weren't you?",
+  "unsupportedDartVersion": "Currently RevEngi only supports dart stable channel\n\nCurrent Dart Version: {dartversion}",
+  "@unsupportedDartVersion": {
+    "placeholders": {
+      "dartversion": {
+        "type": "String"
+      }
+    }
+  },
   "update": "Оновити",
   "updateAvailable": "Доступне оновлення",
   "updateAvailableMessage": "Доступна нова версія програми. Оновити зараз?",
+  "uploading": "Uploading...",
   "username": "Ім'я користувача",
   "usernameCond": "Ім'я користувача може містити лише літери, цифри та підкреслення",
   "usernameLimit": "Ім'я користувача повинно бути від 5 до 15 символів",
+  "validateModules": "Validate version of base.apk with split APKs",
+  "vrd": "Validate resources dir name",
   "welcomeBack": "З поверненням!"
 }

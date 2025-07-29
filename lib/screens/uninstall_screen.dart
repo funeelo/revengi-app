@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:revengi/l10n/app_localizations.dart';
+import 'package:revengi/screens/splash.dart';
 
 class UninstallScreen extends StatelessWidget {
   const UninstallScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Container(
@@ -18,8 +21,8 @@ class UninstallScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                "You were just about to uninstall the app weren't you?",
+              Text(
+                localizations.uninstallWarning,
                 style: TextStyle(
                   color: Colors.greenAccent,
                   fontSize: 24,
@@ -33,9 +36,14 @@ class UninstallScreen extends StatelessWidget {
                   backgroundColor: Colors.green,
                   foregroundColor: Colors.black,
                 ),
-                onPressed: () => Navigator.pop(context),
-                child: const Text(
-                  "I'm sorry, I love this app",
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => const SplashScreen()),
+                  );
+                },
+                child: Text(
+                  localizations.iLoveThisApp,
                   style: TextStyle(fontFamily: 'Courier'),
                 ),
               ),
@@ -43,8 +51,8 @@ class UninstallScreen extends StatelessWidget {
               TextButton(
                 style: TextButton.styleFrom(foregroundColor: Colors.redAccent),
                 onPressed: () => SystemNavigator.pop(),
-                child: const Text(
-                  "I don't care, I'll regret",
+                child: Text(
+                  localizations.iDonTLoveThisApp,
                   style: TextStyle(fontFamily: 'Courier'),
                 ),
               ),

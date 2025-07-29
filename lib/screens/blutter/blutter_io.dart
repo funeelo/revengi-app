@@ -3,6 +3,7 @@ import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:revengi/l10n/app_localizations.dart';
 import 'package:revengi/utils/dartinfo.dart';
 import 'package:revengi/utils/platform.dart';
 import 'package:revengi/utils/dio.dart';
@@ -46,6 +47,7 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
   Future<void> _extractFiles() async {
     if (_apkFile == null) return;
 
+    final localizations = AppLocalizations.of(context)!;
     final Directory directory = Directory.systemTemp;
     final apkPath = _apkFile!.path;
     final zipFile = File(apkPath);
@@ -78,13 +80,14 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
       });
     } catch (e) {
       setState(() {
-        _error = 'Failed to extract files from ZIP: $e';
+        _error = localizations.failedToExtractFiles(e.toString());
       });
     }
   }
 
   Future<void> _analyzeFiles() async {
     if (_libappFile == null || _libflutterFile == null) return;
+    final localizations = AppLocalizations.of(context)!;
 
     setState(() {
       _isAnalyzing = true;
@@ -103,8 +106,7 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
         dartVersion = sdkInfo?.dartVersion;
       }
       if (dartVersion!.endsWith('.dev') || dartVersion.endsWith('.beta')) {
-        _error =
-            'Currently RevEngi only supports dart stable channel\n\nCurrent Dart Version: $dartVersion';
+        _error = localizations.unsupportedDartVersion(dartVersion);
         return;
       }
       final formData = FormData.fromMap({
@@ -177,13 +179,12 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
       final username = prefs.getString('username');
       setState(() {
         if (username == "guest") {
-          _error = "Guest users cannot use this feature";
+          _error = localizations.guestNotAllowed;
         } else if (e.response?.data != null &&
             e.response?.data is Map &&
             e.response?.data['detail'] != null) {
           _error =
-              e.response?.data?['detail'] ??
-              'An error occurred during analysis';
+              e.response?.data?['detail'] ?? localizations.errorDuringAnalysis;
         } else if (e.type == DioExceptionType.connectionTimeout) {
           _error = 'Connection timeout';
         } else if (e.type == DioExceptionType.connectionError) {
@@ -204,8 +205,9 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('Blutter Analysis')),
+      appBar: AppBar(title: Text(localizations.blutter)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -217,8 +219,8 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Select APK/Zip File',
+                    Text(
+                      localizations.selectFiles("APK/Zip"),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -236,10 +238,10 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
                                     .last,
                                 style: const TextStyle(color: Colors.green),
                               )
-                              : const Text('No file selected'),
+                              : Text(localizations.noFileSelected),
                       trailing: ElevatedButton(
                         onPressed: _isAnalyzing ? null : _pickApkFile,
-                        child: const Text('Choose File'),
+                        child: Text(localizations.chooseFile("File")),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -255,9 +257,7 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
                             ),
                           ),
                           TextSpan(
-                            text:
-                                '\nAPK: The app will directly handle APK files.\n'
-                                '\nZIP: Ensure ZIP files contain only the `libapp.so` for arm64 architecture. Failure to comply may result in errors.',
+                            text: localizations.blutterNote,
                             style: const TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -275,7 +275,11 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
                                 ? null
                                 : _analyzeFiles,
                         icon: const Icon(Icons.analytics),
-                        label: Text(_isAnalyzing ? 'Analyzing...' : 'Analyze'),
+                        label: Text(
+                          _isAnalyzing
+                              ? localizations.analyzing
+                              : localizations.analyze,
+                        ),
                       ),
                     ),
                   ],
@@ -287,7 +291,7 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
               if (_uploadProgress > 0 && _uploadProgress < 1)
                 Column(
                   children: [
-                    const Text('Uploading...'),
+                    Text(localizations.uploading),
                     LinearProgressIndicator(value: _uploadProgress),
                     const SizedBox(height: 8),
                   ],
@@ -295,7 +299,7 @@ class _BlutterAnalysisScreenState extends State<BlutterAnalysisScreen> {
               if (_downloadProgress > 0 && _downloadProgress < 1)
                 Column(
                   children: [
-                    const Text('Downloading...'),
+                    Text(localizations.downloading),
                     LinearProgressIndicator(value: _downloadProgress),
                     const SizedBox(height: 8),
                   ],

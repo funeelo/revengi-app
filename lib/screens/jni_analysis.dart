@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:revengi/l10n/app_localizations.dart';
 import 'package:revengi/utils/platform.dart';
 import 'package:revengi/utils/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart'
@@ -49,6 +50,7 @@ class _JniAnalysisScreenState extends State<JniAnalysisScreen> {
   }
 
   Future<void> _analyzeFile() async {
+    final localizations = AppLocalizations.of(context)!;
     if ((isWeb() && _fileBytes.isEmpty) ||
         (!isWeb() && _selectedFile == null)) {
       return;
@@ -83,14 +85,14 @@ class _JniAnalysisScreenState extends State<JniAnalysisScreen> {
       final username = prefs.getString('username');
       setState(() {
         if (username == "guest") {
-          _error = "Guest users cannot use this feature";
+          _error = localizations.guestNotAllowed;
         } else {
           if (e.response?.data != null &&
               e.response?.data is Map &&
               e.response?.data['detail'] != null) {
             _error =
                 e.response?.data?['detail'] ??
-                'An error occurred during analysis';
+                localizations.errorDuringAnalysis;
           }
         }
       });
@@ -103,8 +105,9 @@ class _JniAnalysisScreenState extends State<JniAnalysisScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('JNI Analysis')),
+      appBar: AppBar(title: Text(localizations.jniAnalysis)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -116,8 +119,8 @@ class _JniAnalysisScreenState extends State<JniAnalysisScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Select APK File',
+                    Text(
+                      localizations.selectFiles("APK"),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -141,7 +144,7 @@ class _JniAnalysisScreenState extends State<JniAnalysisScreen> {
                           child: ElevatedButton.icon(
                             onPressed: _isAnalyzing ? null : _pickFile,
                             icon: const Icon(Icons.file_upload),
-                            label: const Text('Choose APK'),
+                            label: Text(localizations.chooseFile("APK")),
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -156,7 +159,9 @@ class _JniAnalysisScreenState extends State<JniAnalysisScreen> {
                                     : _analyzeFile,
                             icon: const Icon(Icons.analytics),
                             label: Text(
-                              _isAnalyzing ? 'Analyzing...' : 'Analyze',
+                              _isAnalyzing
+                                  ? localizations.analyzing
+                                  : localizations.analyze,
                             ),
                           ),
                         ),
