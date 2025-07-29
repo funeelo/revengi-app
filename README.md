@@ -79,6 +79,10 @@ The RevEngi App project is continuously evolving.  Future plans include:
 
 Contributions to RevEngi App are welcome!  Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute.
 
+## Localization & Contributions
+
+This project is localized through our [Crowdin project](https://crowdin.com/project/revengi-app). We welcome contributions to improve existing translations or add support for new languages. Join our Crowdin workspace to get started!
+
 ## Hacking
 
 To get started with hacking on RevEngi App, please refer to the [HACKING.md](HACKING.md) file.
