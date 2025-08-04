@@ -44,10 +44,11 @@ You can get the latest release from our website [here](https://revengi.in/downlo
 
 Alternatively, you can download the latest/past release(s) from the [Releases](https://github.com/RevEngiSquad/revengi-app/releases) page.
 
-> [!NOTE]
+> [!TIP]
 > Make sure to verify the checksum of the downloaded file to ensure its integrity.
 
 ## Reproducible Builds
+![](https://shields.rbtlog.dev/simple/builders/org.revengi.app?style=for-the-badge)
 
 RevEngi App ensures completely reproducible builds. Reproducible builds are a set of software development practices that create an independently-verifiable path from source to binary code. [Find out more](https://reproducible-builds.org/docs/definition/)
 
