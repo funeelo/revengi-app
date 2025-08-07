@@ -291,7 +291,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Raw data"),
+          title: Text(localizations.rawData),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -305,14 +305,14 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
           ),
           actions: <Widget>[
             TextButton(
-              child: Text("Copy"),
+              child: Text(localizations.copy),
               onPressed: () {
                 copyToClipboard(textEditingController.text);
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text("Copy Base64"),
+              child: Text(localizations.copyBase64),
               onPressed: () {
                 copyToClipboard(baseData);
                 Navigator.of(context).pop();
@@ -353,7 +353,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "Signature Information",
+                      localizations.signInfo,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -374,7 +374,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                             TableRow(
                               children: [
                                 Text(
-                                  "Scheme",
+                                  localizations.scheme,
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 InkWell(
@@ -398,7 +398,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                             TableRow(
                               children: [
                                 Text(
-                                  "Algorithm",
+                                  localizations.algorithm,
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 InkWell(
@@ -420,7 +420,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                             TableRow(
                               children: [
                                 Text(
-                                  "Status",
+                                  localizations.status,
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 InkWell(
@@ -446,7 +446,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                             TableRow(
                               children: [
                                 Text(
-                                  "Created",
+                                  localizations.createDate,
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 InkWell(
@@ -469,7 +469,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                             TableRow(
                               children: [
                                 Text(
-                                  "Expired",
+                                  localizations.expireDate,
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 InkWell(
@@ -492,7 +492,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                             TableRow(
                               children: [
                                 Text(
-                                  "Owner",
+                                  localizations.owner,
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 InkWell(
@@ -806,14 +806,14 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                             TableRow(
                               children: [
                                 Text(
-                                  "Format",
+                                  localizations.format,
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Column(
                                   children: [
                                     Row(
                                       children: [
-                                        Text("Add colon"),
+                                        Text(localizations.addColon),
                                         Switch.adaptive(
                                           value: addColon,
                                           onChanged: (value) {
@@ -826,7 +826,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                     ),
                                     Row(
                                       children: [
-                                        Text("Upper case"),
+                                        Text(localizations.upperCase),
                                         Switch.adaptive(
                                           value: upperCase,
                                           onChanged: (value) {
@@ -854,7 +854,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                             _rawData(signInfo.rawData, signInfo.baseData);
                           },
                           child: Text(
-                            "View Data".toUpperCase(),
+                            localizations.viewData.toUpperCase(),
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -1075,7 +1075,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                         TableRow(
                           children: [
                             Text(
-                              "Signature",
+                              localizations.signature,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             InkWell(
