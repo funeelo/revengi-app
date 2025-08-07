@@ -499,7 +499,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               (!isWeb() && isAndroid())
                   ? ListTile(
                     leading: const Icon(Icons.layers),
-                    title: Text("Extract APK"),
+                    title: Text(localizations.extractApk),
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.push(
