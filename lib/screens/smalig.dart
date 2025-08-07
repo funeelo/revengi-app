@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:revengi/l10n/app_localizations.dart';
 import 'package:yaml/yaml.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,34 +36,33 @@ class _SmaliInstructionDialogState extends State<SmaliInstructionDialog> {
   }
 
   Future<void> _showInfoDialog() async {
+    final localizations = AppLocalizations.of(context)!;
     await showDialog(
       context: context,
       builder:
           (context) => AlertDialog(
-            title: const Text('Smali Grammar Information'),
+            title: Text(localizations.briefSummary),
             content: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                children: const [
-                  Text(
-                    'This view contains the grammar for the Smali language (Dalvik Bytecode Opcodes).',
-                  ),
+                children: [
+                  Text(localizations.smaligInfo2),
                   SizedBox(height: 16),
-                  Text('Key components:'),
+                  Text("${localizations.keyComponents}:"),
                   Text('• opcode: Hexadecimal representation'),
                   Text('• name: Opcode name'),
                   Text('• format: Opcode format'),
                   Text('• syntax: Usual syntax'),
                   Text('• args_info: Argument information'),
                   SizedBox(height: 16),
-                  Text('Register information:'),
+                  Text("${localizations.registerInformation}:"),
                   Text('• vA: Destination register (4-bit, registers 0-15)'),
                   Text('• vAA: 8-bit register (0-255)'),
                   Text('• vAAAA: 16-bit register (0-65535)'),
                   Text('• vB: Source register'),
                   SizedBox(height: 16),
-                  Text('Arguments:'),
+                  Text("${localizations.arguments}:"),
                   Text('• #+X: Literal value'),
                   Text('• +X: Relative instruction address offset'),
                   Text('• kind@X: Literal constant pool index'),
@@ -72,7 +72,7 @@ class _SmaliInstructionDialogState extends State<SmaliInstructionDialog> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('OK'),
+                child: Text(localizations.ok),
               ),
               TextButton(
                 onPressed: () async {
@@ -82,7 +82,7 @@ class _SmaliInstructionDialogState extends State<SmaliInstructionDialog> {
                     Navigator.of(context).pop();
                   }
                 },
-                child: const Text('Never show again'),
+                child: Text(localizations.neverShowAgain),
               ),
             ],
           ),
