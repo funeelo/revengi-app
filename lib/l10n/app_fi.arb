@@ -5,9 +5,27 @@
   "analyzing": "Tarkastellaan...",
   "apiKey": "Api Avain",
   "apiRateLimits": "Api Päättymispisteiden Nopeusrajat",
+  "apkExtractedMsg": "APK extracted successfully to {outputfile}",
+  "@apkExtractedMsg": {
+    "placeholders": {
+      "outputfile": {
+        "type": "String"
+      }
+    }
+  },
+  "apkExtractError": "Error extracting APK: {e}",
+  "@apkExtractError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "apkPath": "APK path",
   "apksToApk": "APKS APK",
   "appDescription": "Kokoelma kääntöteknisiä työkaluja.",
   "appTitle": "RevEngi",
+  "availableIn": "Available in",
   "batteryOptimization": "Akun Optimointi",
   "batteryOptimizationMessage": "Android-laitteelle 13 ja sitä vanhemmalle Meidän on poistettava akun optimointi käytöstä, jotta tämä sovellus toimisi kunnolla taustalla.",
   "blutter": "Blutter",
@@ -30,6 +48,9 @@
   "continueAsGuest": "Jatka vieraana",
   "copiedToClipboard": "Kopioitu leikepöydälle",
   "createAccount": "Luo Tili",
+  "dataDirectory": "Data directory",
+  "dataDirectory2": "Data directory 2",
+  "details": "Details",
   "developer": "Kehittäjä",
   "dexRepair": "Dex Korjaus",
   "dexRepairDesc": "Korjaa DEX-tiedostot",
@@ -44,6 +65,9 @@
   "enterPassword": "Anna salasana",
   "enterUsername": "Syötä käyttäjänimi",
   "errorDuringAnalysis": "Analyysin aikana tapahtui virhe",
+  "excludeSystemApps": "Exclude System Apps",
+  "extractApk": "Extract APK",
+  "extractingApk": "Extracting APK",
   "failedToExtractFiles": "Ei voitu poimia tiedostoja ZIP: {e}",
   "@failedToExtractFiles": {
     "placeholders": {
@@ -62,6 +86,10 @@
   },
   "featureNeedsApp": "Ole hyvä ja käytä työpöytä- tai mobiilisovellusta tähän ominaisuuteen.",
   "fetchingModelInfo": "Haetaan mallin tietoja...",
+  "fileExists": "File Exists",
+  "fileExistsMsg": "File already exists. Do you want to overwrite it?",
+  "fileSize": "File size",
+  "firstInstall": "First install",
   "flutterAnalysis": "Flutterin Analyysi",
   "flutterAnalysisDesc": "Analysoi Flutter libs",
   "generate": "Luo",
@@ -69,6 +97,8 @@
   "guestNotAllowed": "Vieraat käyttäjät eivät voi käyttää tätä ominaisuutta",
   "iDonTLoveThisApp": "En välitä, minä olen pahoillani",
   "iLoveThisApp": "Anteeksi, rakastan tätä sovellusta",
+  "includeSystemApps": "Include System Apps",
+  "installer": "Installer",
   "jniAnalysis": "JNI- Analyysi",
   "jniAnalysisDesc": "Etsi JNI allekirjoituksia APK",
   "language": "Kieli: {languageCode}",
@@ -82,17 +112,30 @@
     }
   },
   "largeModelWarning": "Suuri Malli Varoitus",
+  "lastUpdate": "Last update",
   "later": "Myöhemmin",
+  "launch": "Launch",
   "licenses": "Lisenssit",
   "login": "Kirjaudu",
   "mail": "Sähköposti",
+  "manualDeleteRequired": "Kindly manually delete the file/directory at {outputfile} and try again",
+  "@manualDeleteRequired": {
+    "placeholders": {
+      "outputfile": {
+        "type": "String"
+      }
+    }
+  },
   "merge": "Yhdistä",
   "mergeSplitApks": "Yhdistä Jaetut APK:t",
   "mergeUnsupportedOnWeb": "Jaettu APK yhdistäminen ei ole mahdollista web-versiossa.",
   "models": "Mallit",
+  "more": "More",
   "mtHook": "MT Koukku",
   "mtHookDesc": "Luo Mt Enhanced Koukut",
+  "noAppsFound": "No apps found",
   "noFileSelected": "Ei valittua tiedostoa",
+  "notFound": "Not Found",
   "ok": "OK",
   "ollama_api_url": "OLLAMAn perusosoite",
   "ollamaInitializeError": "Ollama asiakasohjelman alustus epäonnistui: {e}",
@@ -104,12 +147,16 @@
     }
   },
   "openOllamaLibrary": "Avaa Ollaman Kirjasto",
+  "overwrite": "Overwrite",
+  "packageName": "Package name",
   "passLen": "Salasanan tulee olla vähintään 8 merkkiä pitkä",
   "passMisMatch": "Salasanat eivät täsmää",
   "password": "Salasana",
   "pathToApkeditorJar": "Polku apkeditor purkkiin",
   "pleaseConfirmPassword": "Vahvista salasana",
+  "pleaseWait": "Please wait...",
   "preferences": "Asetukset",
+  "pressBackAgainToExit": "Press back again to exit",
   "proceed": "Jatka",
   "profile": "Profiili",
   "register": "Rekisteröidy",
@@ -133,6 +180,7 @@
   "repairing": "Korjataan...",
   "reset": "Reset",
   "save": "Tallenna",
+  "searchApps": "Search apps...",
   "selectAModel": "Valitse malli keskustellaksesi",
   "selectFiles": "Valitse {type} Tiedosto",
   "@selectFiles": {
@@ -160,7 +208,9 @@
   "systemMessage": "Järjestelmän Viesti",
   "theme": "Teema",
   "typeMessage": "Type your message…",
+  "uninstall": "Uninstall",
   "uninstallWarning": "Oletko juuri aikeissa poistaa sovelluksen oletko sinä?",
+  "unknown": "Unknown",
   "unsupportedDartVersion": "Currently RevEngi only supports dart stable channel\n\nCurrent Dart Version: {dartversion}",
   "@unsupportedDartVersion": {
     "placeholders": {
@@ -177,6 +227,7 @@
   "usernameCond": "Käyttäjätunnus voi sisältää vain kirjaimia, numeroita ja alaviivoja",
   "usernameLimit": "Käyttäjänimen tulee olla 5-15 merkkiä pitkä.",
   "validateModules": "Vahvista versio base.apk split APKs",
+  "versionCode": "Version code",
   "vrd": "Vahvista resurssien dir nimi",
   "welcomeBack": "Tervetuloa Takaisin!"
 }

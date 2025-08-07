@@ -5,11 +5,29 @@
   "analyzing": "Analyse...",
   "apiKey": "API-Schlüssel",
   "apiRateLimits": "API-Endpunktbegrenzung",
+  "apkExtractedMsg": "APK extracted successfully to {outputfile}",
+  "@apkExtractedMsg": {
+    "placeholders": {
+      "outputfile": {
+        "type": "String"
+      }
+    }
+  },
+  "apkExtractError": "Error extracting APK: {e}",
+  "@apkExtractError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "apkPath": "APK path",
   "apksToApk": "APKS zu APK",
   "appDescription": "Eine Sammlung von Reverse Engineering Tools.",
   "appTitle": "RevEngi",
+  "availableIn": "Available in",
   "batteryOptimization": "Akku-Optimierung",
-  "batteryOptimizationMessage": "Für Android 13 und höher müssen wir die Batterieoptimierung deaktivieren, damit diese App im Hintergrund korrekt funktioniert.",
+  "batteryOptimizationMessage": "Für Android 11 und höher müssen wir die Batterieoptimierung deaktivieren, damit diese App im Hintergrund korrekt funktioniert.",
   "blutter": "Blutter",
   "blutterDesc": "Flutter Binäranalyse-Tool",
   "blutterNote": "\nAPK: Die App verarbeitet direkt APK-Dateien.\n\r\nZIP: Stellen Sie sicher, dass ZIP-Dateien nur die `libapp' enthalten. o` für die arm64-Architektur. Bei Nichteinhaltung kann es zu Fehlern kommen.",
@@ -30,6 +48,9 @@
   "continueAsGuest": "Als Gast fortfahren",
   "copiedToClipboard": "In Zwischenablage kopiert",
   "createAccount": "Konto erstellen",
+  "dataDirectory": "Data directory",
+  "dataDirectory2": "Data directory 2",
+  "details": "Details",
   "developer": "Entwickler",
   "dexRepair": "Dex Reparatur",
   "dexRepairDesc": "DEX-Dateien reparieren",
@@ -44,6 +65,9 @@
   "enterPassword": "Bitte Passwort eingeben",
   "enterUsername": "Bitte Benutzername eingeben",
   "errorDuringAnalysis": "Während der Analyse ist ein Fehler aufgetreten",
+  "excludeSystemApps": "Exclude System Apps",
+  "extractApk": "Extract APK",
+  "extractingApk": "Extracting APK",
   "failedToExtractFiles": "Fehler beim Entpacken von Dateien aus ZIP: {e}",
   "@failedToExtractFiles": {
     "placeholders": {
@@ -62,6 +86,10 @@
   },
   "featureNeedsApp": "Bitte verwenden Sie den Desktop oder die mobile App für diese Funktion.",
   "fetchingModelInfo": "Modelinformationen werden abgerufen...",
+  "fileExists": "File Exists",
+  "fileExistsMsg": "File already exists. Do you want to overwrite it?",
+  "fileSize": "File size",
+  "firstInstall": "First install",
   "flutterAnalysis": "Flutter-Analyse",
   "flutterAnalysisDesc": "Flutter-Bibliotheken analysieren",
   "generate": "Generieren",
@@ -69,6 +97,8 @@
   "guestNotAllowed": "Gastbenutzer können diese Funktion nicht verwenden",
   "iDonTLoveThisApp": "Es ist mir egal, ich bereue",
   "iLoveThisApp": "Tut mir leid, ich liebe diese App",
+  "includeSystemApps": "Include System Apps",
+  "installer": "Installer",
   "jniAnalysis": "JNI Analyse",
   "jniAnalysisDesc": "JNI-Signaturen in APK finden",
   "language": "Sprache: {languageCode}",
@@ -82,17 +112,30 @@
     }
   },
   "largeModelWarning": "Große Modellwarnung",
+  "lastUpdate": "Last update",
   "later": "Später",
+  "launch": "Launch",
   "licenses": "Lizenzen",
   "login": "Anmelden",
   "mail": "Mail",
+  "manualDeleteRequired": "Kindly manually delete the file/directory at {outputfile} and try again",
+  "@manualDeleteRequired": {
+    "placeholders": {
+      "outputfile": {
+        "type": "String"
+      }
+    }
+  },
   "merge": "Zusammenführen",
   "mergeSplitApks": "Split APKs zusammenführen",
   "mergeUnsupportedOnWeb": "Split APK Zusammenführung ist in der Web-Version nicht möglich.",
   "models": "Modelle",
+  "more": "More",
   "mtHook": "MT-Haken",
   "mtHookDesc": "MT Verbesserte Hooks generieren",
+  "noAppsFound": "No apps found",
   "noFileSelected": "Keine Datei ausgewählt",
+  "notFound": "Not Found",
   "ok": "Ok",
   "ollama_api_url": "OLLAMA Basis-URL",
   "ollamaInitializeError": "Fehler beim Initialisieren des Ollama Clients: {e}",
@@ -104,12 +147,16 @@
     }
   },
   "openOllamaLibrary": "Ollama Bibliothek öffnen",
+  "overwrite": "Overwrite",
+  "packageName": "Package name",
   "passLen": "Passwort muss mindestens 8 Zeichen lang sein",
   "passMisMatch": "Passwörter stimmen nicht überein",
   "password": "Passwort",
   "pathToApkeditorJar": "Pfad zu apkeditor jar",
   "pleaseConfirmPassword": "Bitte bestätigen Sie das Passwort",
+  "pleaseWait": "Please wait...",
   "preferences": "Einstellungen",
+  "pressBackAgainToExit": "Press back again to exit",
   "proceed": "Fortfahren",
   "profile": "Profil",
   "register": "Registrieren",
@@ -133,6 +180,7 @@
   "repairing": "Repariere...",
   "reset": "Reset",
   "save": "Speichern",
+  "searchApps": "Search apps...",
   "selectAModel": "Wählen Sie ein Modell zum chatten",
   "selectFiles": "Wähle {type} Datei",
   "@selectFiles": {
@@ -160,7 +208,9 @@
   "systemMessage": "Systemnachricht",
   "theme": "Thema",
   "typeMessage": "Geben Sie Ihre Nachricht… ein",
+  "uninstall": "Uninstall",
   "uninstallWarning": "Sie waren gerade dabei, die App zu deinstallieren, nicht wahr?",
+  "unknown": "Unknown",
   "unsupportedDartVersion": "Derzeit unterstützt RevEngi nur den stabilen Kanal\n\nAktuelle Dart Version: {dartversion}",
   "@unsupportedDartVersion": {
     "placeholders": {
@@ -177,6 +227,7 @@
   "usernameCond": "Benutzername darf nur Buchstaben, Zahlen und Unterstriche enthalten",
   "usernameLimit": "Benutzername muss zwischen 5 und 15 Zeichen lang sein",
   "validateModules": "Version von base.apk mit geteilten APKs überprüfen",
+  "versionCode": "Version code",
   "vrd": "Überprüfe Ressourcen-Verzeichnisname",
   "welcomeBack": "Willkommen zurück!"
 }

@@ -5,11 +5,29 @@
   "analyzing": "Анализ...",
   "apiKey": "Ключ API",
   "apiRateLimits": "Пределы конечной ставки API",
+  "apkExtractedMsg": "APK extracted successfully to {outputfile}",
+  "@apkExtractedMsg": {
+    "placeholders": {
+      "outputfile": {
+        "type": "String"
+      }
+    }
+  },
+  "apkExtractError": "Error extracting APK: {e}",
+  "@apkExtractError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "apkPath": "APK path",
   "apksToApk": "APKS в АПК",
   "appDescription": "Сбор обратных инженерных инструментов.",
   "appTitle": "RevEngi",
+  "availableIn": "Available in",
   "batteryOptimization": "Оптимизация батареи",
-  "batteryOptimizationMessage": "Для Android 13 и выше нам нужно отключить оптимизацию батареи, чтобы это приложение работало правильно в фоновом режиме.",
+  "batteryOptimizationMessage": "Для Android 11 и выше нам нужно отключить оптимизацию батареи, чтобы это приложение работало правильно в фоновом режиме.",
   "blutter": "Blutter",
   "blutterDesc": "Инструмент бинарного анализа Flutter",
   "blutterNote": "\nAPK: Приложение будет работать непосредственно с APK файлами.\n\r\nZIP: Убедитесь, что ZIP файлы содержат только `libapp. o` для архитектуры arm64. Несоответствие может привести к ошибкам.",
@@ -30,6 +48,9 @@
   "continueAsGuest": "Продолжить как гость",
   "copiedToClipboard": "Скопировано в буфер обмена",
   "createAccount": "Создать Аккаунт",
+  "dataDirectory": "Data directory",
+  "dataDirectory2": "Data directory 2",
+  "details": "Details",
   "developer": "Разработчик",
   "dexRepair": "Ремонт",
   "dexRepairDesc": "Восстановление DEX файлов",
@@ -44,6 +65,9 @@
   "enterPassword": "Введите пароль",
   "enterUsername": "Пожалуйста, введите имя пользователя",
   "errorDuringAnalysis": "Произошла ошибка во время анализа",
+  "excludeSystemApps": "Exclude System Apps",
+  "extractApk": "Extract APK",
+  "extractingApk": "Extracting APK",
   "failedToExtractFiles": "Не удалось извлечь файлы из ZIP: {e}",
   "@failedToExtractFiles": {
     "placeholders": {
@@ -62,6 +86,10 @@
   },
   "featureNeedsApp": "Пожалуйста, используйте настольное или мобильное приложение для этой функции.",
   "fetchingModelInfo": "Получение информации о модели...",
+  "fileExists": "File Exists",
+  "fileExistsMsg": "File already exists. Do you want to overwrite it?",
+  "fileSize": "File size",
+  "firstInstall": "First install",
   "flutterAnalysis": "Анализ Flutter",
   "flutterAnalysisDesc": "Анализ библиотек Flutter",
   "generate": "Сгенерировать",
@@ -69,6 +97,8 @@
   "guestNotAllowed": "Гостевые пользователи не могут использовать эту функцию",
   "iDonTLoveThisApp": "Не волнуйтесь, пожалею",
   "iLoveThisApp": "Извините, я люблю это приложение",
+  "includeSystemApps": "Include System Apps",
+  "installer": "Installer",
   "jniAnalysis": "JNI Анализ",
   "jniAnalysisDesc": "Поиск JNI подписей в APK",
   "language": "Язык: {languageCode}",
@@ -82,17 +112,30 @@
     }
   },
   "largeModelWarning": "Большое предупреждение модели",
+  "lastUpdate": "Last update",
   "later": "Позже",
+  "launch": "Launch",
   "licenses": "Лицензии",
   "login": "Логин",
   "mail": "Почта",
+  "manualDeleteRequired": "Kindly manually delete the file/directory at {outputfile} and try again",
+  "@manualDeleteRequired": {
+    "placeholders": {
+      "outputfile": {
+        "type": "String"
+      }
+    }
+  },
   "merge": "Объединить",
   "mergeSplitApks": "Объединить API",
   "mergeUnsupportedOnWeb": "Слияние Split APK в веб-версии невозможно.",
   "models": "Модели",
+  "more": "More",
   "mtHook": "MT Hook",
   "mtHookDesc": "Генерировать улучшенные хуки MT",
+  "noAppsFound": "No apps found",
   "noFileSelected": "Файл не выбран",
+  "notFound": "Not Found",
   "ok": "Ок",
   "ollama_api_url": "OLLAMA базовый URL",
   "ollamaInitializeError": "Не удалось инициализировать Ollama клиент: {e}",
@@ -104,12 +147,16 @@
     }
   },
   "openOllamaLibrary": "Открыть библиотеку Ollama",
+  "overwrite": "Overwrite",
+  "packageName": "Package name",
   "passLen": "Пароль должен содержать не менее 8 символов",
   "passMisMatch": "Пароли не совпадают",
   "password": "Пароль",
   "pathToApkeditorJar": "Путь к apkeditor jar",
   "pleaseConfirmPassword": "Подтвердите пароль",
+  "pleaseWait": "Please wait...",
   "preferences": "Настройки",
+  "pressBackAgainToExit": "Press back again to exit",
   "proceed": "Продолжить",
   "profile": "Профиль",
   "register": "Регистрация",
@@ -133,6 +180,7 @@
   "repairing": "Починка...",
   "reset": "Reset",
   "save": "Сохранить",
+  "searchApps": "Search apps...",
   "selectAModel": "Выберите модель для чата",
   "selectFiles": "Выберите файл {type}",
   "@selectFiles": {
@@ -160,7 +208,9 @@
   "systemMessage": "Системное сообщение",
   "theme": "Тема",
   "typeMessage": "Введите ваше сообщение…",
+  "uninstall": "Uninstall",
   "uninstallWarning": "Вы только собирались удалить приложение?",
+  "unknown": "Unknown",
   "unsupportedDartVersion": "В настоящее время RevEngi поддерживает только стабильный канал dart\n\nТекущая версия Dart версии: {dartversion}",
   "@unsupportedDartVersion": {
     "placeholders": {
@@ -177,6 +227,7 @@
   "usernameCond": "Имя пользователя может содержать только буквы, цифры и подчеркивание",
   "usernameLimit": "Имя пользователя должно быть от 5 до 15 символов",
   "validateModules": "Проверить версию base.apk с помощью разделенного APK",
+  "versionCode": "Version code",
   "vrd": "Проверить имя каталога ресурсов",
   "welcomeBack": "С возвращением!"
 }

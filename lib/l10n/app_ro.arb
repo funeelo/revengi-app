@@ -5,11 +5,29 @@
   "analyzing": "Analizare...",
   "apiKey": "Cheie API",
   "apiRateLimits": "Limitele ratei de finalizare API",
+  "apkExtractedMsg": "APK extracted successfully to {outputfile}",
+  "@apkExtractedMsg": {
+    "placeholders": {
+      "outputfile": {
+        "type": "String"
+      }
+    }
+  },
+  "apkExtractError": "Error extracting APK: {e}",
+  "@apkExtractError": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  },
+  "apkPath": "APK path",
   "apksToApk": "APKS pentru APK",
   "appDescription": "O colecție de instrumente de inginerie inversată.",
   "appTitle": "Revendică",
+  "availableIn": "Available in",
   "batteryOptimization": "Optimizare baterie",
-  "batteryOptimizationMessage": "Pentru Android 13 și mai mare, trebuie să dezactivăm optimizarea bateriei pentru ca această aplicație să funcționeze corespunzător în fundal.",
+  "batteryOptimizationMessage": "Pentru Android 11 și mai mare, trebuie să dezactivăm optimizarea bateriei pentru ca această aplicație să funcționeze corespunzător în fundal.",
   "blutter": "Blutter",
   "blutterDesc": "Instrument de analiză binară Flutter",
   "blutterNote": "\nAPK: Aplicația se va ocupa direct de fișiere APK.\n\r\nZIP: Asigurați-vă că fișierele ZIP conțin doar `libapp. o` pentru arhitectura arm64. Nerespectarea conformităţii poate duce la erori.",
@@ -30,6 +48,9 @@
   "continueAsGuest": "Continuă ca Vizitator",
   "copiedToClipboard": "Copiat în clipboard",
   "createAccount": "Creare cont",
+  "dataDirectory": "Data directory",
+  "dataDirectory2": "Data directory 2",
+  "details": "Details",
   "developer": "Dezvoltator",
   "dexRepair": "Reparație Dex",
   "dexRepairDesc": "Repară fişierele DEX",
@@ -44,6 +65,9 @@
   "enterPassword": "Vă rugăm să introduceţi parola",
   "enterUsername": "Introdu numele de utilizator",
   "errorDuringAnalysis": "A apărut o eroare în timpul analizei",
+  "excludeSystemApps": "Exclude System Apps",
+  "extractApk": "Extract APK",
+  "extractingApk": "Extracting APK",
   "failedToExtractFiles": "Nu s-a reușit extragerea fișierelor din ZIP: {e}",
   "@failedToExtractFiles": {
     "placeholders": {
@@ -62,6 +86,10 @@
   },
   "featureNeedsApp": "Te rugăm să folosești aplicația desktop sau pentru mobil pentru această funcție.",
   "fetchingModelInfo": "Preluare informații model...",
+  "fileExists": "File Exists",
+  "fileExistsMsg": "File already exists. Do you want to overwrite it?",
+  "fileSize": "File size",
+  "firstInstall": "First install",
   "flutterAnalysis": "Analiză Flutter",
   "flutterAnalysisDesc": "Analizează frezele Flutter",
   "generate": "Genereaza",
@@ -69,6 +97,8 @@
   "guestNotAllowed": "Utilizatorii oaspeţi nu pot utiliza această funcţie",
   "iDonTLoveThisApp": "Nu-mi pasă, regret",
   "iLoveThisApp": "Îmi pare rău, iubesc această aplicație",
+  "includeSystemApps": "Include System Apps",
+  "installer": "Installer",
   "jniAnalysis": "Analiza JNI",
   "jniAnalysisDesc": "Găsește semnăturile JNI în APK",
   "language": "Limbă: {languageCode}",
@@ -82,17 +112,30 @@
     }
   },
   "largeModelWarning": "Avertizare model mare",
+  "lastUpdate": "Last update",
   "later": "Mai târziu",
+  "launch": "Launch",
   "licenses": "Licențe",
   "login": "Autentificare",
   "mail": "E-mail",
+  "manualDeleteRequired": "Kindly manually delete the file/directory at {outputfile} and try again",
+  "@manualDeleteRequired": {
+    "placeholders": {
+      "outputfile": {
+        "type": "String"
+      }
+    }
+  },
   "merge": "Îmbinare",
   "mergeSplitApks": "Îmbinare APK-uri",
   "mergeUnsupportedOnWeb": "Fuzionarea Split APK nu este posibilă în versiunea web.",
   "models": "Modele",
+  "more": "More",
   "mtHook": "Cârlig MT",
   "mtHookDesc": "Genereaza Cârlige Imbunatite MT",
+  "noAppsFound": "No apps found",
   "noFileSelected": "Niciun fișier selectat",
+  "notFound": "Not Found",
   "ok": "Ok",
   "ollama_api_url": "URL bază OLLAMA",
   "ollamaInitializeError": "Eșuare inițializare client Ollama: {e}",
@@ -104,12 +147,16 @@
     }
   },
   "openOllamaLibrary": "Deschide Biblioteca Ollama",
+  "overwrite": "Overwrite",
+  "packageName": "Package name",
   "passLen": "Parola trebuie să conțină cel puțin 8 caractere",
   "passMisMatch": "Parolele nu corespund",
   "password": "Parolă",
   "pathToApkeditorJar": "Calea către apkeditor jar",
   "pleaseConfirmPassword": "Vă rugăm să confirmați parola",
+  "pleaseWait": "Please wait...",
   "preferences": "Preferințe",
+  "pressBackAgainToExit": "Press back again to exit",
   "proceed": "Continuă",
   "profile": "Profil",
   "register": "Inregistrare",
@@ -133,6 +180,7 @@
   "repairing": "Reparați...",
   "reset": "Reset",
   "save": "Salvează",
+  "searchApps": "Search apps...",
   "selectAModel": "Selectați un model pentru a discuta",
   "selectFiles": "Selectați {type} Fișier",
   "@selectFiles": {
@@ -160,7 +208,9 @@
   "systemMessage": "Mesaj de sistem",
   "theme": "Tema",
   "typeMessage": "Introduceți mesajul…",
+  "uninstall": "Uninstall",
   "uninstallWarning": "Ai fost pe cale să dezinstalezi aplicația nu-i așa?",
+  "unknown": "Unknown",
   "unsupportedDartVersion": "În prezent, RevEngi suportă doar canalul stabil dart\n\nVersiunea actuală Dart : {dartversion}",
   "@unsupportedDartVersion": {
     "placeholders": {
@@ -177,6 +227,7 @@
   "usernameCond": "Numele de utilizator poate conține doar litere, numere și underscore",
   "usernameLimit": "Numele de utilizator trebuie să aibă între 5 și 15 caractere",
   "validateModules": "Validați versiunea de base.apk cu APK-uri împărțite",
+  "versionCode": "Version code",
   "vrd": "Validare nume resurse dir",
   "welcomeBack": "Bine ai revenit!"
 }
