@@ -1,16 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:revengi/l10n/app_localizations.dart';
+import 'package:revengi/screens/user.dart';
+import 'package:revengi/utils/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
+  Future<void> _handleLogout(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('username');
+    await prefs.remove('apiKey');
+    await prefs.setBool('isLoggedIn', false);
+    dio.options.headers.remove('X-API-Key');
+
+    if (context.mounted) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: Text(localizations.profile)),
+      appBar: AppBar(
+        title: Text(localizations.profile),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () => _handleLogout(context),
+          ),
+        ],
+      ),
       body: FutureBuilder<SharedPreferences>(
         future: SharedPreferences.getInstance(),
         builder: (context, snapshot) {
@@ -90,7 +114,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    username == "guest"
+                    (username == "guest" || username == "N/A")
                         ? const SizedBox.shrink()
                         : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

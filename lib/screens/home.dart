@@ -10,7 +10,6 @@ import 'package:revengi/utils/platform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:revengi/utils/dio.dart';
-import 'package:revengi/screens/user.dart';
 import 'package:revengi/utils/cards.dart';
 import 'package:revengi/screens/mthook/mthook.dart';
 import 'package:revengi/screens/blutter/blutter.dart';
@@ -110,20 +109,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     setState(() {
       checkUpdate = prefs.getBool('checkUpdate') ?? false;
     });
-  }
-
-  Future<void> _handleLogout(BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('username');
-    await prefs.remove('apiKey');
-    await prefs.setBool('isLoggedIn', false);
-    dio.options.headers.remove('X-API-Key');
-
-    if (context.mounted) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const LoginPage()),
-      );
-    }
   }
 
   Future<void> _showSmaliGrammarDialog(BuildContext context) async {
@@ -318,15 +303,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       canPop: false,
       onPopInvokedWithResult: _onPopInvokedWithResult,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(localizations.appTitle),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.logout),
-              onPressed: () => _handleLogout(context),
-            ),
-          ],
-        ),
+        appBar: AppBar(title: Text(localizations.appTitle)),
         onDrawerChanged: (isOpened) => setState(() => isDrawerOpen = isOpened),
         drawer: Drawer(
           child: ListView(
