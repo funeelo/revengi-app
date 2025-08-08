@@ -494,8 +494,15 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                         '${signInfo.schemes}',
                                       ),
                                   child: Text(
-                                    signInfo.schemes.join(" + "),
-                                    style: TextStyle(color: Colors.grey[600]),
+                                    signInfo.schemes.isNotEmpty
+                                        ? signInfo.schemes.join(" + ")
+                                        : "Verified failed",
+                                    style: TextStyle(
+                                      color:
+                                          signInfo.schemes.isNotEmpty
+                                              ? Colors.grey[600]
+                                              : Colors.red,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -543,7 +550,12 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                     signInfo.verified
                                         ? "Verified${signInfo.warnings.isNotEmpty ? ' with ${signInfo.warnings.length} warnings' : ''}${signInfo.errors.isNotEmpty ? ' and ${signInfo.errors.length} errors' : ''}"
                                         : "Not Verified",
-                                    style: TextStyle(color: Colors.grey[600]),
+                                    style: TextStyle(
+                                      color:
+                                          signInfo.verified
+                                              ? Colors.green
+                                              : Colors.red,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -1210,9 +1222,17 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                           : null,
                               child: Text(
                                 signatureSchemes != null
-                                    ? signatureSchemes!.join(" + ")
+                                    ? signatureSchemes!.isEmpty
+                                        ? "Verified failed"
+                                        : signatureSchemes!.join(" + ")
                                     : "...",
-                                style: TextStyle(color: Colors.grey[600]),
+                                style: TextStyle(
+                                  color:
+                                      signatureSchemes != null &&
+                                              signatureSchemes!.isEmpty
+                                          ? Colors.red
+                                          : Colors.grey[600],
+                                ),
                               ),
                             ),
                           ],
