@@ -78,10 +78,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
   }
 
   Future<void> _checkUninstalledApp(String packageName) async {
-    final appInfo = await InstalledApps.getAppInfo(
-      packageName,
-      BuiltWith.flutter,
-    );
+    final appInfo = await InstalledApps.getAppInfo(packageName);
     if (appInfo == null) {
       setState(() {
         _apps.removeWhere((app) => app.packageName == packageName);
@@ -1055,7 +1052,6 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                 }
                 final installerResult = await InstalledApps.getAppInfo(
                   app.installer,
-                  BuiltWith.flutter,
                 );
                 if (context.mounted) {
                   setState(() {
