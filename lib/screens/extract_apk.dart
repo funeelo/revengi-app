@@ -494,12 +494,12 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                         '${signInfo.schemes}',
                                       ),
                                   child: Text(
-                                    signInfo.schemes.isNotEmpty
-                                        ? signInfo.schemes.join(" + ")
+                                    signInfo.verifiedSchemes.isNotEmpty
+                                        ? signInfo.verifiedSchemes.join(" + ")
                                         : "Verified failed",
                                     style: TextStyle(
                                       color:
-                                          signInfo.schemes.isNotEmpty
+                                          signInfo.verifiedSchemes.isNotEmpty
                                               ? Colors.grey[600]
                                               : Colors.red,
                                     ),
