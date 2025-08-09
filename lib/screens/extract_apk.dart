@@ -124,6 +124,9 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
         true,
         "",
       );
+      apps.sort(
+        (a, b) => b.lastUpdatedTimestamp.compareTo(a.lastUpdatedTimestamp),
+      );
       setState(() {
         _apps = apps;
         _filteredApps = apps;
