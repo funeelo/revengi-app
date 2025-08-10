@@ -256,8 +256,12 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
           final isSplitApp = app.splitSourceDirs.isNotEmpty;
           outputFile =
               isSplitApp
-                  ? File('${dir.path}/${app.name}_${app.versionName}.apks')
-                  : File('${dir.path}/${app.name}_${app.versionName}.apk');
+                  ? File(
+                    '${dir.path}/${app.name.replaceAll(RegExp(r'[<>:"/\\|?*]'), '_')}_${app.versionName}.apks',
+                  )
+                  : File(
+                    '${dir.path}/${app.name.replaceAll(RegExp(r'[<>:"/\\|?*]'), '_')}_${app.versionName}.apk',
+                  );
 
           if (outputFile.existsSync()) {
             if (!mounted) return;
@@ -308,6 +312,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
         } catch (e) {
           // Check if error is of PathAccessException type
           if (e is PathAccessException) {
+            print(e);
             // It looks like that file/directory wasn't made by RevEngi
             // It needs manual deletion by the user because we're not requesting manageExternalStorage permission
             // This is a limitation of Android 11 and above
