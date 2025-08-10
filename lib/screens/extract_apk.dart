@@ -254,14 +254,11 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
       for (final app in appsToExtract) {
         try {
           final isSplitApp = app.splitSourceDirs.isNotEmpty;
+          final appName = app.name.replaceAll(RegExp(r'[<>:"/\\|?*]'), '_');
           outputFile =
               isSplitApp
-                  ? File(
-                    '${dir.path}/${app.name.replaceAll(RegExp(r'[<>:"/\\|?*]'), '_')}_${app.versionName}.apks',
-                  )
-                  : File(
-                    '${dir.path}/${app.name.replaceAll(RegExp(r'[<>:"/\\|?*]'), '_')}_${app.versionName}.apk',
-                  );
+                  ? File('${dir.path}/${appName}_${app.versionName}.apks')
+                  : File('${dir.path}/${appName}_${app.versionName}.apk');
 
           if (outputFile.existsSync()) {
             if (!mounted) return;
