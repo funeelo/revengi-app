@@ -291,19 +291,17 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
           if (isSplitApp) {
             final methodChannel = MethodChannel('flutter.native/helper');
             final apkPaths = [app.apkPath, ...app.splitSourceDirs];
-            extracted =
-                (await methodChannel.invokeMethod<bool>('zipApks', {
+            if (await methodChannel.invokeMethod<bool>('zipApks', {
                   'apkPaths': apkPaths,
                   'outputPath': outputFile.path,
-                }))!;
-            extractedApps++;
+                }) ??
+                false) {
+              extractedApps++;
+            }
           } else {
             final apkFile = File(app.apkPath);
             await apkFile.copy(outputFile.path);
-            if (!outputFile.existsSync()) {
-              extracted = false;
-            } else {
-              extracted = true;
+            if (outputFile.existsSync()) {
               extractedApps++;
             }
           }
@@ -330,10 +328,6 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
               }
             }
           }
-          setState(() {
-            isExtracting = false;
-            extracted = false;
-          });
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -349,9 +343,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
       if (mounted) {
         setState(() {
           isExtracting = false;
+          extracted = true;
         });
         Navigator.of(context).pop();
-        if (outputFile != null && extracted) {
+        if (outputFile != null) {
           if (extractedApps == 1) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -360,7 +355,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                 duration: const Duration(seconds: 5),
               ),
             );
-          } else {
+          } else if (extractedApps > 1) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
