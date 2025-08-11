@@ -487,9 +487,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       prefs.then((prefs) {
                         final logEnabled = prefs.getBool('logEnabled') ?? false;
                         prefs.setBool('logEnabled', !logEnabled);
-                        InstalledApps.toast(
-                          "Restart the app to apply the changes",
-                          true,
+                        if (!context.mounted) return;
+                        Navigator.of(context).pop();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Restart the app to apply changes'),
+                          ),
                         );
                       });
                     },

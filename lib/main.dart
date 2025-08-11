@@ -6,7 +6,7 @@ import 'package:revengi/screens/profile.dart';
 import 'package:revengi/screens/uninstall.dart';
 import 'package:revengi/screens/splash.dart';
 import 'package:revengi/utils/dio.dart';
-import 'package:revengi/utils/logger.dart';
+import 'package:revengi/utils/logger/l.dart';
 import 'package:revengi/utils/platform.dart';
 import 'package:revengi/utils/theme_provider.dart';
 import 'package:revengi/utils/language_provider.dart';
