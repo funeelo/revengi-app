@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart'
     show LicenseRegistry, LicenseEntryWithLineBreaks;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle, SystemNavigator;
+import 'package:installed_apps/installed_apps.dart';
 import 'package:revengi/l10n/app_localizations.dart';
 import 'package:revengi/screens/about.dart';
 import 'package:revengi/screens/extract_apk.dart';
@@ -462,6 +463,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                       ]
                       : []),
+                  ListTile(
+                    leading: Icon(Icons.bug_report),
+                    title: FutureBuilder<bool>(
+                      future: SharedPreferences.getInstance().then((prefs) {
+                        return prefs.getBool('logEnabled') ?? false;
+                      }),
+                      builder: (
+                        BuildContext context,
+                        AsyncSnapshot<bool> snapshot,
+                      ) {
+                        if (snapshot.hasData) {
+                          return Text(
+                            snapshot.data! ? 'Disable Logs' : 'Enable Logs',
+                          );
+                        } else {
+                          return Text('Enable Logs');
+                        }
+                      },
+                    ),
+                    onTap: () {
+                      final prefs = SharedPreferences.getInstance();
+                      prefs.then((prefs) {
+                        final logEnabled = prefs.getBool('logEnabled') ?? false;
+                        prefs.setBool('logEnabled', !logEnabled);
+                        InstalledApps.toast(
+                          "Restart the app to apply the changes",
+                          true,
+                        );
+                      });
+                    },
+                  ),
                 ],
               ),
               const Divider(),

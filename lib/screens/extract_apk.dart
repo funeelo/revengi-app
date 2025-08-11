@@ -65,7 +65,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
   Future<void> _loadPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _autoRefresh = prefs.getBool('autoRefresh') ?? true;
+      _autoRefresh = prefs.getBool('autoRefresh') ?? false;
     });
   }
 
@@ -309,7 +309,6 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
         } catch (e) {
           // Check if error is of PathAccessException type
           if (e is PathAccessException) {
-            print(e);
             // It looks like that file/directory wasn't made by RevEngi
             // It needs manual deletion by the user because we're not requesting manageExternalStorage permission
             // This is a limitation of Android 11 and above
