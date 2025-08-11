@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart'
     show LicenseRegistry, LicenseEntryWithLineBreaks;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle, SystemNavigator;
-import 'package:installed_apps/installed_apps.dart';
 import 'package:revengi/l10n/app_localizations.dart';
 import 'package:revengi/screens/about.dart';
 import 'package:revengi/screens/extract_apk.dart';
