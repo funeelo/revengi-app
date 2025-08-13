@@ -70,13 +70,23 @@ class _SplashScreenState extends State<SplashScreen> {
               fit: BoxFit.contain,
             ),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               'Reverse Engineering Tools',
-              style: TextStyle(fontSize: 16, color: Colors.white70),
+              style: TextStyle(
+                fontSize: 16,
+                color:
+                    Brightness.dark == Theme.of(context).brightness
+                        ? Colors.white70
+                        : Colors.black54,
+              ),
             ),
             const SizedBox(height: 48),
-            const CircularProgressIndicator.adaptive(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            CircularProgressIndicator.adaptive(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                Brightness.dark == Theme.of(context).brightness
+                    ? Colors.white70
+                    : Colors.black54,
+              ),
             ),
           ],
         ),
