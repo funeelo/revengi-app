@@ -7,6 +7,7 @@ import 'package:installed_apps/app_info.dart';
 import 'package:installed_apps/installed_apps.dart';
 import 'package:installed_apps/sign_info.dart';
 import 'package:intl/intl.dart';
+import 'package:l/l.dart';
 import 'package:revengi/l10n/app_localizations.dart';
 import 'package:revengi/utils/platform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -96,6 +97,8 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
           'https://play.google.com/store/apps/details?id=$packageName',
       "F-Droid": 'https://f-droid.org/en/packages/$packageName',
       "IzzyOnDroid": 'https://apt.izzysoft.de/fdroid/index/apk/$packageName',
+      "RuStore":
+          'https://backapi.rustore.ru/applicationData/overallInfo/$packageName',
     };
 
     final Dio dio = Dio();
@@ -107,10 +110,9 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
         if (res.statusCode == 200) {
           return (entry.key, entry.value);
         }
-      } catch (
-        _
-      ) {} // Currently there's no logger library in app, i plan to add one soon
-      // [TODO] Implement Talker logger
+      } catch (e) {
+        l.e("Error checking app on store: ${entry.key} $e");
+      }
     }
 
     return (null, null);
