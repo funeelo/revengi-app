@@ -6,7 +6,10 @@
 <li><strong>Blutter:</strong> A dedicated tool for in-depth analysis of Flutter binaries.</li>
 <li><strong>MT Hook:</strong> Generate MT Enhanced Hooks for advanced instrumentation and modification.</li>
 <li><strong>Dex Repair:</strong> Repair corrupted DEX files to salvage and analyze application code.</li>
+<li><strong>Extract/View APPs:</strong> Extract APK and view Apps informations like package name, version, signature and more.</li>
 <li><strong>Smali Grammar Reference:</strong> Quick &amp; Advanced access to Smali instruction set like their opcode, format, and description for code analysis and manipulation. Examples are also provided where applicable.</li>
+<li><strong>Local LLM:</strong> On-Device AI chat with Llama, Qwen, Gemma &amp; more with chat history support. Your data stays on your device. Customize <code>baseUrl</code> to your ollama instance for remote access.</li>
 <li><strong>Theme Customization:</strong> Offers light, dark, and system-based theme options.</li>
+<li><strong>Split APKs Merger:</strong> Merge split APKs into a single APK (APKS/APKM/XAPK to APK).</li>
 <li><strong>API Key:</strong> Get your API key from the profile section and use it to access <a href="https://revengi.in/docs/api">RevEngi API</a>, integrate it with your own tools and scripts.</li>
 </ul>

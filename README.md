@@ -28,6 +28,7 @@ RevEngi App encompasses a variety of functionalities, including:
 *   **Blutter:** A dedicated tool for in-depth analysis of Flutter binaries.
 *   **MT Hook:** Generate MT Enhanced Hooks for advanced instrumentation and modification.
 *   **Dex Repair:** Repair corrupted DEX files to salvage and analyze application code.
+*   **Extract/View APPs:** Extract APK and view Apps informations like package name, version, signature and more.
 *   **Smali Grammar Reference:** Quick & Advanced access to Smali instruction set like their opcode, format, and description for code analysis and manipulation. Examples are also provided where applicable.
 *   **Local LLM:** On-Device AI chat with Llama, Qwen, Gemma & more with chat history support. Your data stays on your device. Customize `baseUrl` to your ollama instance for remote access.
 *   **Theme Customization:** Offers light, dark, and system-based theme options.
@@ -61,13 +62,13 @@ You can verify our builds in two ways:
 
 ## Screenshots
 
-| Splash                                                                   | Home                                                                   | Profile                                                                   |
-| ------------------------------------------------------------------------ | ---------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| ![Splash](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) | ![Home](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png) | ![Profile](fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) |
+| Splash                                                                   | Home                                                                   | Profile                                                                   | Extract APK                                                                  | App Info                                                                   |
+| ------------------------------------------------------------------------ | ---------------------------------------------------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| ![Splash](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) | ![Home](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png) | ![Profile](fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) | ![ExtractAPK](fastlane/metadata/android/en-US/images/phoneScreenshots/9.png) | ![AppInfo](fastlane/metadata/android/en-US/images/phoneScreenshots/10.png) |
 
-| Smali Grammar                                                                   | SideBar                                                                             | AI Chat                                                                   | Manage Models                                                                   |
-| ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| ![Smali Grammar](fastlane/metadata/android/en-US/images/phoneScreenshots/6.png) | ![Navigation Drawer](fastlane/metadata/android/en-US/images/phoneScreenshots/5.png) | ![AI Chat](fastlane/metadata/android/en-US/images/phoneScreenshots/7.png) | ![Manage Models](fastlane/metadata/android/en-US/images/phoneScreenshots/8.png) |
+| Smali Grammar                                                                   | SideBar                                                                             | AI Chat                                                                   | Manage Models                                                                   | Signature Info                                                              |
+| ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| ![Smali Grammar](fastlane/metadata/android/en-US/images/phoneScreenshots/6.png) | ![Navigation Drawer](fastlane/metadata/android/en-US/images/phoneScreenshots/5.png) | ![AI Chat](fastlane/metadata/android/en-US/images/phoneScreenshots/7.png) | ![Manage Models](fastlane/metadata/android/en-US/images/phoneScreenshots/8.png) | ![SignInfo](fastlane/metadata/android/en-US/images/phoneScreenshots/11.png) |
 
 ## Roadmap
 
