@@ -489,7 +489,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                 InkWell(
                                   onTap:
                                       () => copyToClipboard(
-                                        '${signInfo.schemes}',
+                                        '${signInfo.verifiedSchemes}',
                                       ),
                                   child: Text(
                                     signInfo.verifiedSchemes.isNotEmpty
