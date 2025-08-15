@@ -197,7 +197,7 @@ jobs:
           Categories=Development;
           EOF
           fpm -s dir -t rpm -n revengi -v ${APP_VERSION#v} -C dist/rpm .
-          mv revengi-${APP_VERSION#v}-1.x86_64.rpm RevEngi-Linux.rpm
+          mv "$(ls revengi-*.x86_64.rpm)" RevEngi-Linux.rpm
       - name: Package AppImage
         run: |
           mkdir -p AppDir/usr/bin
