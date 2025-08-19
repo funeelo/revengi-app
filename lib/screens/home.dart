@@ -570,6 +570,81 @@ class _DashboardScreenState extends State<DashboardScreen> {
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         body: LayoutBuilder(
           builder: (context, constraints) {
+            final List<AnalysisCard> analysisItems = [
+              AnalysisCard(
+                title: localizations.jniAnalysis,
+                icon: Icons.android,
+                description: localizations.jniAnalysisDesc,
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const JniAnalysisScreen(),
+                      ),
+                    ),
+              ),
+              AnalysisCard(
+                title: localizations.flutterAnalysis,
+                icon: Icons.flutter_dash,
+                description: localizations.flutterAnalysisDesc,
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FlutterAnalysisScreen(),
+                      ),
+                    ),
+              ),
+              AnalysisCard(
+                title: localizations.blutter,
+                icon: Icons.build,
+                description: localizations.blutterDesc,
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const BlutterAnalysisScreen(),
+                      ),
+                    ),
+              ),
+              AnalysisCard(
+                title: localizations.mtHook,
+                icon: Icons.book,
+                description: localizations.mtHookDesc,
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MTHookAnalysisScreen(),
+                      ),
+                    ),
+              ),
+              AnalysisCard(
+                title: localizations.dexRepair,
+                icon: Icons.auto_fix_high,
+                description: localizations.dexRepairDesc,
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DexRepairScreen(),
+                      ),
+                    ),
+              ),
+              if (isWeb() || !isIOS())
+                AnalysisCard(
+                  title: localizations.apksToApk,
+                  icon: Icons.merge_type,
+                  description: localizations.mergeSplitApks,
+                  onTap:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SplitApksMergerScreen(),
+                        ),
+                      ),
+                ),
+            ];
             return GridView.builder(
               padding: const EdgeInsets.all(24),
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -579,97 +654,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 childAspectRatio: 1.2,
                 mainAxisExtent: 170,
               ),
-              itemCount: 6,
+              itemCount: analysisItems.length,
               itemBuilder: (context, index) {
-                switch (index) {
-                  case 0:
-                    return AnalysisCard(
-                      title: localizations.jniAnalysis,
-                      icon: Icons.android,
-                      description: localizations.jniAnalysisDesc,
-                      onTap:
-                          () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const JniAnalysisScreen(),
-                            ),
-                          ),
-                    );
-                  case 1:
-                    return AnalysisCard(
-                      title: localizations.flutterAnalysis,
-                      icon: Icons.flutter_dash,
-                      description: localizations.flutterAnalysisDesc,
-                      onTap:
-                          () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) => const FlutterAnalysisScreen(),
-                            ),
-                          ),
-                    );
-                  case 2:
-                    return AnalysisCard(
-                      title: localizations.blutter,
-                      icon: Icons.build,
-                      description: localizations.blutterDesc,
-                      onTap:
-                          () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) => const BlutterAnalysisScreen(),
-                            ),
-                          ),
-                    );
-                  case 3:
-                    return AnalysisCard(
-                      title: localizations.mtHook,
-                      icon: Icons.book,
-                      description: localizations.mtHookDesc,
-                      onTap:
-                          () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) => const MTHookAnalysisScreen(),
-                            ),
-                          ),
-                    );
-                  case 4:
-                    return AnalysisCard(
-                      title: localizations.dexRepair,
-                      icon: Icons.auto_fix_high,
-                      description: localizations.dexRepairDesc,
-                      onTap:
-                          () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const DexRepairScreen(),
-                            ),
-                          ),
-                    );
-                  case 5:
-                    return (isWeb() || !isIOS())
-                        ? AnalysisCard(
-                          title: localizations.apksToApk,
-                          icon: Icons.merge_type,
-                          description: localizations.mergeSplitApks,
-                          onTap:
-                              () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) =>
-                                          const SplitApksMergerScreen(),
-                                ),
-                              ),
-                        )
-                        : const SizedBox.shrink();
-                  default:
-                    return const SizedBox.shrink();
-                }
+                return analysisItems[index];
               },
             );
           },
