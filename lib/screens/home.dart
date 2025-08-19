@@ -80,6 +80,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         return AlertDialog.adaptive(
           title: Text(AppLocalizations.of(context)!.updateAvailable),
           content: Text(AppLocalizations.of(context)!.updateAvailableMessage),
+          actionsPadding: EdgeInsets.all(8),
           actions: <Widget>[
             TextButton(
               child: Text(AppLocalizations.of(context)!.later),
@@ -117,15 +118,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
         context: context,
         builder:
             (context) => AlertDialog(
-              title: Row(
-                children: [
-                  Text(AppLocalizations.of(context)!.smaliGrammar),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18),
+              ),
+              contentPadding: EdgeInsets.all(5),
+              titlePadding: EdgeInsets.only(top: 12, left: 12, right: 12),
+              title: Text(
+                AppLocalizations.of(context)!.smaliGrammar,
+                textAlign: TextAlign.center,
               ),
               content: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.8,
@@ -184,6 +184,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               content: Text(
                 AppLocalizations.of(context)!.batteryOptimizationMessage,
               ),
+              actionsPadding: EdgeInsets.all(8),
               actions: <Widget>[
                 TextButton(
                   child: Text(AppLocalizations.of(context)!.cancel),

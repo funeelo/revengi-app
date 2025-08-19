@@ -69,6 +69,7 @@ class _SmaliInstructionDialogState extends State<SmaliInstructionDialog> {
                 ],
               ),
             ),
+            actionsPadding: EdgeInsets.all(8),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
