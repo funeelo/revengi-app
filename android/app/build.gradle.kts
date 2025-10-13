@@ -34,7 +34,7 @@ android {
     }
 
     signingConfigs {
-        if (keystorePropertiesFile.exists() && keystoreProperties.containsKey("keyAlias")) {
+        if (keystorePropertiesFile.exists()) {
             create("release") {
                 keyAlias = keystoreProperties["keyAlias"] as String
                 keyPassword = keystoreProperties["keyPassword"] as String
