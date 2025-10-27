@@ -67,7 +67,7 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v2
-        if: github.ref_type == 'tag'
+        if: github.ref_type == 'tag' || github.event_name == 'workflow_dispatch'
         with:
           tag_name: ${{ env.APP_VERSION }}
           name: Release ${{ env.APP_VERSION }}
