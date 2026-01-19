@@ -309,11 +309,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
             }
           }
         } catch (e) {
-          // Check if error is of PathAccessException type
           if (e is PathAccessException) {
-            // It looks like that file/directory wasn't made by RevEngi
-            // It needs manual deletion by the user because we're not requesting manageExternalStorage permission
-            // This is a limitation of Android 11 and above
             if (mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -441,6 +437,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
 
   Future<void> _showSignInfo(SignInfo signInfo) async {
     final localizations = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     showDialog(
       context: context,
@@ -466,6 +463,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
+                        color: theme.colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -484,7 +482,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                               children: [
                                 Text(
                                   localizations.scheme,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
                                 ),
                                 InkWell(
                                   onTap:
@@ -498,8 +499,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                     style: TextStyle(
                                       color:
                                           signInfo.verifiedSchemes.isNotEmpty
-                                              ? Colors.grey[600]
-                                              : Colors.red,
+                                              ? theme
+                                                  .colorScheme
+                                                  .onSurfaceVariant
+                                              : theme.colorScheme.error,
                                     ),
                                   ),
                                 ),
@@ -515,14 +518,19 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                               children: [
                                 Text(
                                   localizations.algorithm,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
                                 ),
                                 InkWell(
                                   onTap:
                                       () => copyToClipboard(signInfo.algorithm),
                                   child: Text(
                                     signInfo.algorithm,
-                                    style: TextStyle(color: Colors.grey[600]),
+                                    style: TextStyle(
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -537,7 +545,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                               children: [
                                 Text(
                                   localizations.status,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
                                 ),
                                 InkWell(
                                   onTap:
@@ -552,7 +563,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                       color:
                                           signInfo.verified
                                               ? Colors.green
-                                              : Colors.red,
+                                              : theme.colorScheme.error,
                                     ),
                                   ),
                                 ),
@@ -568,7 +579,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                               children: [
                                 Text(
                                   localizations.createDate,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
                                 ),
                                 InkWell(
                                   onTap:
@@ -576,7 +590,9 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                           copyToClipboard(signInfo.createDate),
                                   child: Text(
                                     signInfo.createDate,
-                                    style: TextStyle(color: Colors.grey[600]),
+                                    style: TextStyle(
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -591,7 +607,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                               children: [
                                 Text(
                                   localizations.expireDate,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
                                 ),
                                 InkWell(
                                   onTap:
@@ -599,7 +618,9 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                           copyToClipboard(signInfo.expireDate),
                                   child: Text(
                                     signInfo.expireDate,
-                                    style: TextStyle(color: Colors.grey[600]),
+                                    style: TextStyle(
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -614,13 +635,18 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                               children: [
                                 Text(
                                   localizations.owner,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
                                 ),
                                 InkWell(
                                   onTap: () => copyToClipboard(signInfo.issuer),
                                   child: Text(
                                     signInfo.issuer,
-                                    style: TextStyle(color: Colors.grey[600]),
+                                    style: TextStyle(
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -635,7 +661,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                               children: [
                                 Text(
                                   "HASH",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
                                 ),
                                 InkWell(
                                   onTap:
@@ -648,7 +677,9 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                     upperCase
                                         ? "0x${(int.parse(signInfo.digests.hash) & 0xFFFFFFFF).toRadixString(16).toUpperCase()} (${signInfo.digests.hash})"
                                         : "0x${(int.parse(signInfo.digests.hash) & 0xFFFFFFFF).toRadixString(16)} (${signInfo.digests.hash})",
-                                    style: TextStyle(color: Colors.grey[600]),
+                                    style: TextStyle(
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -663,7 +694,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                               children: [
                                 Text(
                                   "CRC32",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
                                 ),
                                 InkWell(
                                   onTap:
@@ -676,7 +710,9 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                     upperCase
                                         ? "0x${signInfo.digests.crc32.replaceFirst(RegExp('^0+'), '').toUpperCase()} (${int.parse((signInfo.digests.crc32), radix: 16)})"
                                         : "0x${signInfo.digests.crc32.replaceFirst(RegExp('^0+'), '')} (${int.parse((signInfo.digests.crc32), radix: 16)})",
-                                    style: TextStyle(color: Colors.grey[600]),
+                                    style: TextStyle(
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -691,7 +727,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                               children: [
                                 Text(
                                   "MD5",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
                                 ),
                                 InkWell(
                                   onTap:
@@ -721,7 +760,9 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                         : addColon
                                         ? _formatWithColon(signInfo.digests.md5)
                                         : signInfo.digests.md5,
-                                    style: TextStyle(color: Colors.grey[600]),
+                                    style: TextStyle(
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -736,7 +777,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                               children: [
                                 Text(
                                   "SHA1",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
                                 ),
                                 InkWell(
                                   onTap:
@@ -769,7 +813,9 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                           signInfo.digests.sha1,
                                         )
                                         : signInfo.digests.sha1,
-                                    style: TextStyle(color: Colors.grey[600]),
+                                    style: TextStyle(
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -784,7 +830,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                               children: [
                                 Text(
                                   "SHA256",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
                                 ),
                                 InkWell(
                                   onTap:
@@ -817,7 +866,9 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                           signInfo.digests.sha256,
                                         )
                                         : signInfo.digests.sha256,
-                                    style: TextStyle(color: Colors.grey[600]),
+                                    style: TextStyle(
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -832,7 +883,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                               children: [
                                 Text(
                                   "SHA384",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
                                 ),
                                 InkWell(
                                   onTap:
@@ -865,7 +919,9 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                           signInfo.digests.sha384,
                                         )
                                         : signInfo.digests.sha384,
-                                    style: TextStyle(color: Colors.grey[600]),
+                                    style: TextStyle(
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -880,7 +936,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                               children: [
                                 Text(
                                   "SHA512",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
                                 ),
                                 InkWell(
                                   onTap:
@@ -913,7 +972,9 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                           signInfo.digests.sha512,
                                         )
                                         : signInfo.digests.sha512,
-                                    style: TextStyle(color: Colors.grey[600]),
+                                    style: TextStyle(
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -928,7 +989,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                               children: [
                                 Text(
                                   localizations.format,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
                                 ),
                                 Column(
                                   children: [
@@ -1026,6 +1090,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
 
   Future<void> _showAppDetails(AppInfo app) async {
     final localizations = AppLocalizations.of(context)!;
+    final theme = Theme.of(context); // Capture theme
     final GlobalKey menuKey = GlobalKey();
 
     List<String>? signatureSchemes;
@@ -1116,6 +1181,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
                                   ),
                                 ),
                               ),
@@ -1125,7 +1191,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                   padding: EdgeInsets.only(top: 6, bottom: 4),
                                   child: Text(
                                     app.versionName,
-                                    style: TextStyle(fontSize: 14),
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1142,13 +1211,18 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                           children: [
                             Text(
                               localizations.packageName,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                              ),
                             ),
                             InkWell(
                               onTap: () => copyToClipboard(app.packageName),
                               child: Text(
                                 app.packageName,
-                                style: TextStyle(color: Colors.grey[600]),
+                                style: TextStyle(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
                               ),
                             ),
                           ],
@@ -1163,14 +1237,19 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                           children: [
                             Text(
                               localizations.versionCode,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                              ),
                             ),
                             InkWell(
                               onTap:
                                   () => copyToClipboard('${app.versionCode}'),
                               child: Text(
                                 '${app.versionCode}',
-                                style: TextStyle(color: Colors.grey[600]),
+                                style: TextStyle(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
                               ),
                             ),
                           ],
@@ -1185,7 +1264,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                           children: [
                             Text(
                               localizations.fileSize,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                              ),
                             ),
                             InkWell(
                               onTap:
@@ -1194,7 +1276,9 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                   ),
                               child: Text(
                                 '${(app.packageSize / (1024 * 1024)).toStringAsFixed(2)}M',
-                                style: TextStyle(color: Colors.grey[600]),
+                                style: TextStyle(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
                               ),
                             ),
                           ],
@@ -1209,7 +1293,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                           children: [
                             Text(
                               localizations.signature,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                              ),
                             ),
                             InkWell(
                               onTap:
@@ -1227,8 +1314,8 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                   color:
                                       signatureSchemes != null &&
                                               signatureSchemes!.isEmpty
-                                          ? Colors.red
-                                          : Colors.grey[600],
+                                          ? theme.colorScheme.error
+                                          : theme.colorScheme.onSurfaceVariant,
                                 ),
                               ),
                             ),
@@ -1244,14 +1331,17 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                           children: [
                             Text(
                               localizations.dataDirectory,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                              ),
                             ),
                             InkWell(
                               onTap: () => copyToClipboard(app.dataDir),
                               child: Text(
                                 app.dataDir,
                                 style: TextStyle(
-                                  color: Colors.grey[600],
+                                  color: theme.colorScheme.onSurfaceVariant,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
@@ -1268,7 +1358,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                           children: [
                             Text(
                               localizations.dataDirectory2,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                              ),
                             ),
                             InkWell(
                               onTap:
@@ -1278,7 +1371,7 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                               child: Text(
                                 '/storage/emulated/0/Android/data/${app.packageName}',
                                 style: TextStyle(
-                                  color: Colors.grey[600],
+                                  color: theme.colorScheme.onSurfaceVariant,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
@@ -1295,14 +1388,17 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                           children: [
                             Text(
                               localizations.apkPath,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                              ),
                             ),
                             InkWell(
                               onTap: () => copyToClipboard(app.apkPath),
                               child: Text(
                                 app.apkPath,
                                 style: TextStyle(
-                                  color: Colors.grey[600],
+                                  color: theme.colorScheme.onSurfaceVariant,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
@@ -1319,7 +1415,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                           children: [
                             Text(
                               localizations.firstInstall,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                              ),
                             ),
                             InkWell(
                               onTap:
@@ -1336,7 +1435,9 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                     app.installedTimestamp,
                                   ),
                                 ),
-                                style: TextStyle(color: Colors.grey[600]),
+                                style: TextStyle(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
                               ),
                             ),
                           ],
@@ -1351,7 +1452,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                           children: [
                             Text(
                               localizations.lastUpdate,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                              ),
                             ),
                             InkWell(
                               onTap:
@@ -1368,7 +1472,9 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                     app.lastUpdatedTimestamp,
                                   ),
                                 ),
-                                style: TextStyle(color: Colors.grey[600]),
+                                style: TextStyle(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
                               ),
                             ),
                           ],
@@ -1383,7 +1489,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                           children: [
                             Text(
                               localizations.availableIn,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                              ),
                             ),
                             InkWell(
                               onTap: () async {
@@ -1411,7 +1520,10 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                           children: [
                             Text(
                               localizations.installer,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                              ),
                             ),
                             InkWell(
                               onTap:
@@ -1420,7 +1532,9 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                                   ),
                               child: Text(
                                 installer != "" ? installer : "...",
-                                style: TextStyle(color: Colors.grey[600]),
+                                style: TextStyle(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
                               ),
                             ),
                           ],
@@ -1433,16 +1547,21 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                         ),
                         TableRow(
                           children: [
-                            const Text(
+                            Text(
                               'UID',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                              ),
                             ),
                             InkWell(
                               onTap:
                                   () => copyToClipboard(app.appUid.toString()),
                               child: Text(
                                 "${app.appUid}",
-                                style: TextStyle(color: Colors.grey[600]),
+                                style: TextStyle(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
                               ),
                             ),
                           ],
@@ -1542,160 +1661,317 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
 
   @override
   Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
+    final theme = Theme.of(context);
     final localizations = AppLocalizations.of(context)!;
+
     return PopScope(
       canPop: !_isSearching && !_isMultiSelect,
       onPopInvokedWithResult: _onPopInvokedWithResult,
       child: Scaffold(
-        appBar: AppBar(
-          title:
-              _isSearching
-                  ? TextField(
-                    controller: _searchController,
-                    autofocus: true,
-                    decoration: InputDecoration(
-                      hintText: localizations.searchApps,
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(
-                        color:
-                            brightness == Brightness.dark
-                                ? Colors.white70
-                                : Colors.black54,
-                      ),
-                    ),
-                    style: TextStyle(
-                      color:
-                          brightness == Brightness.dark
-                              ? Colors.white
-                              : Colors.black,
-                    ),
-                  )
-                  : _isMultiSelect
-                  ? Text(
-                    localizations.selected(_selectedApps.length.toString()),
-                  )
-                  : Text(localizations.extractApk),
-          actions: [
-            IconButton(
-              icon: Icon(_isSearching ? Icons.close : Icons.search),
-              onPressed: _toggleSearch,
+        backgroundColor: theme.scaffoldBackgroundColor,
+        body: RefreshIndicator(
+          onRefresh: _loadApps,
+          child: CustomScrollView(
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics(),
             ),
-            PopupMenuButton<int>(
-              icon: const Icon(Icons.more_vert),
-              onSelected: (value) {
-                if (value == 0) {
-                  setState(() {
-                    _excludeSystemApps = !_excludeSystemApps;
-                    _isSearching = false;
-                    _searchController.clear();
-                  });
-                  _loadApps();
-                } else if (value == 1) {
-                  _savePrefs(!_autoRefresh);
-                }
-              },
-              itemBuilder:
-                  (context) => [
-                    CheckedPopupMenuItem(
-                      value: 0,
-                      checked: !_excludeSystemApps,
-                      child: Text(localizations.includeSystemApps),
+            slivers: [
+              SliverAppBar(
+                expandedHeight: 180,
+                pinned: true,
+                stretch: true,
+                backgroundColor: theme.colorScheme.surface,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    if (_isSearching) {
+                      _toggleSearch();
+                    } else if (_isMultiSelect) {
+                      _toggleMultiSelect();
+                    } else {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                ),
+                actions: [
+                  IconButton(
+                    icon: Icon(_isSearching ? Icons.close : Icons.search),
+                    onPressed: _toggleSearch,
+                  ),
+                  PopupMenuButton<int>(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    CheckedPopupMenuItem(
-                      value: 1,
-                      checked: _autoRefresh,
-                      child: Text(localizations.autoRefresh),
-                    ),
-                  ],
-            ),
-          ],
-        ),
-        body:
-            _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : _filteredApps.isEmpty
-                ? Center(child: Text(localizations.noAppsFound))
-                : RefreshIndicator(
-                  onRefresh: _loadApps,
-                  child: SafeArea(
-                    top: false,
-                    child: ListView.builder(
-                      padding: const EdgeInsets.all(8),
-                      itemCount: _filteredApps.length,
-                      itemBuilder: (context, index) {
-                        final app = _filteredApps[index];
-                        bool isSplitApp = app.splitSourceDirs.isNotEmpty;
-                        return Card(
-                          elevation: 2,
-                          margin: const EdgeInsets.symmetric(
-                            vertical: 4,
-                            horizontal: 8,
+                    icon: const Icon(Icons.more_vert),
+                    onSelected: (value) {
+                      if (value == 0) {
+                        setState(() {
+                          _excludeSystemApps = !_excludeSystemApps;
+                          _isSearching = false;
+                          _searchController.clear();
+                        });
+                        _loadApps();
+                      } else if (value == 1) {
+                        _savePrefs(!_autoRefresh);
+                      }
+                    },
+                    itemBuilder:
+                        (context) => [
+                          CheckedPopupMenuItem(
+                            value: 0,
+                            checked: !_excludeSystemApps,
+                            child: Text(localizations.includeSystemApps),
                           ),
-                          child: ListTile(
-                            leading:
+                          CheckedPopupMenuItem(
+                            value: 1,
+                            checked: _autoRefresh,
+                            child: Text(localizations.autoRefresh),
+                          ),
+                        ],
+                  ),
+                ],
+                flexibleSpace: FlexibleSpaceBar(
+                  title:
+                      _isMultiSelect
+                          ? Text(
+                            localizations.selected(
+                              _selectedApps.length.toString(),
+                            ),
+                            style: TextStyle(
+                              color: theme.colorScheme.onSurface,
+                            ),
+                          )
+                          : _isSearching
+                          ? null
+                          : Text(
+                            localizations.extractApk,
+                            style: TextStyle(
+                              color: theme.colorScheme.onSurface,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                  centerTitle: true,
+                  background: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              theme.colorScheme.primary.withValues(alpha: 0.1),
+                              theme.colorScheme.surface,
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        right: -20,
+                        top: -20,
+                        child: Opacity(
+                          opacity: 0.1,
+                          child: Icon(
+                            Icons.layers,
+                            size: 150,
+                            color: theme.colorScheme.primary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                bottom:
+                    _isSearching
+                        ? PreferredSize(
+                          preferredSize: const Size.fromHeight(60),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            color: theme.colorScheme.surface,
+                            child: TextField(
+                              controller: _searchController,
+                              autofocus: true,
+                              decoration: InputDecoration(
+                                hintText: localizations.searchApps,
+                                prefixIcon: const Icon(Icons.search),
+                                filled: true,
+                                fillColor: theme
+                                    .colorScheme
+                                    .surfaceContainerHighest
+                                    .withValues(alpha: 0.5),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                  borderSide: BorderSide.none,
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                        : null,
+              ),
+              if (_isLoading)
+                const SliverFillRemaining(
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              else if (_filteredApps.isEmpty)
+                SliverFillRemaining(
+                  child: Center(child: Text(localizations.noAppsFound)),
+                )
+              else
+                SliverPadding(
+                  padding: const EdgeInsets.all(16),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      final app = _filteredApps[index];
+                      bool isSplitApp = app.splitSourceDirs.isNotEmpty;
+                      final isSelected =
+                          _isMultiSelect && _selectedApps.contains(index);
+
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 12),
+                        decoration: BoxDecoration(
+                          color:
+                              isSelected
+                                  ? theme.colorScheme.primary.withValues(
+                                    alpha: 0.1,
+                                  )
+                                  : theme.colorScheme.surface,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color:
+                                isSelected
+                                    ? theme.colorScheme.primary
+                                    : theme.dividerColor,
+                            width: isSelected ? 2 : 1,
+                          ),
+                        ),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          leading: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: theme.colorScheme.surfaceContainerHighest
+                                  .withValues(alpha: 0.5),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child:
                                 app.icon != null
                                     ? Image.memory(
                                       app.icon!,
-                                      width: 40,
-                                      height: 40,
+                                      width: 32,
+                                      height: 32,
                                     )
-                                    : const Icon(Icons.android, size: 40),
-                            title: Text(app.name),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  !isSplitApp
-                                      ? "${app.versionName}    ${formatSize(app.packageSize)}"
-                                      : "${app.versionName}    ${formatSize(app.packageSize)}    SPLIT+${formatSize(app.splitSourceDirs.fold(0, (sum, dir) => sum + File(dir).lengthSync()))}",
-                                ),
+                                    : Icon(
+                                      Icons.android,
+                                      size: 32,
+                                      color: theme.colorScheme.primary,
+                                    ),
+                          ),
+                          title: Text(
+                            app.name,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                      vertical: 2,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: theme.colorScheme.secondary
+                                          .withValues(alpha: 0.1),
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                    child: Text(
+                                      app.versionName,
+                                      style: theme.textTheme.labelSmall
+                                          ?.copyWith(
+                                            color: theme.colorScheme.secondary,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    formatSize(app.packageSize),
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: theme.colorScheme.outline,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              if (isSplitApp) ...[
                                 const SizedBox(height: 4),
                                 Text(
-                                  app.packageName,
-                                  style: const TextStyle(fontSize: 13),
+                                  "SPLIT APK",
+                                  style: theme.textTheme.labelSmall?.copyWith(
+                                    color: theme.colorScheme.tertiary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ],
-                            ),
-                            selected:
-                                _isMultiSelect && _selectedApps.contains(index),
-                            selectedTileColor: Theme.of(
-                              context,
-                            ).colorScheme.primary.withValues(alpha: 0.2),
-                            onTap: () {
-                              if (_isMultiSelect) {
-                                setState(() {
-                                  if (_selectedApps.contains(index)) {
-                                    _selectedApps.remove(index);
-                                    if (_selectedApps.isEmpty) {
-                                      _isMultiSelect = false;
-                                    }
-                                  } else {
-                                    _selectedApps.add(index);
-                                  }
-                                });
-                              } else {
-                                _showAppDetails(app);
-                              }
-                            },
-                            onLongPress: () {
-                              if (!_isMultiSelect) {
-                                _toggleMultiSelect();
-                              }
+                              const SizedBox(height: 4),
+                              Text(
+                                app.packageName,
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  fontFamily: 'monospace',
+                                  color: theme.colorScheme.outline,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                          onTap: () {
+                            if (_isMultiSelect) {
                               setState(() {
                                 if (_selectedApps.contains(index)) {
                                   _selectedApps.remove(index);
+                                  if (_selectedApps.isEmpty) {
+                                    _isMultiSelect = false;
+                                  }
                                 } else {
                                   _selectedApps.add(index);
                                 }
                               });
-                            },
-                          ),
-                        );
-                      },
-                    ),
+                            } else {
+                              _showAppDetails(app);
+                            }
+                          },
+                          onLongPress: () {
+                            if (!_isMultiSelect) {
+                              _toggleMultiSelect();
+                            }
+                            setState(() {
+                              if (_selectedApps.contains(index)) {
+                                _selectedApps.remove(index);
+                              } else {
+                                _selectedApps.add(index);
+                              }
+                            });
+                          },
+                        ),
+                      );
+                    }, childCount: _filteredApps.length),
                   ),
                 ),
+            ],
+          ),
+        ),
         floatingActionButton: AnimatedSwitcher(
           duration: const Duration(milliseconds: 200),
           transitionBuilder: (Widget child, Animation<double> animation) {
@@ -1719,12 +1995,16 @@ class _ExtractApkScreenState extends State<ExtractApkScreen>
                           FloatingActionButton(
                             onPressed: _invertSelect,
                             heroTag: 'invertFAB',
+                            backgroundColor: theme.colorScheme.secondary,
+                            foregroundColor: theme.colorScheme.onSecondary,
                             child: const Icon(Icons.flip_to_back),
                           ),
                           const SizedBox(height: 12),
                           FloatingActionButton(
                             onPressed: _extractSelectedApps,
                             heroTag: 'extractFAB',
+                            backgroundColor: theme.colorScheme.primary,
+                            foregroundColor: theme.colorScheme.onPrimary,
                             child: const Icon(Icons.eject_outlined),
                           ),
                         ],
